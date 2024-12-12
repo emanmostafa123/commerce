@@ -1,0 +1,34 @@
+.section {
+    position: relative;
+    background: url('../../../assets/background.jpg') no-repeat center center;
+    background-size: cover;
+}
+
+.section::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #30425159;
+    z-index: 1;
+}
+
+.section > * {
+    position: relative;
+    z-index: 2;
+}
+a{
+    text-decoration: none;
+}
+.blog-header-logo{
+    color: white;
+    font-weight: 700;
+    font-size: 25px;
+}
+nav{
+    a{
+        font-weight: 700;
+    }
+}

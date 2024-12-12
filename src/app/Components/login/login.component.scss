@@ -17,6 +17,7 @@
     height: fit-content;
     h3{
         text-align: center;
+        color: #0d1e2e;
     }
     input{
         background: #ffffffa3;
@@ -29,11 +30,11 @@
         outline: none !important;
     }
     a{
-        color: #2f0767;
+        color: #0d1e2e;
     }
     button {
         color: white;
-        background: #6938d2;
+        background: #0d1e2e;
         border: none;
         border-radius: 8px;
         height: 40px;
@@ -48,12 +49,12 @@
         position: absolute;
         left: 20px;
         top: 36px;
-        color: #6938d2;
+        color: #50667d;
     }
     .icon_pass{
         position: absolute;
         left: 20px;
         top: 100px;
-        color: #6938d2;
+        color: #50667d;
     }
 }
