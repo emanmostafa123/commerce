@@ -1,0 +1,25 @@
+<div class="section">
+    <div class="container">
+        <form [formGroup]="loginForm">
+            <div class="row justify-content-center">
+                <div class="m-5 col-12 col-sm-12 col-md-8 col-lg-6 col-xl-6 col-xxl-6 ">
+                    <div class="login_card p-4 row">
+                        <div class="title mt-4 col-12">
+                            <h3>Welcome Back</h3>
+                        </div>
+                        <div class="controls_container col-12">
+                            <input type="text" name="usrNm" formControlName="usrNm" 
+                            id="usrNm" class="mt-4 col-12" placeholder="User Name">
+                            <i class="fa-solid fa-user icon_usrNm"></i>
+                            <input type="password" name="usrPss" formControlName="usrPss"
+                            id="usrPss" class="my-4 col-12" placeholder="Password">
+                            <i class="fa-solid fa-key icon_pass"></i>
+                            <a href="http://" target="_blank" rel="noopener noreferrer" class="">Forget Password..?</a>
+                        </div>
+                        <button class="w-25 me-3 ms-auto" (click)="login()" [disabled]="this.loginForm.invalid">Login</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
