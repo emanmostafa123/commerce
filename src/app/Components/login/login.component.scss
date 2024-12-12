@@ -1,0 +1,59 @@
+.section{
+    background: url('../../../assets/background.jpg');
+    height: 100vh;
+    width: 100vw;
+    
+}
+.login_card{
+    background-color: #ffffff4f;
+    border-radius: 8px;
+    color: white;
+    font-family: cursive;
+    justify-content: center;
+    display: grid;
+    overflow: auto;
+    top: 25%;
+    position: relative;
+    height: fit-content;
+    h3{
+        text-align: center;
+    }
+    input{
+        background: #ffffffa3;
+        border: none;
+        border-radius: 8px;
+        height: 40px;
+        padding: 0px 28px;
+    }
+    input:focus{
+        outline: none !important;
+    }
+    a{
+        color: #2f0767;
+    }
+    button {
+        color: white;
+        background: #6938d2;
+        border: none;
+        border-radius: 8px;
+        height: 40px;
+    }
+    button:disabled{
+        background: grey;
+    }
+    .controls_container{
+        position: relative;
+    }
+    .icon_usrNm{
+        position: absolute;
+        left: 20px;
+        top: 36px;
+        color: #6938d2;
+    }
+    .icon_pass{
+        position: absolute;
+        left: 20px;
+        top: 100px;
+        color: #6938d2;
+    }
+}
