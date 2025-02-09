@@ -1,30 +1,154 @@
 <div class="section">
-
-    <div class="container">
-        <div class="row">
-            <div class="col-12">
-                <header class="blog-header py-3">
-                    <div class="row flex-nowrap justify-content-between align-items-center">
-                        <div class="col-4">
-                            <a class="blog-header-logo" href="#">
-                                <i class="fa-solid fa-cart-shopping"></i>
+    <div class="container-fluid">
+        <div class="row flex-nowrap">
+            <div class="col-auto col-md-2 col-xl-1 px-sm-2 px-0 bg-rayahen">
+                <div class="d-flex flex-column align-items-center align-items-sm-start pt-2 text-white min-vh-100">
+                    <a href="/" class="d-flex align-items-center pb-3 mb-md-0 me-md-auto text-white text-decoration-none">
+                        <span class="fs-5 d-none d-sm-inline">
+                            <img src="assets/rayahenLogo.png" class="logo">
+                        </span>
+                    </a>
+                    <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start" id="menu">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link align-middle px-0">
+                                <i class="fa-solid fa-ticket" ></i><span class="ms-1 d-none d-sm-inline">Tickets</span>
                             </a>
-                        </div>
-                        <div class="col-4 pt-1">
-                            <nav class="nav d-flex justify-content-center">
-                                <a class="p-2 text-light" href="#">Home</a>
-                                <a class="p-2 text-light" href="#">Products</a>
-                                <a class="p-2 text-light" href="#">About us</a>
-                            </nav>
-                        </div>
-
-                        <div class="col-4 d-flex justify-content-end align-items-center">
-                            <a class="btn btn-sm btn-outline-light" href="#" (click)="logout()">Logout</a>
-                        </div>
+                        </li>
+                    </ul>
+                    <hr>
+                    <div class="dropdown pb-4">
+                        <a class="d-flex align-items-center text-white text-decoration-none " (click)="openAddUsrModal()" >
+                            <span class="mx-1" > <i class="fa-solid fa-user-plus pe-2"></i>Add User</span>
+                        </a>
                     </div>
-                </header>
+                </div>
+            </div>
+            <div class="col  main">
+                <div class="row headerOfDash">
+                    <div class="col-8">
+                        <a class="blog-header-logo" href="#">
+                            Dashboard
+                        </a>
+                    </div>
+                    <div class="col-4 d-flex justify-content-end align-items-center">
+                        <a class="admin px-3" > <i class="fa-solid fa-user px-2"></i>Admin</a>
+                        <a class="btn btn-sm btn-outline logoutbtn"  (click)="logout()">Logout</a>
+                    </div>
+                </div>
+                <div class="main-screen mt-3">
+                    <div class="d-flex">
+                        <a class="btn btn-sm btn-outline logoutbtn mx-1" (click)="logout()">All Tickets</a>
+                        <a class="btn btn-sm btn-outline logoutbtn mx-1" (click)="logout()">Active Tickets</a>
+                        <a class="btn btn-sm btn-outline logoutbtn mx-1" (click)="logout()">Unactive Tickets</a>
+                        <a class="btn btn-sm btn-outline logoutbtn mx-1 ms-auto" (click)="logout()"><i class="fa-solid fa-plus"></i></a>
+
+                    </div>
+                        <div class="row my-3">
+                            <div class="col-4">
+                                <div class="card">
+                                    <div class="ribbon ms-auto">New</div> 
+                                    <div class="card-content p-2">
+                                        <div class="d-flex">
+                                            <span class="title">Subject : </span> 
+                                            <span class="des"> Ticket Subject</span>
+                                        </div>
+                                        <div class="d-flex">
+                                            <span class="title">priority : </span> 
+                                            <span class="des"> High</span>
+                                        </div>
+                                        <div class="d-flex">
+                                            <span class="title">Group : </span> 
+                                            <span class="des"> one</span>
+                                            <div class="ms-auto">
+                                                <span class="title">Agent : </span> 
+                                                <span class="des"> IT Rayahen</span>
+                                            </div>
+                                        </div>
+                                        <div class="d-block">
+                                            <div class="title">Description : </div> 
+                                            <div class="des"> ticket description</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <div class="card">
+                                    <div class="ribbon ms-auto">New</div> 
+                                    <div class="card-content p-2">
+                                        <div class="d-flex">
+                                            <span class="title">Subject : </span> 
+                                            <span class="des"> Ticket Subject</span>
+                                        </div>
+                                        <div class="d-flex">
+                                            <span class="title">priority : </span> 
+                                            <span class="des"> High</span>
+                                        </div>
+                                        <div class="d-flex">
+                                            <span class="title">Group : </span> 
+                                            <span class="des"> one</span>
+                                            <div class="ms-auto">
+                                                <span class="title">Agent : </span> 
+                                                <span class="des"> IT Rayahen</span>
+                                            </div>
+                                        </div>
+                                        <div class="d-block">
+                                            <div class="title">Description : </div> 
+                                            <div class="des"> ticket description</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <div class="card">
+                                    <div class="ribbon ms-auto">New</div> 
+                                    <div class="card-content p-2">
+                                        <div class="d-flex">
+                                            <span class="title">Subject : </span> 
+                                            <span class="des"> Ticket Subject</span>
+                                        </div>
+                                        <div class="d-flex">
+                                            <span class="title">priority : </span> 
+                                            <span class="des"> High</span>
+                                        </div>
+                                        <div class="d-flex">
+                                            <span class="title">Group : </span> 
+                                            <span class="des"> one</span>
+                                            <div class="ms-auto">
+                                                <span class="title">Agent : </span> 
+                                                <span class="des"> IT Rayahen</span>
+                                            </div>
+                                        </div>
+                                        <div class="d-block">
+                                            <div class="title">Description : </div> 
+                                            <div class="des"> ticket description</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                </div>
             </div>
         </div>
     </div>
-
 </div>
+
+  <!-- Modal -->
+  <div class="modal fade" id="addUsrModal" tabindex="-1" role="dialog" aria-labelledby="addUsrModalTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          ...
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary">Save changes</button>
+        </div>
+      </div>
+    </div>
+  </div>

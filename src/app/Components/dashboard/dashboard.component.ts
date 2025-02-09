@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-
+declare let $ : any
 @Component({
   selector: 'app-dashboard',
   imports: [],
@@ -14,7 +14,9 @@ export class DashboardComponent {
   }
 
 
-
+  openAddUsrModal(){
+    $('#addUsrModal').modal('show')
+  }
   logout(){
     localStorage.removeItem("token") ;
     this.router.navigate(['/dashboard']);
