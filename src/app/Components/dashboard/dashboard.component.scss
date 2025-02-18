@@ -80,13 +80,45 @@ nav{
     padding-inline: calc(var(--r) + .25em) .5em;
     line-height: 1.8;
     clip-path: polygon(0 0,100% 0,100% 100%,0 100%,var(--r) calc(100% - .25em),0 50%,var(--r) .25em);
-    background:
-     radial-gradient(.2em 50% at right,#000a,#0000) border-box,
-     #B8935E padding-box; /* the color  */
+    
     width: fit-content;
     font-size: 16px;
+  }
+  .ribbonActive{
+    background:
+    radial-gradient(.2em 50% at right,#000a,#0000) border-box,
+    #B8935E padding-box; /* the color  */
+  }
+  .ribbonDeactive{
+    background:
+    radial-gradient(.2em 50% at right,rgba(209, 0, 0, 0.667),#0000) border-box,
+    #9e0000 padding-box; /* the color  */
   }
 
   .title{
     font-weight: 700;
   }
+
+  .high{
+    border-top: 5px solid red;
+  }
+  .medium{
+    border-top: 5px solid orange;
+  }
+  .low{
+    border-top: 5px solid yellow;
+  }
+//   .imgContainer{
+//     position: absolute;
+//     padding: 8px;
+//     background-color: white;
+//     top: 10px;
+//   }
+
+
+.imgBtn{
+    background :  transparent
+}
+.btn.show{
+    border: none;
+}
