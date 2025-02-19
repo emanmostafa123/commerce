@@ -122,3 +122,10 @@ nav{
 .btn.show{
     border: none;
 }
+
+
+.modal-dialog{
+    --bs-modal-width: 55rem;
+    max-width:var(--bs-modal-width) !important ;
+    width: 55em;
+}

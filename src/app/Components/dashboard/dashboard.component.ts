@@ -2,11 +2,12 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { RayahenService } from '../../Services/rayahen.service';
 import { CommonModule } from '@angular/common';
+import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 declare let $ : any
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [CommonModule ],
+  imports: [CommonModule , ReactiveFormsModule],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss'
 })
@@ -14,9 +15,12 @@ export class DashboardComponent {
   tickets : any;
   mainTickets: any
   chosenTckt: any;
+  addTcktForm:any;
+  addusrForm: any;
   constructor(
     public router : Router,
-    public rayahenService : RayahenService
+    public rayahenService : RayahenService,
+    public fb : FormBuilder,
   ) { 
   }
 
@@ -24,6 +28,20 @@ export class DashboardComponent {
     this.rayahenService.getAllTickets().subscribe((res)=>{
       this.mainTickets = res.body
       this.tickets = this.mainTickets
+    })
+    this.addusrForm = this.fb.group({
+      id: ['', [Validators.required]],
+      userName: ['', [Validators.required]],
+      password: ['', [Validators.required]],
+      branch: ['', [Validators.required]],
+      department: ['', [Validators.required]],
+      role: ['', [Validators.required]],
+    })
+    this.addTcktForm = this.fb.group({
+      title: ['', [Validators.required]],
+      description: ['', [Validators.required]],
+      priority: ['', [Validators.required]],
+      isactive: ['', [Validators.required]]
     })
   }
   getTickets(event :  any){
@@ -47,6 +65,23 @@ export class DashboardComponent {
   }
   openAddUsrModal(){
     $('#addUsrModal').modal('show')
+  }
+  addUser(){
+    if(!this.addusrForm.invalid){
+      this.rayahenService.addUser(this.addusrForm.value).subscribe((res)=>{
+
+      })
+    }
+  }
+  openAddTcktModal(){
+  $('#addTcktModal').modal('show')
+  }
+  addTckt(){
+    if(!this.addTcktForm.invalid){
+      this.rayahenService.addTickt(this.addTcktForm.value).subscribe((res)=>{
+
+      })
+    }
   }
   logout(){
     localStorage.removeItem("token") ;
