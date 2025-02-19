@@ -32,4 +32,21 @@ export class RayahenService {
     });
     return this.http.get<any>('http://localhost:5162/api/Ticket/GetTicketById?id=' + req ,{ headers, responseType: 'json', observe: 'response' })
   }
+
+  addUser(req:any){
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      // 'id': req
+    });
+    return this.http.post<any>('http://localhost:5162/api/Auth/register', req, { headers, responseType: 'json', observe: 'response' })
+
+  }
+  addTickt(req:any){
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      // 'id': req
+    });
+    return this.http.post<any>('http://localhost:5162/api/Ticket/AddTicket', req, { headers, responseType: 'json', observe: 'response' })
+
+  }
 }

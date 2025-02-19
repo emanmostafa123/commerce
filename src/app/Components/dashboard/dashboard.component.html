@@ -40,7 +40,7 @@
                         <a class="btn btn-sm btn-outline logoutbtn mx-1" (click)="getTickets('all')">All Tickets</a>
                         <a class="btn btn-sm btn-outline logoutbtn mx-1" (click)="getTickets('active')">Active Tickets</a>
                         <a class="btn btn-sm btn-outline logoutbtn mx-1" (click)="getTickets('deactive')">Unactive Tickets</a>
-                        <a class="btn btn-sm btn-outline logoutbtn mx-1 ms-auto" (click)="logout()"><i class="fa-solid fa-plus"></i></a>
+                        <a class="btn btn-sm btn-outline logoutbtn mx-1 ms-auto" (click)="openAddTcktModal()"><i class="fa-solid fa-plus"></i></a>
 
                     </div>
                         <div class="row my-3">
@@ -78,21 +78,74 @@
 </div>
 
   <!-- Modal -->
-  <div class="modal fade" id="addUsrModal" tabindex="-1" role="dialog" aria-labelledby="addUsrModalTitle" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
+  <div class="modal fade" id="addUsrModal" tabindex="-1" role="dialog" data-bs-backdrop="static" aria-labelledby="addUsrModalTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modalCustom" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
+            <h5 class="modal-title" id="staticBackdropLabel">Add User</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
         <div class="modal-body">
-          ...
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary">Save changes</button>
+            <form [formGroup]="addusrForm">
+                <div class="row">
+                    <div class="col-12 col-md-6 col-lg-6 col-sm-12">
+                        <div class="form-floating mb-3">
+                            <input type="email" class="form-control" name="id" formControlName="id" id="floatingInput">
+                            <label for="floatingInput">Id</label>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-6 col-lg-6 col-sm-12">
+                        <div class="form-floating  mb-3">
+                            <input type="password" class="form-control" name="userName" formControlName="userName"
+                                id="floatingPassword" placeholder="Password">
+                            <label for="floatingPassword">userName</label>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-6 col-lg-6 col-sm-12">
+                        <div class="form-floating  mb-3">
+                            <input type="password" class="form-control" name="password" formControlName="password"
+                                id="floatingPassword" placeholder="Password">
+                            <label for="floatingPassword">Password</label>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-6 col-lg-6 col-sm-12">
+                        <div class="form-floating  mb-3">
+                            <select class="form-select" name="branch" formControlName="branch" id="floatingSelectGrid"
+                                aria-label="Floating label select example">
+                                <option selected>Branch One</option>
+                                <option value="2">Branch Two</option>
+                                <option value="3">Branch Three</option>
+                            </select>
+                            <label for="floatingSelectGrid">Branch</label>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-6 col-lg-6 col-sm-12">
+                        <div class="form-floating  mb-3">
+                            <select class="form-select" name="department" formControlName="department" id="floatingSelectGrid"
+                                aria-label="Floating label select example">
+                                <option selected>Department One</option>
+                                <option value="2">Department Two</option>
+                                <option value="3">Department Three</option>
+                            </select>
+                            <label for="floatingSelectGrid">Department</label>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-6 col-lg-6 col-sm-12">
+                        <div class="form-floating  mb-3">
+                            <select class="form-select" name="role" formControlName="role" id="floatingSelectGrid"
+                                aria-label="Floating label select example">
+                                <option selected>Role One</option>
+                                <option value="2">Role Two</option>
+                                <option value="3">Role Three</option>
+                            </select>
+                            <label for="floatingSelectGrid">Role</label>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <button type="submit" class="btn btn-primary ms-auto" (click)="addUser()">Submit</button>
+                    </div>
+                </div>
+            </form>
         </div>
       </div>
     </div>
@@ -144,6 +197,59 @@
                     </div>
                 </div>
             </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal -->
+  <div class="modal fade" id="addTcktModal" tabindex="-1" role="dialog" data-bs-backdrop="static" aria-labelledby="addUsrModalTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modalCustom" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="staticBackdropLabel">Add Ticket</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+        <div class="modal-body">
+            <form [formGroup]="addTcktForm">
+                <div class="row">
+                    <div class="col-12 col-md-6 col-lg-6 col-sm-12">
+                        <div class="form-floating  mb-3">
+                            <input type="password" class="form-control" name="title" formControlName="title"
+                                id="floatingPassword" placeholder="Password">
+                            <label for="floatingPassword">title</label>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-6 col-lg-6 col-sm-12">
+                        <div class="form-floating  mb-3">
+                            <input type="password" class="form-control" name="description" formControlName="description"
+                                id="floatingPassword" placeholder="Password">
+                            <label for="floatingPassword">description</label>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-6 col-lg-6 col-sm-12">
+                        <div class="form-floating  mb-3">
+                            <select class="form-select" name="priority" formControlName="priority" id="floatingSelectGrid"
+                                aria-label="Floating label select example">
+                                <option selected>priority One</option>
+                                <option value="2">priority Two</option>
+                                <option value="3">priority Three</option>
+                            </select>
+                            <label for="floatingSelectGrid">priority</label>
+                        </div>
+                    </div>
+                    
+                    <div class="col-12 col-md-6 col-lg-6 col-sm-12">
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" name="isactive" formControlName="isactive" type="checkbox" id="flexSwitchCheckChecked" checked>
+                            <label class="form-check-label" for="flexSwitchCheckChecked">Checked switch checkbox input</label>
+                          </div>
+                    </div>
+                    <div class="col-12">
+                        <button type="submit" class="btn btn-primary ms-auto" (click)="addTckt()">Submit</button>
+                    </div>
+                </div>
+            </form>
         </div>
       </div>
     </div>
