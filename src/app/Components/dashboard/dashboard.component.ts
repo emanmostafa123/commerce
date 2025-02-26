@@ -31,6 +31,7 @@ export class DashboardComponent {
     })
     this.addusrForm = this.fb.group({
       id: ['', [Validators.required]],
+      email:['',[Validators.required]],
       userName: ['', [Validators.required]],
       password: ['', [Validators.required]],
       branch: ['', [Validators.required]],
@@ -38,10 +39,11 @@ export class DashboardComponent {
       role: ['', [Validators.required]],
     })
     this.addTcktForm = this.fb.group({
-      title: ['', [Validators.required]],
+      Title: ['', [Validators.required]],
       description: ['', [Validators.required]],
       priority: ['', [Validators.required]],
-      isactive: ['', [Validators.required]]
+      isactive: ['', [Validators.required]],
+      createdByUser :['', [Validators.required]],
     })
   }
   getTickets(event :  any){
@@ -67,8 +69,9 @@ export class DashboardComponent {
     $('#addUsrModal').modal('show')
   }
   addUser(){
+    let token = localStorage.getItem('token')
     if(!this.addusrForm.invalid){
-      this.rayahenService.addUser(this.addusrForm.value).subscribe((res)=>{
+      this.rayahenService.addUser(this.addusrForm.value , token).subscribe((res)=>{
 
       })
     }
@@ -77,11 +80,15 @@ export class DashboardComponent {
   $('#addTcktModal').modal('show')
   }
   addTckt(){
-    if(!this.addTcktForm.invalid){
-      this.rayahenService.addTickt(this.addTcktForm.value).subscribe((res)=>{
-
+    let token = localStorage.getItem('token')
+    this.addTcktForm.value.createdByUser =1;
+    this.addTcktForm.value.isactive = true;
+    debugger
+    // if(!this.addTcktForm.invalid){
+      this.rayahenService.addTickt(this.addTcktForm.value,token).subscribe((res)=>{
+        // this.toastr.success('Hello world!', 'Toastr fun!');
       })
-    }
+    // }
   }
   logout(){
     localStorage.removeItem("token") ;
