@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { RayahenService } from '../../Services/rayahen.service';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+
 declare let $ : any
 @Component({
   selector: 'app-dashboard',
@@ -25,7 +26,8 @@ export class DashboardComponent {
   }
 
   ngOnInit(): void {
-    this.rayahenService.getAllTickets().subscribe((res)=>{
+    let token = localStorage.getItem('token')
+    this.rayahenService.getAllTickets(token).subscribe((res)=>{
       this.mainTickets = res.body
       this.tickets = this.mainTickets
     })
@@ -56,7 +58,8 @@ export class DashboardComponent {
     }
   }
   getTicketbyId(event:any){
-    this.rayahenService.getTicketById(event).subscribe((res)=>{
+    let token = localStorage.getItem('token')
+    this.rayahenService.getTicketById(event , token).subscribe((res)=>{
       this.chosenTckt = res.body
       $('#displayTcktModal').modal('show')
     })
