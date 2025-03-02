@@ -3,7 +3,10 @@ import { Router } from '@angular/router';
 import { RayahenService } from '../../Services/rayahen.service';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-declare let $ : any
+import { AuthService } from '../../shared/auth.service';
+import $ from 'jquery';
+// declare let $ : any
+declare var bootstrap: any;
 @Component({
   selector: 'app-dashboard',
   standalone: true,
@@ -17,20 +20,32 @@ export class DashboardComponent {
   chosenTckt: any;
   addTcktForm:any;
   addusrForm: any;
+  shownavElmnt: any;
+  userData: any;
+  addIssueForm: any;
   constructor(
     public router : Router,
     public rayahenService : RayahenService,
     public fb : FormBuilder,
+    public authService : AuthService
   ) { 
+    this.userData = this.authService.getDecodedToken();
+    this.userData = this.transformUserData(this.userData);
   }
 
   ngOnInit(): void {
-    this.rayahenService.getAllTickets().subscribe((res)=>{
+    $(document).ready(() => {
+      console.log('jQuery Loaded:', $);
+    });
+    this.shownavElmnt = 'tickets'
+    let token = localStorage.getItem('token')
+    this.rayahenService.getAllTickets(token).subscribe((res)=>{
       this.mainTickets = res.body
       this.tickets = this.mainTickets
     })
     this.addusrForm = this.fb.group({
       id: ['', [Validators.required]],
+      email:['',[Validators.required]],
       userName: ['', [Validators.required]],
       password: ['', [Validators.required]],
       branch: ['', [Validators.required]],
@@ -38,11 +53,32 @@ export class DashboardComponent {
       role: ['', [Validators.required]],
     })
     this.addTcktForm = this.fb.group({
-      title: ['', [Validators.required]],
+      Title: ['', [Validators.required]],
       description: ['', [Validators.required]],
       priority: ['', [Validators.required]],
-      isactive: ['', [Validators.required]]
+      isactive: ['', [Validators.required]],
+      createdByUser :['', [Validators.required]],
     })
+    this.addIssueForm = this.fb.group({
+      addIssue : ['']
+    })
+  }
+  transformUserData(user: any): any {
+    if (user["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"]) {
+      user.role = user["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"];
+      delete user["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"];
+    }
+    return user;
+  }
+  
+  // Apply the transformation
+ 
+  
+  openNavElmnt(event:any, openIssueodal?:boolean){
+    this.shownavElmnt = event
+    if(openIssueodal){
+      this.openModal('addIssueModal')
+    }
   }
   getTickets(event :  any){
     if(event == 'all'){
@@ -54,37 +90,42 @@ export class DashboardComponent {
     }
   }
   getTicketbyId(event:any){
-    this.rayahenService.getTicketById(event).subscribe((res)=>{
+    let token = localStorage.getItem('token')
+    this.rayahenService.getTicketById(event , token).subscribe((res)=>{
       this.chosenTckt = res.body
-      $('#displayTcktModal').modal('show')
+      this.openModal('displayTcktModal')
     })
   }
   openImg(imageUrl:any){
     window.open(imageUrl, '_blank');
 
   }
-  openAddUsrModal(){
-    $('#addUsrModal').modal('show')
-  }
   addUser(){
+    let token = localStorage.getItem('token')
     if(!this.addusrForm.invalid){
-      this.rayahenService.addUser(this.addusrForm.value).subscribe((res)=>{
+      this.rayahenService.addUser(this.addusrForm.value , token).subscribe((res)=>{
 
       })
     }
   }
-  openAddTcktModal(){
-  $('#addTcktModal').modal('show')
+  openModal(event: any){
+      const modalElement = document.getElementById(event);
+      const modal = new bootstrap.Modal(modalElement);
+      modal.show();
   }
   addTckt(){
-    if(!this.addTcktForm.invalid){
-      this.rayahenService.addTickt(this.addTcktForm.value).subscribe((res)=>{
-
+    let token = localStorage.getItem('token')
+    this.addTcktForm.value.createdByUser =1;
+    this.addTcktForm.value.isactive = true;
+    debugger
+    // if(!this.addTcktForm.invalid){
+      this.rayahenService.addTickt(this.addTcktForm.value,token).subscribe((res)=>{
+        // this.toastr.success('Hello world!', 'Toastr fun!');
       })
-    }
+    // }
   }
   logout(){
     localStorage.removeItem("token") ;
-    this.router.navigate(['/dashboard']);
+    this.router.navigate(['/login']);
   }
 }
