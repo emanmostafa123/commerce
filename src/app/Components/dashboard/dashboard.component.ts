@@ -3,8 +3,10 @@ import { Router } from '@angular/router';
 import { RayahenService } from '../../Services/rayahen.service';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-
-declare let $ : any
+import { AuthService } from '../../shared/auth.service';
+import $ from 'jquery';
+// declare let $ : any
+declare var bootstrap: any;
 @Component({
   selector: 'app-dashboard',
   standalone: true,
@@ -18,14 +20,24 @@ export class DashboardComponent {
   chosenTckt: any;
   addTcktForm:any;
   addusrForm: any;
+  shownavElmnt: any;
+  userData: any;
+  addIssueForm: any;
   constructor(
     public router : Router,
     public rayahenService : RayahenService,
     public fb : FormBuilder,
+    public authService : AuthService
   ) { 
+    this.userData = this.authService.getDecodedToken();
+    this.userData = this.transformUserData(this.userData);
   }
 
   ngOnInit(): void {
+    $(document).ready(() => {
+      console.log('jQuery Loaded:', $);
+    });
+    this.shownavElmnt = 'tickets'
     let token = localStorage.getItem('token')
     this.rayahenService.getAllTickets(token).subscribe((res)=>{
       this.mainTickets = res.body
@@ -47,6 +59,26 @@ export class DashboardComponent {
       isactive: ['', [Validators.required]],
       createdByUser :['', [Validators.required]],
     })
+    this.addIssueForm = this.fb.group({
+      addIssue : ['']
+    })
+  }
+  transformUserData(user: any): any {
+    if (user["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"]) {
+      user.role = user["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"];
+      delete user["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"];
+    }
+    return user;
+  }
+  
+  // Apply the transformation
+ 
+  
+  openNavElmnt(event:any, openIssueodal?:boolean){
+    this.shownavElmnt = event
+    if(openIssueodal){
+      this.openModal('addIssueModal')
+    }
   }
   getTickets(event :  any){
     if(event == 'all'){
@@ -61,15 +93,12 @@ export class DashboardComponent {
     let token = localStorage.getItem('token')
     this.rayahenService.getTicketById(event , token).subscribe((res)=>{
       this.chosenTckt = res.body
-      $('#displayTcktModal').modal('show')
+      this.openModal('displayTcktModal')
     })
   }
   openImg(imageUrl:any){
     window.open(imageUrl, '_blank');
 
-  }
-  openAddUsrModal(){
-    $('#addUsrModal').modal('show')
   }
   addUser(){
     let token = localStorage.getItem('token')
@@ -79,8 +108,10 @@ export class DashboardComponent {
       })
     }
   }
-  openAddTcktModal(){
-  $('#addTcktModal').modal('show')
+  openModal(event: any){
+      const modalElement = document.getElementById(event);
+      const modal = new bootstrap.Modal(modalElement);
+      modal.show();
   }
   addTckt(){
     let token = localStorage.getItem('token')
@@ -95,6 +126,6 @@ export class DashboardComponent {
   }
   logout(){
     localStorage.removeItem("token") ;
-    this.router.navigate(['/dashboard']);
+    this.router.navigate(['/login']);
   }
 }

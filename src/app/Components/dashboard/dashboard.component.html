@@ -9,15 +9,25 @@
                         </span>
                     </a>
                     <ul class="nav w-100 nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start" id="menu">
-                        <li class="nav-item w-100 align-middle active ">
+                        <li class="nav-item w-100 align-middle "
+                            [ngClass]="shownavElmnt == 'tickets' ? 'active':''"
+                        (click)="openNavElmnt('tickets')">
                             <a class="nav-link p-0">
                                 <i class="fa-solid fa-ticket pe-2" ></i><span class="ms-1 d-none d-sm-inline">Tickets</span>
                             </a>
                         </li>
+                        @if(userData.role =='Admin'){
+                            <li class="nav-item w-100 align-middle"  (click)="openNavElmnt('addIssue',true)"
+                            [ngClass]="shownavElmnt == 'addIssue' ? 'active':''">
+                                <a class="nav-link p-0">
+                                    <i class="fa-solid fa-ticket pe-2" ></i><span class="ms-1 d-none d-sm-inline">Add Issue</span>
+                                </a>
+                            </li>
+                        }
                     </ul>
                     <hr>
                     <div class="dropdown pb-4">
-                        <a class="d-flex align-items-center text-white text-decoration-none " (click)="openAddUsrModal()" >
+                        <a class="d-flex align-items-center addusrBtn text-white text-decoration-none " (click)="openModal('addUsrModal')" >
                             <span class="mx-1" > <i class="fa-solid fa-user-plus pe-2"></i>Add User</span>
                         </a>
                     </div>
@@ -31,55 +41,63 @@
                         </a>
                     </div>
                     <div class="col-4 d-flex justify-content-end align-items-center">
-                        <div class="dropdown">
-                            <a class="admin px-3 dropdown-toggle" id="dropdownMenuLink" 
-                                data-bs-toggle="dropdown" aria-expanded="false" > 
-                                <i class="fa-solid fa-user px-2"></i>Admin
-                            </a>
-                            <ul class="dropdown-menu p-4" aria-labelledby="dropdownMenuLink">
-                                <a class="btn btn-sm btn-outline logoutbtn"  (click)="logout()">Logout</a>
-                            </ul>
-                          </div>
-                        
-                    </div>
-                </div>
-                <div class="main-screen mt-3">
-                    <div class="d-flex">
-                        <a class="btn btn-sm btn-outline logoutbtn mx-1" (click)="getTickets('all')">All Tickets</a>
-                        <a class="btn btn-sm btn-outline logoutbtn mx-1" (click)="getTickets('active')">Active Tickets</a>
-                        <a class="btn btn-sm btn-outline logoutbtn mx-1" (click)="getTickets('deactive')">Unactive Tickets</a>
-                        <a class="btn btn-sm btn-outline logoutbtn mx-1 ms-auto" (click)="openAddTcktModal()"><i class="fa-solid fa-plus"></i></a>
+                          <a class="btn btn-sm btn-outline logoutbtn me-2" >
+                            <i class="fa-solid fa-user px-2"></i>Admin
+                          </a>
+                          <a class="btn btn-sm btn-outline logoutbtn"  
+                          (click)="logout()">Logout</a>
 
                     </div>
-                        <div class="row my-3">
-                            @for(ticket of tickets; track ticket){
-                                <div class="col-4">
-                                    <div class="card cardDash m-2" (click)="getTicketbyId(ticket?.id)"
-                                    [ngClass]="ticket.priority == 1 ? 'high' : (ticket.priority == 2 ? 'medium' : 'low')">
-                                        <span class="d-flex">
-                                            @if(ticket.isActive){
-                                                <div class="ribbon ms-auto ribbonActive">Active</div> 
-                                            }
-                                            @if(!ticket.isActive){
-                                                <div class="ribbon ms-auto ribbonDeactive">Deactive</div> 
-                                            }
-                                        </span>
-                                        <div class="card-content p-2">
-                                            <div class="d-flex">
-                                                <span class="title">Subject : </span> 
-                                                <span class="des">  {{ticket.title}}</span>
-                                            </div>
-                                            <div class="d-block">
-                                                <div class="title">Description : </div> 
-                                                <div class="des">{{ticket.description}}</div>
+                </div>
+                    <div class="main-screen mt-3" >
+                        <div class="d-flex">
+                            <a class="btn btn-sm btn-outline logoutbtn mx-1" (click)="getTickets('all')">All Tickets</a>
+                            <a class="btn btn-sm btn-outline logoutbtn mx-1" (click)="getTickets('active')">Active Tickets</a>
+                            <a class="btn btn-sm btn-outline logoutbtn mx-1" (click)="getTickets('deactive')">Unactive Tickets</a>
+                            <a class="btn btn-sm btn-outline logoutbtn mx-1 ms-auto" (click)="openModal('addTcktModal')"><i class="fa-solid fa-plus"></i></a>
+    
+                        </div>
+                            <div class="row my-3">
+                                @for(ticket of tickets; track ticket){
+                                    <div class="col-4">
+                                        <div class="card cardDash m-2" (click)="getTicketbyId(ticket?.id)"
+                                        [ngClass]="ticket.priority == 1 ? 'high' : (ticket.priority == 2 ? 'medium' : 'low')">
+                                            <span class="d-flex">
+                                                @if(ticket.isActive){
+                                                    <div class="ribbon ms-auto ribbonActive">Active</div> 
+                                                }
+                                                @if(!ticket.isActive){
+                                                    <div class="ribbon ms-auto ribbonDeactive">Deactive</div> 
+                                                }
+                                            </span>
+                                            <div class="card-content p-2">
+                                                <div class="d-flex">
+                                                    <span class="title">Subject : </span> 
+                                                    <span class="des">  {{ticket.title}}</span>
+                                                </div>
+                                                <div class="d-block">
+                                                    <div class="title">Description : </div> 
+                                                    <div class="des">{{ticket.description}}</div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                            }
-                            
+                                }
+                                
+                            </div>
+                    </div>
+                
+                <!-- @if(shownavElmnt == 'addIssue'){
+                <div class="main-screen mt-3">
+                    <div class="col-12 col-md-6 col-lg-6 col-sm-12">
+                        <div class="form-floating  mb-3">
+                            <input type="text" class="form-control" name="description" formControlName="description"
+                                id="floatingPassword" placeholder="Password">
+                            <label for="floatingPassword">Add Issue</label>
                         </div>
+                    </div>
                 </div>
+            } -->
             </div>
         </div>
     </div>
@@ -270,3 +288,31 @@
       </div>
     </div>
   </div>
+    <!-- Modal issue -->
+    <div class="modal fade" id="addIssueModal" tabindex="-1" role="dialog" data-bs-backdrop="static" aria-labelledby="addUsrModalTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modalCustom" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">Add Issue</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+            <div class="modal-body">
+                <form [formGroup]="addIssueForm">
+                    <div class="row">
+                        
+                        <div class="col-12">
+                            <div class="form-floating  mb-3">
+                                <input type="text" class="form-control" name="addIssue" formControlName="addIssue"
+                                    id="floatingPassword" placeholder="Password">
+                                <label for="floatingPassword">description</label>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <button type="submit" class="btn btn-primary ms-auto" (click)="addTckt()">Submit</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+          </div>
+        </div>
+      </div>
