@@ -30,19 +30,74 @@ export class DashboardComponent {
     public authService : AuthService
   ) { 
     this.userData = this.authService.getDecodedToken();
+    console.log(this.userData)
     this.userData = this.transformUserData(this.userData);
   }
 
   ngOnInit(): void {
-    $(document).ready(() => {
-      console.log('jQuery Loaded:', $);
-    });
+    
     this.shownavElmnt = 'tickets'
     let token = localStorage.getItem('token')
-    this.rayahenService.getAllTickets(token).subscribe((res)=>{
-      this.mainTickets = res.body
-      this.tickets = this.mainTickets
-    })
+    // this.rayahenService.getAllTickets(token).subscribe((res)=>{
+    //   this.mainTickets = res.body
+    //   this.tickets = this.mainTickets
+    // })
+    
+    interface Ticket {
+      id: number;
+      subject: string;
+      priority:number;
+      description: string;
+      imgUrl: string;
+      isActive: boolean;
+    }
+    
+    const tickets: Ticket[] = [
+      {
+        id: 1,
+        subject: "Login Issue",
+        priority: 1,
+        description: "User unable to log in with correct credentials.",
+        imgUrl: "https://example.com/images/login-issue.png",
+        isActive: true,
+      },
+      {
+        id: 2,
+        subject: "Page Not Loading",
+        priority: 2,
+        description: "The dashboard page is taking too long to load.",
+        imgUrl: "https://example.com/images/page-load.png",
+        isActive: false,
+      },
+      {
+        id: 3,
+        subject: "Feature Request: Dark Mode",
+        priority: 3,
+        description: "User requested a dark mode feature for better accessibility.",
+        imgUrl: "https://example.com/images/dark-mode.png",
+        isActive: true,
+      },
+      {
+        id: 4,
+        subject: "Payment Gateway Error",
+        priority: 1,
+        description: "Some users report failed transactions while making payments.",
+        imgUrl: "https://example.com/images/payment-error.png",
+        isActive: true,
+      },
+      {
+        id: 5,
+        subject: "Email Notifications Not Sent",
+        priority: 2,
+        description: "Users are not receiving email confirmations for orders.",
+        imgUrl: "https://example.com/images/email-issue.png",
+        isActive: false,
+      }
+    ];
+    this.mainTickets= tickets
+    
+    this.tickets = this.mainTickets
+    
     this.addusrForm = this.fb.group({
       id: ['', [Validators.required]],
       email:['',[Validators.required]],

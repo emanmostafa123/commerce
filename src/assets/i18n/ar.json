@@ -1,0 +1,45 @@
+{
+    "tickets": {
+        "mainLabels": {
+            "tckts": "التذاكر",
+            "addissue": "إضافة مشكلة",
+            "adduser": "إضافة مستخدم",
+            "dashboard": "لوحة التحكم",
+            "alltckts": "كل التذاكر",
+            "activetckts": "التذاكر النشطة",
+            "deactivetckts": "التذاكر غير النشطة",
+            "addtckt": "إضافة تذكرة",
+            "submit":"إضافة"
+        },
+        "tcktsCrd": {
+            "subject": "الموضوع",
+            "description": "الوصف",
+            "active": "نشط",
+            "deactive": "غير نشط",
+            "tcktTitle": "العنوان",
+            "tcktDes": "الوصف",
+            "tcktPrty": "الأولوية"
+        },
+        "issueCrd": {
+            "issueNm": "اسم المشكلة"
+        },
+        "usrCard": {
+            "id": "معرّف المستخدم",
+            "usrNm": "اسم المستخدم",
+            "email": "البريد الإلكتروني",
+            "password": "كلمة المرور",
+            "branch": "الفرع",
+            "role": "الدور",
+            "department": "القسم",
+            "issue":"المشكلة"
+        }
+    },
+    "log": {
+        "login": "تسجيل الدخول",
+        "logout": "تسجيل الخروج",
+        "usrNm": "اسم المستخدم",
+        "password": "كلمة المرور",
+        "wlcmBck": "مرحبًا بعودتك",
+        "forgetpsswrd": "نسيت كلمة المرور..؟"
+    }
+}
