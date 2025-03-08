@@ -1,6 +1,8 @@
 .section {
     position: relative;
     background-size: cover;
+    font-size: 14px;
+
 }
 
 .logo {
@@ -86,10 +88,9 @@ nav {
 .ribbon {
     --r: .8em;
     border-block: .5em solid #0000;
-    padding-inline: calc(var(--r) + .25em) .5em;
+    padding: .1rem 1rem ;
     line-height: 1.8;
     clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%, var(--r) calc(100% - .25em), 0 50%, var(--r) .25em);
-
     width: fit-content;
     font-size: 16px;
 }
@@ -131,7 +132,7 @@ nav {
 //     top: 10px;
 //   }
 .cardDash {
-    height: 10rem;
+    height: 11rem;
     overflow: auto;
 }
 
@@ -177,3 +178,44 @@ nav {
     color: #B8935E;
     cursor: pointer;
 }
+
+.btn.btn-primary{
+    background-color: #B8935E !important;
+    border: 1px solid #B8935E;
+}
+.modal-title{
+    font-size: 16px !important;
+    color: white;
+}
+.form-floating > label{
+    font-size: 14px !important;
+}
+
+.modal-header{
+    background-color: #B8935E;
+    padding: .5rem;
+}
+.lngDrp .btn {
+    font-size: 13px !important;
+    background: transparent !important;
+    color: brown !important;
+    border: none !important;
+}
+
+.cursor_pointer{
+    cursor: pointer;
+}
+
+.lang{
+    .dropdown-item.active, .dropdown-item:active{
+        background-color: transparent !important;
+    }
+    .dropdown-item:hover{
+        background-color: #B8935E !important;
+        color: white!important;
+    }
+}
+// .sideMenu{
+//     // background: url('../../../assets/login.png');
+//     // background-size: contain;
+// }

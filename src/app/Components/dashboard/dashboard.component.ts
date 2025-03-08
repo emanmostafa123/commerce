@@ -5,12 +5,13 @@ import { CommonModule } from '@angular/common';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AuthService } from '../../shared/auth.service';
 import $ from 'jquery';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 // declare let $ : any
 declare var bootstrap: any;
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [CommonModule , ReactiveFormsModule],
+  imports: [CommonModule , ReactiveFormsModule,TranslateModule],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss'
 })
@@ -23,26 +24,93 @@ export class DashboardComponent {
   shownavElmnt: any;
   userData: any;
   addIssueForm: any;
+  lang: string | undefined;
+  dirVal: string;
   constructor(
     public router : Router,
     public rayahenService : RayahenService,
     public fb : FormBuilder,
-    public authService : AuthService
-  ) { 
+    public authService : AuthService,
+    private translate: TranslateService) {
+
+    const defaultLang = localStorage.getItem('lang') || 'en';
+    this.lang = defaultLang
+    if(this.lang == 'ar'){
+      this.dirVal = 'rtl'
+    }else{
+      this.dirVal = 'ltr'
+    }
+    this.translate.setDefaultLang(defaultLang);
+    this.translate.use(defaultLang);
     this.userData = this.authService.getDecodedToken();
+    console.log(this.userData)
     this.userData = this.transformUserData(this.userData);
   }
 
   ngOnInit(): void {
-    $(document).ready(() => {
-      console.log('jQuery Loaded:', $);
-    });
+    
     this.shownavElmnt = 'tickets'
     let token = localStorage.getItem('token')
-    this.rayahenService.getAllTickets(token).subscribe((res)=>{
-      this.mainTickets = res.body
-      this.tickets = this.mainTickets
-    })
+    // this.rayahenService.getAllTickets(token).subscribe((res)=>{
+    //   this.mainTickets = res.body
+    //   this.tickets = this.mainTickets
+    // })
+    
+    interface Ticket {
+      id: number;
+      subject: string;
+      priority:number;
+      description: string;
+      imgUrl: string;
+      isActive: boolean;
+    }
+    
+    const tickets: Ticket[] = [
+      {
+        id: 1,
+        subject: "Login Issue",
+        priority: 1,
+        description: "User unable to log in with correct credentials.",
+        imgUrl: "https://example.com/images/login-issue.png",
+        isActive: true,
+      },
+      {
+        id: 2,
+        subject: "Page Not Loading",
+        priority: 2,
+        description: "The dashboard page is taking too long to load.",
+        imgUrl: "https://example.com/images/page-load.png",
+        isActive: false,
+      },
+      {
+        id: 3,
+        subject: "Feature Request: Dark Mode",
+        priority: 3,
+        description: "User requested a dark mode feature for better accessibility.",
+        imgUrl: "https://example.com/images/dark-mode.png",
+        isActive: true,
+      },
+      {
+        id: 4,
+        subject: "Payment Gateway Error",
+        priority: 1,
+        description: "Some users report failed transactions while making payments.",
+        imgUrl: "https://example.com/images/payment-error.png",
+        isActive: true,
+      },
+      {
+        id: 5,
+        subject: "Email Notifications Not Sent",
+        priority: 2,
+        description: "Users are not receiving email confirmations for orders.",
+        imgUrl: "https://example.com/images/email-issue.png",
+        isActive: false,
+      }
+    ];
+    this.mainTickets= tickets
+    
+    this.tickets = this.mainTickets
+    
     this.addusrForm = this.fb.group({
       id: ['', [Validators.required]],
       email:['',[Validators.required]],
@@ -71,6 +139,19 @@ export class DashboardComponent {
     return user;
   }
   
+
+  // language 
+  switchLanguage(lang: string) {
+    this.lang = lang
+    if(lang == 'ar'){
+      this.dirVal = 'rtl'
+    }else{
+      this.dirVal = 'ltr'
+    }
+    this.translate.use(lang);
+    localStorage.setItem('lang', lang);
+  }
+  //
   // Apply the transformation
  
   
@@ -112,6 +193,9 @@ export class DashboardComponent {
       const modalElement = document.getElementById(event);
       const modal = new bootstrap.Modal(modalElement);
       modal.show();
+      if(event == 'addUsrModal'){
+        this.openNavElmnt(event)
+      }
   }
   addTckt(){
     let token = localStorage.getItem('token')

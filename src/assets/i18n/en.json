@@ -1,0 +1,52 @@
+{
+    "tickets":{
+        "mainLabels":{
+            "tckts": "tickets",
+            "addissue":"Add Issue",
+            "adduser":"Add User",
+            "dashboard":"Dashboard",
+            "alltckts":"All Tickets",
+            "activetckts": "Active Tickets",
+            "deactivetckts": "Deactive Tickets",
+            "addtckt":"Add Ticket",
+            "submit":"submit"
+        },
+        "tcktsCrd":{
+            "subject":"Subject",
+            "description":"Description",
+            "active":"Active",
+            "deactive":"Deactive",
+            "tcktTitle":"Title",
+            "tcktDes":"Description",
+            "tcktPrty":"priority",
+            "crtOn":"Created On",
+            "high":"High",
+            "medium":"Medium",
+            "low":"Low"
+        },
+        "issueCrd":{
+            "issueNm":"Issue Name"
+        },
+        "usrCard":{
+            "id":"User ID",
+            "usrNm": "User Name",
+            "email":"Email",
+            "password":"Password",
+            "branch": "Branch",
+            "role":"Role",
+            "department":"Department",
+            "issue":"Issue",
+            "admin":"Admin",
+            "usr":"User"
+        }
+
+    },
+    "log":{
+        "login":"Login",
+        "logout":"Logout",
+        "usrNm":"User Name",
+        "password":"Password",
+        "wlcmBck":"Welcome Back",
+        "forgetpsswrd":"Forget Password..?"
+    }
+}
