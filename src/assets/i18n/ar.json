@@ -18,7 +18,11 @@
             "deactive": "غير نشط",
             "tcktTitle": "العنوان",
             "tcktDes": "الوصف",
-            "tcktPrty": "الأولوية"
+            "tcktPrty": "الأولوية",
+            "crtOn":"تاريخ الانشاء",
+            "high":"عالي",
+            "medium":"متوسط",
+            "low":"منخفض"
         },
         "issueCrd": {
             "issueNm": "اسم المشكلة"
@@ -31,7 +35,9 @@
             "branch": "الفرع",
             "role": "الدور",
             "department": "القسم",
-            "issue":"المشكلة"
+            "issue":"المشكلة",
+            "admin":"مسئول",
+            "usr":"مستخدم"
         }
     },
     "log": {

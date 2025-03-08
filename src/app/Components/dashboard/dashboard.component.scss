@@ -88,10 +88,9 @@ nav {
 .ribbon {
     --r: .8em;
     border-block: .5em solid #0000;
-    padding-inline: calc(var(--r) + .25em) .5em;
+    padding: .1rem 1rem ;
     line-height: 1.8;
     clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%, var(--r) calc(100% - .25em), 0 50%, var(--r) .25em);
-
     width: fit-content;
     font-size: 16px;
 }
@@ -201,4 +200,22 @@ nav {
     background: transparent !important;
     color: brown !important;
     border: none !important;
+}
+
+.cursor_pointer{
+    cursor: pointer;
+}
+
+.lang{
+    .dropdown-item.active, .dropdown-item:active{
+        background-color: transparent !important;
+    }
+    .dropdown-item:hover{
+        background-color: #B8935E !important;
+        color: white!important;
+    }
+}
+.sideMenu{
+    // background: url('../../../assets/login.png');
+    // background-size: contain;
 }

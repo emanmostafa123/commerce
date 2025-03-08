@@ -5,12 +5,13 @@ import { CommonModule } from '@angular/common';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AuthService } from '../../shared/auth.service';
 import $ from 'jquery';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 // declare let $ : any
 declare var bootstrap: any;
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [CommonModule , ReactiveFormsModule],
+  imports: [CommonModule , ReactiveFormsModule,TranslateModule],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss'
 })
@@ -23,12 +24,24 @@ export class DashboardComponent {
   shownavElmnt: any;
   userData: any;
   addIssueForm: any;
+  lang: string | undefined;
+  dirVal: string;
   constructor(
     public router : Router,
     public rayahenService : RayahenService,
     public fb : FormBuilder,
-    public authService : AuthService
-  ) { 
+    public authService : AuthService,
+    private translate: TranslateService) {
+
+    const defaultLang = localStorage.getItem('lang') || 'en';
+    this.lang = defaultLang
+    if(this.lang == 'ar'){
+      this.dirVal = 'rtl'
+    }else{
+      this.dirVal = 'ltr'
+    }
+    this.translate.setDefaultLang(defaultLang);
+    this.translate.use(defaultLang);
     this.userData = this.authService.getDecodedToken();
     console.log(this.userData)
     this.userData = this.transformUserData(this.userData);
@@ -126,6 +139,19 @@ export class DashboardComponent {
     return user;
   }
   
+
+  // language 
+  switchLanguage(lang: string) {
+    this.lang = lang
+    if(lang == 'ar'){
+      this.dirVal = 'rtl'
+    }else{
+      this.dirVal = 'ltr'
+    }
+    this.translate.use(lang);
+    localStorage.setItem('lang', lang);
+  }
+  //
   // Apply the transformation
  
   
@@ -167,6 +193,9 @@ export class DashboardComponent {
       const modalElement = document.getElementById(event);
       const modal = new bootstrap.Modal(modalElement);
       modal.show();
+      if(event == 'addUsrModal'){
+        this.openNavElmnt(event)
+      }
   }
   addTckt(){
     let token = localStorage.getItem('token')

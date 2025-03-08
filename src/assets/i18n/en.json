@@ -18,7 +18,11 @@
             "deactive":"Deactive",
             "tcktTitle":"Title",
             "tcktDes":"Description",
-            "tcktPrty":"priority"
+            "tcktPrty":"priority",
+            "crtOn":"Created On",
+            "high":"High",
+            "medium":"Medium",
+            "low":"Low"
         },
         "issueCrd":{
             "issueNm":"Issue Name"
@@ -31,7 +35,9 @@
             "branch": "Branch",
             "role":"Role",
             "department":"Department",
-            "issue":"Issue"
+            "issue":"Issue",
+            "admin":"Admin",
+            "usr":"User"
         }
 
     },
