@@ -1,4 +1,10 @@
 {
+    "main":{
+        "nav":{
+            "brand":"رياحين",
+            "home":"الرئيسية"
+        }
+    },
     "tickets": {
         "mainLabels": {
             "tckts": "التذاكر",

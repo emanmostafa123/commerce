@@ -16,14 +16,13 @@
 }
 
 .logoutbtn {
-    color: #3C2E21;
-    border: 1px solid #3C2E21;
+    color: white;
+    border: 1px solid white;
 
     &:hover,
     &:active {
         color: white;
         border: 1px solid white;
-        background-color: #3C2E21;
     }
 }
 
@@ -31,26 +30,23 @@
     background-color: #3C2E21;
 }
 
-.section::after {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    // background-color: #3c2e2127;
-    z-index: 1;
-}
 
+.navbar {
+    z-index: 88;
+}
+.navbar-brand img{
+    width: 120px;
+    filter: brightness(5);
+}
 .headerOfDash {
     padding: 10px;
     background-color: white;
 }
 
-.section>* {
-    position: relative;
-    z-index: 2;
-}
+// .section>* {
+//     position: relative;
+//     z-index: 2;
+// }
 
 a {
     text-decoration: none;
@@ -67,7 +63,7 @@ a {
 }
 
 .main-screen {
-    height: 90vh;
+    min-height: 90vh;
     background: white;
     border-radius: 4px;
     padding: 8px;
@@ -98,7 +94,7 @@ nav {
 .ribbonActive {
     background:
         radial-gradient(.2em 50% at right, #000a, #0000) border-box,
-        #B8935E padding-box;
+        #805e1f padding-box;
     /* the color  */
 }
 
@@ -156,32 +152,31 @@ nav {
     padding: 8px 10px !important;
     margin-bottom: 2px;
     align-items: center;
-    border-radius: 7px;
     cursor: pointer;
     display: flex;
     align-self: center;
 
     .nav-link {
-        color: #B8935E;
+        color: white;
     }
 
 }
 
 .nav-item.active {
-    background-color: #B8935E;
+    border-bottom: 3px solid white;
 
     .nav-link {
         color: white;
     }
 }
 .addusrBtn span{
-    color: #B8935E;
+    color: #805e1f;
     cursor: pointer;
 }
 
 .btn.btn-primary{
-    background-color: #B8935E !important;
-    border: 1px solid #B8935E;
+    background-color: #805e1f !important;
+    border: 1px solid #805e1f;
 }
 .modal-title{
     font-size: 16px !important;
@@ -192,13 +187,13 @@ nav {
 }
 
 .modal-header{
-    background-color: #B8935E;
+    background-color: #805e1f;
     padding: .5rem;
 }
 .lngDrp .btn {
     font-size: 13px !important;
     background: transparent !important;
-    color: brown !important;
+    color: white !important;
     border: none !important;
 }
 
@@ -211,7 +206,7 @@ nav {
         background-color: transparent !important;
     }
     .dropdown-item:hover{
-        background-color: #B8935E !important;
+        background-color: #805e1f !important;
         color: white!important;
     }
 }
@@ -219,3 +214,15 @@ nav {
 //     // background: url('../../../assets/login.png');
 //     // background-size: contain;
 // }
+.bg-rayahen{
+    background-color: #805e1f;
+}
+.tcktsBtn{
+    color: #805e1f;
+    border: 1px solid #805e1f;
+}
+.tcktsBtn.active{
+    color: #ffffff;
+    border: 1px solid #805e1f;
+    background-color: #805e1f;
+}

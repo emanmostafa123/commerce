@@ -6,12 +6,13 @@ import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AuthService } from '../../shared/auth.service';
 import $ from 'jquery';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { ChartsComponent } from '../charts/charts.component';
 // declare let $ : any
 declare var bootstrap: any;
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [CommonModule , ReactiveFormsModule,TranslateModule],
+  imports: [CommonModule , ReactiveFormsModule,TranslateModule , ChartsComponent],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss'
 })
@@ -26,6 +27,9 @@ export class DashboardComponent {
   addIssueForm: any;
   lang: string | undefined;
   dirVal: string;
+  getTckts: any;
+  showHome: any;
+  showTckts: any;
   constructor(
     public router : Router,
     public rayahenService : RayahenService,
@@ -43,19 +47,18 @@ export class DashboardComponent {
     this.translate.setDefaultLang(defaultLang);
     this.translate.use(defaultLang);
     this.userData = this.authService.getDecodedToken();
-    console.log(this.userData)
     this.userData = this.transformUserData(this.userData);
   }
 
   ngOnInit(): void {
-    
+    this.getTckts = 'all'
     this.shownavElmnt = 'tickets'
     let token = localStorage.getItem('token')
     // this.rayahenService.getAllTickets(token).subscribe((res)=>{
     //   this.mainTickets = res.body
     //   this.tickets = this.mainTickets
     // })
-    
+    this.openNavElmnt('home')
     interface Ticket {
       id: number;
       subject: string;
@@ -157,11 +160,21 @@ export class DashboardComponent {
   
   openNavElmnt(event:any, openIssueodal?:boolean){
     this.shownavElmnt = event
+    if(event == 'home'){
+      this.showHome = true
+      this.showTckts = false
+    } 
+    if(event == 'tickets'){
+      this.showHome = false
+      this.showTckts = true
+    }
+
     if(openIssueodal){
       this.openModal('addIssueModal')
     }
   }
   getTickets(event :  any){
+    this.getTckts = event
     if(event == 'all'){
       this.tickets = this.mainTickets
     }else if(event == 'active'){
