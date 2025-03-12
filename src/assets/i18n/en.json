@@ -1,7 +1,13 @@
 {
+    "main":{
+        "nav":{
+            "brand":"Rayahen",
+            "home":"Home"
+        }
+    },
     "tickets":{
         "mainLabels":{
-            "tckts": "tickets",
+            "tckts": "Tickets",
             "addissue":"Add Issue",
             "adduser":"Add User",
             "dashboard":"Dashboard",

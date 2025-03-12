@@ -1,0 +1,11 @@
+<div class="d-flex">
+    <ngx-charts-pie-chart [view]="view" [results]="single" [legend]="showLegend" [labels]="showLabels"
+        [doughnut]="doughnut" [explodeSlices]="explodeSlices" [gradient]="gradient" [scheme]="colorScheme">
+    </ngx-charts-pie-chart>
+
+    <ngx-charts-line-chart [view]="viewline" [scheme]="colorSchemeline" [results]="multi" [legend]="showLegendline"
+        [xAxis]="showXAxis" [yAxis]="showYAxis" [showGridLines]="showGridLines" [xAxisLabel]="xAxisLabel"
+        [yAxisLabel]="yAxisLabel" [autoScale]="true">
+    </ngx-charts-line-chart>
+
+</div>
