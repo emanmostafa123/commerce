@@ -23,7 +23,7 @@
                         class="ms-1 d-none d-sm-inline">{{'tickets.mainLabels.tckts'| translate}}</span>
                 </a>
             </li>
-            @if(userData.role =='Admin'){
+            @if(userData.Role =='Admin'){
                 <li class="nav-item  align-middle"  (click)="openNavElmnt('addIssue',true)"
                 [ngClass]="shownavElmnt == 'addIssue' ? 'active':''">
                     <a class="nav-link p-0">
@@ -275,6 +275,17 @@
                     </div>
                     <div class="col-12 col-md-6 col-lg-6 col-sm-12">
                         <div class="form-floating  mb-3">
+                            <select class="form-select" name="typeOfIssueId" formControlName="typeOfIssueId" id="floatingSelectGridtypeOfIssueId"
+                                aria-label="Floating label select example">
+                                @for( issue of allIssue; track issue){
+                                    <option [ngValue]="issue.id">{{issue.name}}</option>
+                                }
+                            </select>
+                            <label for="floatingSelectGridtypeOfIssueId">{{'tickets.mainLabels.tcktissue'| translate}}</label>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-6 col-lg-6 col-sm-12">
+                        <div class="form-floating  mb-3">
                             <select class="form-select" name="priority" formControlName="priority" id="floatingSelectGridtcktPrty"
                                 aria-label="Floating label select example">
                                 <option [ngValue]="1">{{'tickets.tcktsCrd.high'| translate}}</option>
@@ -284,13 +295,15 @@
                             <label for="floatingSelectGridtcktPrty">{{'tickets.tcktsCrd.tcktPrty'| translate}}</label>
                         </div>
                     </div>
-                    
-                    <!-- <div class="col-12 col-md-6 col-lg-6 col-sm-12">
-                        <div class="form-check form-switch">
-                            <input class="form-check-input" name="isactive" formControlName="isactive" type="checkbox" id="flexSwitchCheckChecked" checked>
-                            <label class="form-check-label" for="flexSwitchCheckChecked">Checked switch checkbox input</label>
+                    <div class="col-12 col-md-6 col-lg-6 col-sm-12">
+                        <div class="form-check">
+                            <input class="form-check-input" name="isActive" formControlName="isActive" type="checkbox"
+                                [value]="true" id="flexCheckCheckedDisabled" checked [disabled]="true">
+                            <label class="form-check-label" for="flexCheckCheckedDisabled">
+                              {{'tickets.tcktsCrd.active'| translate}}
+                            </label>
                           </div>
-                    </div> -->
+                    </div>
                     <div class="col-12">
                         <button type="submit" class="btn btn-primary ms-auto" (click)="addTckt()">{{'tickets.mainLabels.submit'| translate}}</button>
                     </div>
@@ -320,7 +333,7 @@
                             </div>
                         </div>
                         <div class="col-12">
-                            <button type="submit" class="btn btn-primary ms-auto" (click)="addTckt()">
+                            <button type="submit" class="btn btn-primary ms-auto" (click)="addIssue()">
                                 {{'tickets.mainLabels.submit'| translate}}
                             </button>
                         </div>

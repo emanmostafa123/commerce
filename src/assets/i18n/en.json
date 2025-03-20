@@ -15,6 +15,7 @@
             "activetckts": "Active Tickets",
             "deactivetckts": "Deactive Tickets",
             "addtckt":"Add Ticket",
+            "tcktissue":"Issue Type",
             "submit":"submit"
         },
         "tcktsCrd":{

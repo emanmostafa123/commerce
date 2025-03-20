@@ -7,6 +7,7 @@ import { AuthService } from '../../shared/auth.service';
 import $ from 'jquery';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { ChartsComponent } from '../charts/charts.component';
+import { ToastrService } from 'ngx-toastr';
 // declare let $ : any
 declare var bootstrap: any;
 @Component({
@@ -30,12 +31,15 @@ export class DashboardComponent {
   getTckts: any;
   showHome: any;
   showTckts: any;
+  token: string | null;
+  allIssue: any;
   constructor(
     public router : Router,
     public rayahenService : RayahenService,
     public fb : FormBuilder,
     public authService : AuthService,
-    private translate: TranslateService) {
+    private translate: TranslateService,
+    public toastr : ToastrService) {
 
     const defaultLang = localStorage.getItem('lang') || 'en';
     this.lang = defaultLang
@@ -47,17 +51,22 @@ export class DashboardComponent {
     this.translate.setDefaultLang(defaultLang);
     this.translate.use(defaultLang);
     this.userData = this.authService.getDecodedToken();
-    this.userData = this.transformUserData(this.userData);
+    // this.userData = this.transformUserData(this.userData);
+    console.log(this.userData)
+    this.token = localStorage.getItem('token')
+
+  }
+  getAllTicket(){
+    this.rayahenService.getAllTickets(this.token).subscribe((res)=>{
+      this.mainTickets = res.body
+      this.tickets = this.mainTickets
+    })
   }
 
   ngOnInit(): void {
     this.getTckts = 'all'
     this.shownavElmnt = 'tickets'
-    let token = localStorage.getItem('token')
-    // this.rayahenService.getAllTickets(token).subscribe((res)=>{
-    //   this.mainTickets = res.body
-    //   this.tickets = this.mainTickets
-    // })
+    this.getAllTicket()
     this.openNavElmnt('home')
     interface Ticket {
       id: number;
@@ -68,51 +77,51 @@ export class DashboardComponent {
       isActive: boolean;
     }
     
-    const tickets: Ticket[] = [
-      {
-        id: 1,
-        subject: "Login Issue",
-        priority: 1,
-        description: "User unable to log in with correct credentials.",
-        imgUrl: "https://example.com/images/login-issue.png",
-        isActive: true,
-      },
-      {
-        id: 2,
-        subject: "Page Not Loading",
-        priority: 2,
-        description: "The dashboard page is taking too long to load.",
-        imgUrl: "https://example.com/images/page-load.png",
-        isActive: false,
-      },
-      {
-        id: 3,
-        subject: "Feature Request: Dark Mode",
-        priority: 3,
-        description: "User requested a dark mode feature for better accessibility.",
-        imgUrl: "https://example.com/images/dark-mode.png",
-        isActive: true,
-      },
-      {
-        id: 4,
-        subject: "Payment Gateway Error",
-        priority: 1,
-        description: "Some users report failed transactions while making payments.",
-        imgUrl: "https://example.com/images/payment-error.png",
-        isActive: true,
-      },
-      {
-        id: 5,
-        subject: "Email Notifications Not Sent",
-        priority: 2,
-        description: "Users are not receiving email confirmations for orders.",
-        imgUrl: "https://example.com/images/email-issue.png",
-        isActive: false,
-      }
-    ];
-    this.mainTickets= tickets
+    // const tickets: Ticket[] = [
+    //   {
+    //     id: 1,
+    //     subject: "Login Issue",
+    //     priority: 1,
+    //     description: "User unable to log in with correct credentials.",
+    //     imgUrl: "https://example.com/images/login-issue.png",
+    //     isActive: true,
+    //   },
+    //   {
+    //     id: 2,
+    //     subject: "Page Not Loading",
+    //     priority: 2,
+    //     description: "The dashboard page is taking too long to load.",
+    //     imgUrl: "https://example.com/images/page-load.png",
+    //     isActive: false,
+    //   },
+    //   {
+    //     id: 3,
+    //     subject: "Feature Request: Dark Mode",
+    //     priority: 3,
+    //     description: "User requested a dark mode feature for better accessibility.",
+    //     imgUrl: "https://example.com/images/dark-mode.png",
+    //     isActive: true,
+    //   },
+    //   {
+    //     id: 4,
+    //     subject: "Payment Gateway Error",
+    //     priority: 1,
+    //     description: "Some users report failed transactions while making payments.",
+    //     imgUrl: "https://example.com/images/payment-error.png",
+    //     isActive: true,
+    //   },
+    //   {
+    //     id: 5,
+    //     subject: "Email Notifications Not Sent",
+    //     priority: 2,
+    //     description: "Users are not receiving email confirmations for orders.",
+    //     imgUrl: "https://example.com/images/email-issue.png",
+    //     isActive: false,
+    //   }
+    // ];
+    // this.mainTickets= tickets
     
-    this.tickets = this.mainTickets
+    // this.tickets = this.mainTickets
     
     this.addusrForm = this.fb.group({
       id: ['', [Validators.required]],
@@ -127,8 +136,11 @@ export class DashboardComponent {
       Title: ['', [Validators.required]],
       description: ['', [Validators.required]],
       priority: ['', [Validators.required]],
-      isactive: ['', [Validators.required]],
+      isActive: [{value: true ,disabled: true}],
       createdByUser :['', [Validators.required]],
+      typeOfIssue:['', [Validators.required]],
+      typeOfIssueId:[''],
+      userNameCreated:['']
     })
     this.addIssueForm = this.fb.group({
       addIssue : ['']
@@ -141,7 +153,14 @@ export class DashboardComponent {
     }
     return user;
   }
-  
+  addIssue(){
+    let req = {
+      name: this.addIssueForm.value.addIssue
+    }
+    this.rayahenService.addIssue(req , this.token).subscribe((res)=>{
+      this.toastr.success(res.body.message);
+    })
+  }
 
   // language 
   switchLanguage(lang: string) {
@@ -157,7 +176,12 @@ export class DashboardComponent {
   //
   // Apply the transformation
  
-  
+  getAllIssue(){
+    this.rayahenService.getallIssues(this.token).subscribe((res)=>{
+      console.log(res)
+      this.allIssue = res.body
+    })
+  }
   openNavElmnt(event:any, openIssueodal?:boolean){
     this.shownavElmnt = event
     if(event == 'home'){
@@ -184,8 +208,7 @@ export class DashboardComponent {
     }
   }
   getTicketbyId(event:any){
-    let token = localStorage.getItem('token')
-    this.rayahenService.getTicketById(event , token).subscribe((res)=>{
+    this.rayahenService.getTicketById(event , this.token).subscribe((res)=>{
       this.chosenTckt = res.body
       this.openModal('displayTcktModal')
     })
@@ -195,10 +218,9 @@ export class DashboardComponent {
 
   }
   addUser(){
-    let token = localStorage.getItem('token')
     if(!this.addusrForm.invalid){
-      this.rayahenService.addUser(this.addusrForm.value , token).subscribe((res)=>{
-
+      this.rayahenService.addUser(this.addusrForm.value , this.token).subscribe((res)=>{
+        this.toastr.success('Added user');
       })
     }
   }
@@ -209,15 +231,22 @@ export class DashboardComponent {
       if(event == 'addUsrModal'){
         this.openNavElmnt(event)
       }
+      if(event == 'addTcktModal') this.getAllIssue()
   }
   addTckt(){
-    let token = localStorage.getItem('token')
-    this.addTcktForm.value.createdByUser =1;
-    this.addTcktForm.value.isactive = true;
+    this.addTcktForm.value.createdByUser = this.userData.UserId;
+    this.addTcktForm.value.userNameCreated = this.userData.Email;
+    this.addTcktForm.value.isActive = true
+    this.allIssue.forEach((el:any)=>{
+      if(el.id == this.addTcktForm.value.typeOfIssueId) {
+        this.addTcktForm.value.typeOfIssue = el.name
+      }
+    })
     debugger
     // if(!this.addTcktForm.invalid){
-      this.rayahenService.addTickt(this.addTcktForm.value,token).subscribe((res)=>{
-        // this.toastr.success('Hello world!', 'Toastr fun!');
+      this.rayahenService.addTickt(this.addTcktForm.value,this.token).subscribe((res)=>{
+        this.toastr.success(res.body.message);
+        this.getAllTicket()
       })
     // }
   }

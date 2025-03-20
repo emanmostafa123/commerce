@@ -15,6 +15,7 @@
             "activetckts": "التذاكر النشطة",
             "deactivetckts": "التذاكر غير النشطة",
             "addtckt": "إضافة تذكرة",
+            "tcktissue":"نوع المشكلة",
             "submit":"إضافة"
         },
         "tcktsCrd": {

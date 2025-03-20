@@ -48,6 +48,19 @@ export class RayahenService {
       'Authorization': `Bearer ${token}`, // Attach JWT token
     });
     return this.http.post<any>('http://localhost:5162/api/Ticket/AddTicket', req, { headers, responseType: 'json', observe: 'response' })
-
+  }
+  addIssue(req:any, token:any){
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`, // Attach JWT token
+    });
+    return this.http.post<any>('http://localhost:5162/api/Admin/AddIssue', req, { headers, responseType: 'json', observe: 'response' })
+  } 
+  getallIssues(token:any){
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`, // Attach JWT token
+    });
+    return this.http.get<any>('http://localhost:5162/api/Admin/GetAllIssues', { headers, responseType: 'json', observe: 'response' })
   }
 }
