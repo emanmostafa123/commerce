@@ -10,6 +10,7 @@
             "tckts": "التذاكر",
             "addissue": "إضافة مشكلة",
             "adduser": "إضافة مستخدم",
+            "allissue":"المشكلات",
             "dashboard": "لوحة التحكم",
             "alltckts": "كل التذاكر",
             "activetckts": "التذاكر النشطة",
@@ -26,6 +27,7 @@
             "tcktDes": "الوصف",
             "tcktPrty": "الأولوية",
             "crtOn":"تاريخ الانشاء",
+            "typeOfIssue":"نوع المشكلة",
             "high":"عالي",
             "medium":"متوسط",
             "low":"منخفض"

@@ -1,136 +1,120 @@
-<div class="section"  [lang]="lang" [dir]="dirVal" [ngClass]="dirVal =='rtl'?' rtl':' '">
-    <nav class="navbar sticky-top navbar-expand-lg navbar-dark bg-rayahen" aria-label="Eighth navbar example">
-        <div class="container">
-          <a class="navbar-brand" >
-           <img src="../../../assets/rayahenLogo.png" alt=""> 
-            <!-- {{'main.nav.brand' | translate}} -->
-        </a>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsExample07" aria-controls="navbarsExample07" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-    
-          <div class="collapse navbar-collapse" id="navbarsExample07">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-              <li class="nav-item" [ngClass]="shownavElmnt == 'home' ? 'active':''">
-                <a class="nav-link active" aria-current="page"
-                (click)="openNavElmnt('home')"><i class="fa-solid fa-house"  [ngClass]="dirVal =='rtl'?' ps-2':' pe-2'">
-                </i>{{'main.nav.home'| translate}}</a>
-              </li>
-            <li class="nav-item align-middle " [ngClass]="shownavElmnt == 'tickets' ? 'active':''"
-                (click)="openNavElmnt('tickets')">
-                <a class="nav-link p-0">
-                    <i class="fa-solid fa-ticket" [ngClass]="dirVal =='rtl'?' ps-2':' pe-2'"></i><span
-                        class="ms-1 d-none d-sm-inline">{{'tickets.mainLabels.tckts'| translate}}</span>
-                </a>
-            </li>
-            @if(userData.Role =='Admin'){
-                <li class="nav-item  align-middle"  (click)="openNavElmnt('addIssue',true)"
-                [ngClass]="shownavElmnt == 'addIssue' ? 'active':''">
-                    <a class="nav-link p-0">
-                        <i class="fa-solid fa-ticket"  [ngClass]="dirVal =='rtl'?' ps-2':' pe-2'"
-                        ></i><span class="ms-1 d-none d-sm-inline">{{'tickets.mainLabels.allissue'| translate}}</span>
-                    </a>
-                </li>
-            }
-              
-            <li class="nav-item align-middle" [ngClass]="shownavElmnt == 'addUsrModal' ? 'active':''"
-            (click)="openModal('addUsrModal')" >
-                <a class="nav-link p-0">
-                    <i class="fa-solid fa-user-plus"
-                    [ngClass]="dirVal =='rtl'?' ps-2':' pe-2'" ></i><span class="ms-1 d-none d-sm-inline">{{'tickets.mainLabels.adduser'| translate}}</span>
-                </a>
-            </li>
-            </ul>
-            <div class="dropdown me-2 lngDrp">
-                <a class="btn dropdown-toggle"
-                role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
-                  {{lang}}
-                </a>
-              
-                <ul class="dropdown-menu lang" aria-labelledby="dropdownMenuLink">
-                  <li><a class="dropdown-item cursor_pointer langitem" (click)="switchLanguage('ar')">العربية</a></li>
-                  <li><a class="dropdown-item cursor_pointer langitem" (click)="switchLanguage('en')">English</a></li>
-                </ul>
-              </div>
-              <a class="btn btn-sm btn-outline logoutbtn mx-1" >
-                <i class="fa-solid fa-user px-2"></i>{{userData.Email}}
-              </a>
-              <a class="btn btn-sm btn-outline mx-1 logoutbtn"  
-              (click)="logout()">{{'log.logout'| translate}}</a>
-
-          </div>
-        </div>
-      </nav>
+<div class="section"  [lang]="lang" [dir]="dirVal">
     <div class="container-fluid">
         <div class="row flex-nowrap">
-            <div class="col  main">
-                @if(showTckts){
-                <div class="main-screen mt-3">
-                    <div class="d-flex">
-                        <a class="btn btn-sm btn-outline tcktsBtn  mx-1" [ngClass]="getTckts == 'all'? 'active':''"
-                            (click)="getTickets('all')">{{'tickets.mainLabels.alltckts'| translate}}</a>
-                        <a class="btn btn-sm btn-outline tcktsBtn mx-1" [ngClass]="getTckts == 'active'? 'active':''"
-                            (click)="getTickets('active')">{{'tickets.mainLabels.activetckts'| translate}}</a>
-                        <a class="btn btn-sm btn-outline tcktsBtn mx-1" [ngClass]="getTckts == 'deactive'? 'active':''"
-                            (click)="getTickets('deactive')">{{'tickets.mainLabels.deactivetckts'| translate}}</a>
-                        <a class="btn btn-sm btn-outline tcktsBtn mx-1 " [ngClass]="dirVal =='rtl'?'me-auto':'ms-auto'"
-                            (click)="openModal('addTcktModal')"><i class="fa-solid fa-plus"></i></a>
-                
-                    </div>
-                    <div class="row my-3">
-                        @for(ticket of tickets; track ticket){
-                        <div class="col-4 col-md-4 col-lg-4 col-sm-12">
-                            <div class="card cardDash m-2" (click)="getTicketbyId(ticket?.id)"
-                                [ngClass]="ticket.priority == 1 ? 'high' : (ticket.priority == 2 ? 'medium' : 'low')">
-                                <span class="d-flex">
-                                    @if(ticket.isActive){
-                                    <div class="ribbon ms-auto ribbonActive">{{'tickets.tcktsCrd.active'| translate}}</div>
-                                    }
-                                    @if(!ticket.isActive){
-                                    <div class="ribbon ms-auto ribbonDeactive">{{'tickets.tcktsCrd.deactive'| translate}}</div>
-                                    }
-                                </span>
-                                <div class="card-content p-2">
-                                    <div class="d-flex">
-                                        <span class="title">{{'tickets.tcktsCrd.subject'| translate}} : </span>
-                                        <span class="des"> {{ticket.title}}</span>
-                                    </div>
-                                    <div class="d-block">
-                                        <div class="title">{{'tickets.tcktsCrd.tcktDes'| translate}} : </div>
-                                        <div class="des">{{ticket.description}}</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+            <div class="col-auto col-md-3 col-xl-2 px-sm-3 px-0 border sideMenu">
+                <div class="d-flex flex-column align-items-center align-items-sm-start pt-2 text-white min-vh-100">
+                    <a href="/" class="d-flex align-items-center w-100 pb-3 mb-md-0 me-md-auto text-white text-decoration-none">
+                        <span class="fs-5 d-none d-sm-inline  w-100" style="text-align: center;">
+                            <img src="assets/rayahenLogo.png" class="logo">
+                        </span>
+                    </a>
+                    <ul class="nav w-100 nav-pills flex-column pe-2 mb-sm-auto mb-0 align-items-center align-items-sm-start" id="menu">
+                        <li class="nav-item w-100 align-middle "
+                            [ngClass]="shownavElmnt == 'tickets' ? 'active':''"
+                        (click)="openNavElmnt('tickets')">
+                            <a class="nav-link p-0">
+                                <i class="fa-solid fa-ticket"
+                                [ngClass]="dirVal =='rtl'?' ps-2':' pe-2'" ></i><span class="ms-1 d-none d-sm-inline">{{'tickets.mainLabels.tckts'| translate}}</span>
+                            </a>
+                        </li>
+                        @if(userData.role =='Admin'){
+                            <li class="nav-item w-100 align-middle"  (click)="openNavElmnt('addIssue',true)"
+                            [ngClass]="shownavElmnt == 'addIssue' ? 'active':''">
+                                <a class="nav-link p-0">
+                                    <i class="fa-solid fa-ticket"  [ngClass]="dirVal =='rtl'?' ps-2':' pe-2'"
+                                    ></i><span class="ms-1 d-none d-sm-inline">{{'tickets.mainLabels.addissue'| translate}}</span>
+                                </a>
+                            </li>
                         }
-                
+                    </ul>
+                    <hr>
+                    <li class="nav-item w-100 align-middle" [ngClass]="shownavElmnt == 'addUsrModal' ? 'active':''"
+                    (click)="openModal('addUsrModal')" >
+                        <a class="nav-link p-0">
+                            <i class="fa-solid fa-user-plus"
+                            [ngClass]="dirVal =='rtl'?' ps-2':' pe-2'" ></i><span class="ms-1 d-none d-sm-inline">{{'tickets.mainLabels.adduser'| translate}}</span>
+                        </a>
+                    </li>
+                </div>
+            </div>
+            <div class="col  main">
+                <div class="row headerOfDash">
+                    <div class="col-8">
+                        <a class="blog-header-logo" href="#">
+                            {{'tickets.mainLabels.dashboard'| translate}}
+                        </a>
+                    </div>
+                    <div class="col-4 d-flex justify-content-end align-items-center">
+                        <div class="dropdown me-2 lngDrp">
+                            <a class="btn dropdown-toggle"
+                            role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+                              {{lang}}
+                            </a>
+                          
+                            <ul class="dropdown-menu lang" aria-labelledby="dropdownMenuLink">
+                              <li><a class="dropdown-item cursor_pointer langitem" (click)="switchLanguage('ar')">العربية</a></li>
+                              <li><a class="dropdown-item cursor_pointer langitem" (click)="switchLanguage('en')">English</a></li>
+                            </ul>
+                          </div>
+                          <a class="btn btn-sm btn-outline logoutbtn mx-1" >
+                            <i class="fa-solid fa-user px-2"></i>Admin
+                          </a>
+                          <a class="btn btn-sm btn-outline mx-1 logoutbtn"  
+                          (click)="logout()">{{'log.logout'| translate}}</a>
+
                     </div>
                 </div>
-                }
-                @if(showHome){
-                <div class="main-screen mt-3">
-                    <app-charts></app-charts>
-                </div>
-                }
-                @if(showIssues){
-                    <div class="row bg-white cursor_pointer">
-                        <div class="col-11 row">
-                            @for(issue of allIssues; track issue){
-                            <div class="card m-2 col-2 col-md-2 col-lg-2 col-sm-12"
-                                (click)="openIssue(issue.id ,issue.name)">
-                                <div class="card-content p-2">
-                                    {{issue.name}}
-                                </div>
+                    <div class="main-screen mt-3" >
+                        <div class="d-flex">
+                            <a class="btn btn-sm btn-outline logoutbtn mx-1" (click)="getTickets('all')">{{'tickets.mainLabels.alltckts'| translate}}</a>
+                            <a class="btn btn-sm btn-outline logoutbtn mx-1" (click)="getTickets('active')">{{'tickets.mainLabels.activetckts'| translate}}</a>
+                            <a class="btn btn-sm btn-outline logoutbtn mx-1" (click)="getTickets('deactive')">{{'tickets.mainLabels.deactivetckts'| translate}}</a>
+                            <a class="btn btn-sm btn-outline logoutbtn mx-1 "
+                                [ngClass]="dirVal =='rtl'?'me-auto':'ms-auto'"
+                                (click)="openModal('addTcktModal')"><i class="fa-solid fa-plus"></i></a>
+    
+                        </div>
+                            <div class="row my-3">
+                                @for(ticket of tickets; track ticket){
+                                    <div class="col-4">
+                                        <div class="card cardDash m-2" (click)="getTicketbyId(ticket?.id)"
+                                        [ngClass]="ticket.priority == 1 ? 'high' : (ticket.priority == 2 ? 'medium' : 'low')">
+                                            <span class="d-flex">
+                                                @if(ticket.isActive){
+                                                    <div class="ribbon ms-auto ribbonActive">{{'tickets.tcktsCrd.active'| translate}}</div> 
+                                                }
+                                                @if(!ticket.isActive){
+                                                    <div class="ribbon ms-auto ribbonDeactive">{{'tickets.tcktsCrd.deactive'| translate}}</div> 
+                                                }
+                                            </span>
+                                            <div class="card-content p-2">
+                                                <div class="d-flex">
+                                                    <span class="title">{{'tickets.tcktsCrd.subject'| translate}} : </span> 
+                                                    <span class="des">  {{ticket.title}}</span>
+                                                </div>
+                                                <div class="d-block">
+                                                    <div class="title">{{'tickets.tcktsCrd.tcktDes'| translate}} : </div> 
+                                                    <div class="des">{{ticket.description}}</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                                
                             </div>
-                            }
-                        </div>
-                        <div class="col-1 m-2" [ngClass]="dirVal =='rtl'?'me-auto':'ms-auto'" >
-                            <a class="btn btn-sm btn-outline tcktsBtn mx-1  "
-                                (click)="openModal('addIssueModal')"><i class="fa-solid fa-plus"></i></a>
-                        </div>
-                   
                     </div>
-                }
+                
+                <!-- @if(shownavElmnt == 'addIssue'){
+                <div class="main-screen mt-3">
+                    <div class="col-12 col-md-6 col-lg-6 col-sm-12">
+                        <div class="form-floating  mb-3">
+                            <input type="text" class="form-control" name="description" formControlName="description"
+                                id="floatingPassword" placeholder="Password">
+                            <label for="floatingPassword">Add Issue</label>
+                        </div>
+                    </div>
+                </div>
+            } -->
             </div>
         </div>
     </div>
@@ -300,16 +284,7 @@
                             <label for="floatingSelectGridtcktPrty">{{'tickets.tcktsCrd.tcktPrty'| translate}}</label>
                         </div>
                     </div>
-                    <div class="col-12 col-md-6 col-lg-6 col-sm-12">
-                        <div class="form-floating  mb-3">
-                            <select class="form-select" name="typeOfIssue" formControlName="typeOfIssue" id="floatingSelectGridtypeOfIssue"
-                                aria-label="Floating label select example">
-                                @for(issue of allIssues; track issue){
-                                <option [ngValue]="issue.name">{{issue.name}}</option>}
-                            </select>
-                            <label for="floatingSelectGridtypeOfIssue">{{'tickets.tcktsCrd.typeOfIssue'| translate}}</label>
-                        </div>
-                    </div>
+                    
                     <!-- <div class="col-12 col-md-6 col-lg-6 col-sm-12">
                         <div class="form-check form-switch">
                             <input class="form-check-input" name="isactive" formControlName="isactive" type="checkbox" id="flexSwitchCheckChecked" checked>
@@ -325,13 +300,13 @@
       </div>
     </div>
   </div>
-    <!-- Modal add issue -->
+    <!-- Modal issue -->
     <div class="modal fade" id="addIssueModal" tabindex="-1" role="dialog" data-bs-backdrop="static" aria-labelledby="addIssueModalTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modalCustom" role="document">
           <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="staticBackdropLabel">{{'tickets.mainLabels.addissue'| translate}}</h5>
-                <button type="button" class="btn-close"  data-bs-dismiss="modal" aria-label="Close"></button>
+                <button type="button" class="btn-close" (click)="openNavElmnt('tickets')" data-bs-dismiss="modal" aria-label="Close"></button>
               </div>
             <div class="modal-body">
                 <form [formGroup]="addIssueForm">
@@ -339,13 +314,13 @@
                         
                         <div class="col-12">
                             <div class="form-floating  mb-3">
-                                <input type="text" class="form-control" name="name" formControlName="name"
-                                    id="floatingissueNm" [placeholder]="'tickets.issueCrd.issueNm' | translate">
+                                <input type="text" class="form-control" name="addIssue" formControlName="addIssue"
+                                    id="floatingissueNm" placeholder="Password">
                                 <label for="floatingissueNm">{{'tickets.issueCrd.issueNm'| translate}}</label>
                             </div>
                         </div>
                         <div class="col-12">
-                            <button type="submit" class="btn btn-primary ms-auto" (click)="addNewIssue()">
+                            <button type="submit" class="btn btn-primary ms-auto" (click)="addTckt()">
                                 {{'tickets.mainLabels.submit'| translate}}
                             </button>
                         </div>
@@ -355,36 +330,3 @@
           </div>
         </div>
       </div>
-      <!-- Modal upd issue -->
-    <div class="modal fade" [id]="'updIssueModal'" tabindex="-1" role="dialog" aria-labelledby="addIssueModalTitle" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modalCustom" role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="staticBackdropLabel">{{'tickets.mainLabels.addissue'| translate}}</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-              </div>
-            <div class="modal-body">
-                <form [formGroup]="updIssueForm">
-                    <div class="row">
-                        
-                        <div class="col-12">
-                            <div class="form-floating  mb-3">
-                                <input type="text" class="form-control" name="name" formControlName="name"
-                                    id="floatingissueNm" [value]="issueNm" [placeholder]="'tickets.issueCrd.issueNm' | translate">
-                                <label for="floatingissueNm">{{'tickets.issueCrd.issueNm'| translate}}</label>
-                            </div>
-                        </div>
-                        <div class="col-12">
-                            <button type="submit" class="btn btn-primary ms-auto" (click)="updateIssue()">
-                                {{'tickets.mainLabels.submit'| translate}}
-                            </button>
-                        </div>
-                    </div>
-                </form>
-            </div>
-          </div>
-        </div>
-      </div>
-
-
-      <app-toast #toastRef [message]="toastMessage" [bgColor]="toastBgColor"></app-toast>
