@@ -58,15 +58,15 @@ export class LoginComponent {
     localStorage.setItem('lang', lang);
   }
   //
-  // P@ssword123
+  // c
   login(){
     console.log('test')
     if(!this.loginForm.invalid){
-      // this.rayahenService.login(this.loginForm.value).subscribe((res)=>{
+      this.rayahenService.login(this.loginForm.value).subscribe((res)=>{
         debugger
-        localStorage.setItem('token','eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJFbWFpbCI6IkFtaXJhIiwiVXNlcklkIjoiMSIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvcm9sZSI6IkFkbWluIiwiZXhwIjoxNzQxMTc3MDI2LCJpc3MiOiJUaWNrZXRTeXN0ZW1BUEkiLCJhdWQiOiJodHRwczovL2xvY2FsaG9zdDo3MjAyIn0.j4W_cTfl2loJ2I1SrIlwe8MmxOVk79GT6SbyZY5fSYM') 
+        localStorage.setItem('token',res.body.data.token) 
         this.router.navigate(['/dashboard'])
-      // })
+      })
 
     }
   }
