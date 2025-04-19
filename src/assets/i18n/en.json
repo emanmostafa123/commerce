@@ -56,5 +56,13 @@
         "password":"Password",
         "wlcmBck":"Welcome Back",
         "forgetpsswrd":"Forget Password..?"
+    },
+    "fire":{
+        "issue":{
+            "title":"Are you sure?",
+            "text":"This action cannot be undone!",
+            "confirmButtonText":"yes",
+            "cancelButtonText":"No"
+        }
     }
 }
