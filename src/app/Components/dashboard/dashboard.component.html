@@ -10,7 +10,7 @@
           </button>
     
           <div class="collapse navbar-collapse" id="navbarsExample07">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <ul class="navbar-nav  mb-2 mb-lg-0" [ngClass]="dirVal =='rtl'?'ms-auto':'me-auto'">
               <li class="nav-item" [ngClass]="shownavElmnt == 'home' ? 'active':''">
                 <a class="nav-link active" aria-current="page"
                 (click)="openNavElmnt('home')"><i class="fa-solid fa-house"  [ngClass]="dirVal =='rtl'?' ps-2':' pe-2'">
@@ -42,12 +42,12 @@
             </li>
             </ul>
             <div class="dropdown me-2 lngDrp">
-                <a class="btn dropdown-toggle"
-                role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+                <a class="btn dropdown-toggle" (click)="openLangDrop()"
+                role="button" id="dropdownMenuLinklang" data-bs-toggle="dropdown" aria-expanded="false">
                   {{lang}}
                 </a>
               
-                <ul class="dropdown-menu lang" aria-labelledby="dropdownMenuLink">
+                <ul class="dropdown-menu lang" id="langDropMenu" aria-labelledby="dropdownMenuLinklang">
                   <li><a class="dropdown-item cursor_pointer langitem" (click)="switchLanguage('ar')">العربية</a></li>
                   <li><a class="dropdown-item cursor_pointer langitem" (click)="switchLanguage('en')">English</a></li>
                 </ul>
@@ -80,7 +80,7 @@
                     <div class="row my-3">
                         @for(ticket of tickets; track ticket){
                         <div class="col-4 col-md-4 col-lg-4 col-sm-12">
-                            <div class="card cardDash m-2" (click)="getTicketbyId(ticket?.id)"
+                            <div class="card cardDash m-2" 
                                 [ngClass]="ticket.priority == 1 ? 'high' : (ticket.priority == 2 ? 'medium' : 'low')">
                                 <span class="d-flex">
                                     @if(ticket.isActive){
@@ -94,6 +94,8 @@
                                     <div class="d-flex">
                                         <span class="title">{{'tickets.tcktsCrd.subject'| translate}} : </span>
                                         <span class="des"> {{ticket.title}}</span>
+                                        <span class="text-primary cursor-pointer"  [ngClass]="dirVal !='rtl'?' ms-auto':' me-auto'" (click)="getTicketbyId(ticket?.id)"><i class="fas fa-eye"></i></span>
+                                        <span class="text-warning mx-1 cursor-pointer" (click)="updTckt(ticket)"><i class="fas fa-edit"></i></span>
                                     </div>
                                     <div class="d-block">
                                         <div class="title">{{'tickets.tcktsCrd.tcktDes'| translate}} : </div>
@@ -109,7 +111,9 @@
                 }
                 @if(showHome){
                 <div class="main-screen mt-3">
-                    <app-charts></app-charts>
+                    @if(chartSide){
+                        <app-charts  #chartComp></app-charts>
+                    }
                 </div>
                 }
                 @if(showIssues){
@@ -117,9 +121,11 @@
                         <div class="col-11 row">
                             @for(issue of allIssues; track issue){
                             <div class="card m-2 col-2 col-md-2 col-lg-2 col-sm-12"
-                                (click)="openIssue(issue.id ,issue.name)">
+                                >
                                 <div class="card-content p-2">
-                                    {{issue.name}}
+                                    <span>{{issue.name}} </span>
+                                    <span class="mx-1 text-danger" [ngClass]="dirVal =='rtl'?' float-left':' float-right'" (click)="deleteIssue(issue.id ,issue.name)"><i class="fas fa-trash-alt"></i></span>
+                                    <span class="text-warning"  [ngClass]="dirVal =='rtl'?' float-left':' float-right'"(click)="openIssue(issue.id ,issue.name)"><i class="fas fa-edit"></i></span>
                                 </div>
                             </div>
                             }
@@ -310,12 +316,7 @@
                             <label for="floatingSelectGridtypeOfIssue">{{'tickets.tcktsCrd.typeOfIssue'| translate}}</label>
                         </div>
                     </div>
-                    <!-- <div class="col-12 col-md-6 col-lg-6 col-sm-12">
-                        <div class="form-check form-switch">
-                            <input class="form-check-input" name="isactive" formControlName="isactive" type="checkbox" id="flexSwitchCheckChecked" checked>
-                            <label class="form-check-label" for="flexSwitchCheckChecked">Checked switch checkbox input</label>
-                          </div>
-                    </div> -->
+                    <input type="file" (change)="onFileSelected($event)" />
                     <div class="col-12">
                         <button type="submit" class="btn btn-primary ms-auto" (click)="addTckt()">{{'tickets.mainLabels.submit'| translate}}</button>
                     </div>
