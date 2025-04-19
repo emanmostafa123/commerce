@@ -48,7 +48,7 @@ export class ChartsComponent {
   gradient = false;
 
   colorScheme: Color = {
-    name: 'custوomScheme',
+    name: 'customScheme',
     selectable: true,
     group: ScaleType.Ordinal,
     domain: ['#5AA454', '#A10A28', '#C7B42C', '#AAAAAA'],
