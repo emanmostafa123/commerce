@@ -50,14 +50,6 @@ export class RayahenService {
     return this.http.post<any>('http://ticket-sys.runasp.net/api/Ticket/AddTicket', req, { headers, responseType: 'json', observe: 'response' })
 
   }
-  updTicket(req:any, token:any){
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${token}`, // Attach JWT token
-    });
-    return this.http.post<any>('http://ticket-sys.runasp.net/api/Ticket/UpdateTicket', req, { headers, responseType: 'json', observe: 'response' })
-
-  } 
   addIssue(req:any, token:any){
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
@@ -80,14 +72,6 @@ export class RayahenService {
       'Authorization': `Bearer ${token}`, // Attach JWT token
     });
     return this.http.post<any>('http://ticket-sys.runasp.net/api/Admin/UpdateIssue', req, { headers, responseType: 'json', observe: 'response' })
-
-  }  
-  deleteIssue(req:any, token:any){
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${token}`, // Attach JWT token
-    });
-    return this.http.delete<any>('http://ticket-sys.runasp.net/api/Admin/DeleteIssue?id=' + req , { headers, responseType: 'json', observe: 'response' })
 
   }
 }

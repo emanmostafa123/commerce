@@ -55,13 +55,5 @@
         "password": "كلمة المرور",
         "wlcmBck": "مرحبًا بعودتك",
         "forgetpsswrd": "نسيت كلمة المرور..؟"
-    },
-    "fire":{
-        "issue":{
-            "title":"هل أنت متأكد؟",
-            "text":"لا يمكنك التراجع عن هذا الإجراء",
-            "confirmButtonText":"نعم",
-            "cancelButtonText":"لا"
-        }
     }
 }

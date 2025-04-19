@@ -8,9 +8,6 @@ import $ from 'jquery';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { ChartsComponent } from '../charts/charts.component';
 import { ToastComponent } from "../toast/toast.component";
-import Swal from 'sweetalert2';
-import { AccumulationChartComponent } from '@syncfusion/ej2-angular-charts';
-
 // declare let $ : any
 declare var bootstrap: any;
 @Component({
@@ -41,11 +38,7 @@ export class DashboardComponent {
   toastMessage: any;
   toastBgColor:any;
   @ViewChild('toastRef') toastComponent!: ToastComponent;
-  @ViewChild('chartComp') chartComponent: ChartsComponent | undefined;
-
   issueNm: any;
-  selectedFile: File | undefined;
-  chartSide: boolean | undefined;
   constructor(
     public router : Router,
     public rayahenService : RayahenService,
@@ -70,8 +63,62 @@ export class DashboardComponent {
   ngOnInit(): void {
     this.getTckts = 'all'
     this.shownavElmnt = 'tickets'
-    // this.getAllTickets()
+    this.getAllTickets()
     this.openNavElmnt('home')
+    // interface Ticket {
+    //   id: number;
+    //   subject: string;
+    //   priority:number;
+    //   description: string;
+    //   imgUrl: string;
+    //   isActive: boolean;
+    // }
+    
+    // const tickets: Ticket[] = [
+    //   {
+    //     id: 1,
+    //     subject: "Login Issue",
+    //     priority: 1,
+    //     description: "User unable to log in with correct credentials.",
+    //     imgUrl: "https://example.com/images/login-issue.png",
+    //     isActive: true,
+    //   },
+    //   {
+    //     id: 2,
+    //     subject: "Page Not Loading",
+    //     priority: 2,
+    //     description: "The dashboard page is taking too long to load.",
+    //     imgUrl: "https://example.com/images/page-load.png",
+    //     isActive: false,
+    //   },
+    //   {
+    //     id: 3,
+    //     subject: "Feature Request: Dark Mode",
+    //     priority: 3,
+    //     description: "User requested a dark mode feature for better accessibility.",
+    //     imgUrl: "https://example.com/images/dark-mode.png",
+    //     isActive: true,
+    //   },
+    //   {
+    //     id: 4,
+    //     subject: "Payment Gateway Error",
+    //     priority: 1,
+    //     description: "Some users report failed transactions while making payments.",
+    //     imgUrl: "https://example.com/images/payment-error.png",
+    //     isActive: true,
+    //   },
+    //   {
+    //     id: 5,
+    //     subject: "Email Notifications Not Sent",
+    //     priority: 2,
+    //     description: "Users are not receiving email confirmations for orders.",
+    //     imgUrl: "https://example.com/images/email-issue.png",
+    //     isActive: false,
+    //   }
+    // ];
+    // this.mainTickets= tickets
+    
+    // this.tickets = this.mainTickets
     
     this.addusrForm = this.fb.group({
       id: ['', [Validators.required]],
@@ -116,9 +163,6 @@ export class DashboardComponent {
       this.tickets = this.mainTickets
     })
  }
- openLangDrop(){
-  $('#langDropMenu').toggleClass('show')
- }
   // language 
   switchLanguage(lang: string) {
     this.lang = lang
@@ -141,14 +185,11 @@ export class DashboardComponent {
       this.showTckts = false
       this.showIssues = false
       this.showHome = true
-      this.openChart()
     } 
     if(event == 'tickets'){
       this.showHome = false
       this.showIssues = false
       this.showTckts = true
-      this.getAllTickets()
-      this.chartSide = false
     }
 
     if(event == 'addIssue'){
@@ -157,13 +198,7 @@ export class DashboardComponent {
       this.showTckts = false
       this.getAllIssues()
       this.showIssues = true
-      this.chartSide = false
     }
-  }
-  openChart(){
-    this.chartSide = true
-    this.chartComponent?.refreshChart();
-
   }
   getTickets(event :  any){
     this.getTckts = event
@@ -190,24 +225,11 @@ export class DashboardComponent {
   addUser(){
     let token = localStorage.getItem('token')
     if(!this.addusrForm.invalid){
-      this.rayahenService.addUser(this.addusrForm.value , token).subscribe({
-      next:(res)=>{
-        console.log(res)
-          this.toastMessage = "Done"
-          this.toastBgColor = 'bg-success'
-          this.toastComponent.show();
-          this.closeModal('addUsrModal')
-      } ,
-      error: (err) =>{
-        console.log(err)
-        this.toastMessage = err.error.message
-        this.toastBgColor = 'bg-danger'
-        this.toastComponent.show();
-      },
-      // })
-    })
+      this.rayahenService.addUser(this.addusrForm.value , token).subscribe((res)=>{
+
+      })
+    }
   }
-}
   openModal(event: any){
       const modalElement = document.getElementById(event);
       const modal = new bootstrap.Modal(modalElement);
@@ -216,18 +238,6 @@ export class DashboardComponent {
         this.openNavElmnt(event)
       }
   }
-  closeModal(modalId: string) {
-    const modalElement = document.getElementById(modalId);
-    if (!modalElement) {
-      return;
-    }
-    const modalInstance = bootstrap.Modal.getInstance(modalElement) || new bootstrap.Modal(modalElement);
-    modalInstance.hide();
-    if (modalId === 'addUsrModal') {
-      this.openNavElmnt(modalId);
-    }
-  }
-  
   addTckt(){
     let token = localStorage.getItem('token')
     this.addTcktForm.value.createdByUser =1;
@@ -240,56 +250,32 @@ export class DashboardComponent {
     debugger
       this.rayahenService.addTickt(this.addTcktForm.value,token).subscribe((res)=>{
         if(res.status == 200 ){
-          this.uploadImage()
           this.toastMessage = res.body.message
           this.toastBgColor = 'bg-success'
           this.toastComponent.show();
           this.getAllTickets()
-          this.closeModal('addTcktModal')
+          console.log(res)
         }
       })
 
-  }
-  updTckt(event:any){
-    console.log(event)
-  }
-  
-  onFileSelected(event: Event): void {
-    const input = event.target as HTMLInputElement;
-    if (input.files && input.files.length > 0) {
-      this.selectedFile = input.files[0];
-    }
-  }
-  uploadImage(): void {
-    if (!this.selectedFile) {
-      return;
-    }
-
-    const formData = new FormData();
-    formData.append('image', this.selectedFile);
-
-    // this.http.post('https://your-api-endpoint.com/upload', formData)
-    //   .subscribe({
-    //     next: (res) => console.log('Upload success:', res),
-    //     error: (err) => console.error('Upload error:', err)
-    //   });
   }
 
   getAllIssues(){
     let token = localStorage.getItem('token')
     this.rayahenService.getallIssues(token).subscribe((res)=>{
+      console.log(res)
       this.allIssues = res.body
     })
   }
   addNewIssue(){
     let token = localStorage.getItem('token')
+   
       this.rayahenService.addIssue(this.addIssueForm.value,token).subscribe((res)=>{
         if(res.status == 201 ){
           this.toastMessage = res.body.message
           this.toastBgColor = 'bg-success'
           this.toastComponent.show();
           this. getAllIssues()
-          this.closeModal('addIssueModal')
         }
       })
     // }
@@ -303,35 +289,9 @@ export class DashboardComponent {
     let token = localStorage.getItem('token')
     this.updIssueForm.value.id = this.issueID
     this.rayahenService.updIssue(this.updIssueForm.value,token).subscribe((res)=>{
-      this.toastMessage = res.body.message
-      this.toastBgColor = 'bg-success'
-      this.toastComponent.show();
+      // this.toastr.success('Hello world!', 'Toastr fun!');
       this. getAllIssues()
-      this.closeModal('updIssueModal')
     })
-  }
-  deleteIssue(issueId : any, issueNm:any){
-    Swal.fire({
-      title: this.translate.instant('fire.issue.title'),
-      text: this.translate.instant('fire.issue.text'),
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonText: this.translate.instant('fire.issue.confirmButtonText'),
-      cancelButtonText: this.translate.instant('fire.issue.cancelButtonText'),
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33'
-    }).then((result) => {
-      if (result.isConfirmed) {
-        let token = localStorage.getItem('token')
-        this.rayahenService.deleteIssue(issueId,token).subscribe((res)=>{
-          this.toastMessage = res.body.message
-          this.toastBgColor = 'bg-success'
-          this.toastComponent.show();
-          this. getAllIssues()
-        })
-      }
-    });
-
   }
   logout(){
     localStorage.removeItem("token") ;
