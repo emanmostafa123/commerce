@@ -16,6 +16,7 @@
             "activetckts": "Active Tickets",
             "deactivetckts": "Deactive Tickets",
             "addtckt":"Add Ticket",
+            "updTicket": "update Ticket",
             "submit":"submit"
         },
         "tcktsCrd":{
