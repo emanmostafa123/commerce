@@ -58,7 +58,7 @@ export class LoginComponent {
     localStorage.setItem('lang', lang);
   }
   //
-  // P@ssword123
+  // c
   login(){
     if(!this.loginForm.invalid){
       this.rayahenService.login(this.loginForm.value).subscribe((res)=>{

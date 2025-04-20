@@ -9,6 +9,7 @@
         "mainLabels":{
             "tckts": "Tickets",
             "addissue":"Add Issue",
+            "allissue":"Issues",
             "adduser":"Add User",
             "dashboard":"Dashboard",
             "alltckts":"All Tickets",
@@ -26,6 +27,7 @@
             "tcktTitle":"Title",
             "tcktDes":"Description",
             "tcktPrty":"priority",
+            "typeOfIssue":"Issue Type",
             "crtOn":"Created On",
             "high":"High",
             "medium":"Medium",
@@ -55,5 +57,13 @@
         "password":"Password",
         "wlcmBck":"Welcome Back",
         "forgetpsswrd":"Forget Password..?"
+    },
+    "fire":{
+        "issue":{
+            "title":"Are you sure?",
+            "text":"This action cannot be undone!",
+            "confirmButtonText":"yes",
+            "cancelButtonText":"No"
+        }
     }
 }

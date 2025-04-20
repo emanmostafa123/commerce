@@ -1,73 +1,127 @@
-import { Component } from '@angular/core';
+import { AfterViewInit, Component, ViewChild } from '@angular/core';
 import { NgxChartsModule, Color, ScaleType } from '@swimlane/ngx-charts';
+import { RayahenService } from '../../Services/rayahen.service';
+import { enableRtl } from '@syncfusion/ej2-base';
+import { LangChangeEvent, TranslateModule, TranslateService } from '@ngx-translate/core';
+import { CommonModule } from '@angular/common';
+import { AccumulationChartComponent, AccumulationChartModule } from '@syncfusion/ej2-angular-charts';
+
+// ✅ Interface for chart data
+interface single {
+  name: string;
+  value: number;
+}
+
+// ✅ Interface for issue object
+interface mainTickets {
+  id: number;
+  title: string;
+  description: string;
+  imageUrl: string;
+  createdByUser: number;
+  userNameCreated: string;
+  typeOfIssueId: number;
+  typeOfIssue: string;
+  priority: number;
+  createdOn: string;
+  isActive: boolean;
+  readFlg: boolean;
+}
+interface Ticket {
+  id: number;
+  title: string;
+  isActive: boolean;
+  // add other fields as needed
+}
+enableRtl(true);
 
 @Component({
   selector: 'app-charts',
   standalone: true,
-  imports: [NgxChartsModule],
+  imports: [NgxChartsModule, TranslateModule,CommonModule,AccumulationChartModule],
   templateUrl: './charts.component.html',
   styleUrl: './charts.component.scss'
 })
-export class ChartsComponent {
+
+export class ChartsComponent implements AfterViewInit{
+  @ViewChild('pieChart') pieChart: AccumulationChartComponent | undefined;
+
   view: [number, number] = [700, 400];
+  lineChartData: any[] = []
 
-  single = [
-    { name: "Category A", value: 30 },
-    { name: "Category B", value: 70 },
-    { name: "Category C", value: 100 },
-  ];
-
-  showLegend = true;
-  showLabels = true;
-  explodeSlices = false;
-  doughnut = false;
-  gradient = false;
+  barChartData: any[] = [];
+  pieChartData: any[] = [];
 
   colorScheme: Color = {
     name: 'customScheme',
     selectable: true,
-    group: ScaleType.Ordinal, 
-    domain: ['#5AA454', '#A10A28', '#C7B42C', '#AAAAAA'],
+    group: ScaleType.Ordinal,
+    domain: ['#28a745', '#dc3545'] // green (active), red (inactive)
   };
-  viewline: [number, number] = [700, 400]; // Chart dimensions
-
-  multi = [
-    {
-      "name": "Sales",
-      "series": [
-        { "name": "2020", "value": 50 },
-        { "name": "2021", "value": 80 },
-        { "name": "2022", "value": 65 },
-        { "name": "2023", "value": 120 }
-      ]
-    },
-    {
-      "name": "Revenue",
-      "series": [
-        { "name": "2020", "value": 30 },
-        { "name": "2021", "value": 60 },
-        { "name": "2022", "value": 75 },
-        { "name": "2023", "value": 100 }
-      ]
-    }
-  ];
-
-  showLegendline = true;
-  showXAxis = true;
-  showYAxis = true;
-  showGridLines = true;
-  showXAxisLabel = true;
-  xAxisLabel = 'Year';
-  showYAxisLabel = true;
-  yAxisLabel = 'Amount';
-  curveType = "Linear"; // Curve type (default: Linear)
-
-  // Define color scheme correctly
-  colorSchemeline: Color = {
-    name: 'customScheme',
+  
+  colorSchemePie : Color = {
+    name: 'customColorScheme',
     selectable: true,
-    group: ScaleType.Ordinal, // Correct way to define ScaleType
-    domain: ['#007bff', '#28a745', '#dc3545', '#ffc107']
+    group: ScaleType.Ordinal,  // Correct usage of ScaleType
+    domain: ['#007bff', '#28a745', '#ffc107', '#dc3545', '#6f42c1', '#17a2b8', '#fd7e14']    // green for active, red for inactive
   };
-  constructor() {}
+
+  mainTickets: mainTickets[] = [];
+  tickets: any;
+  activeArray : Ticket[] = [];
+  deactiveArray : Ticket[] = [];
+  allIssues: any;
+  constructor(
+    public rayahenService: RayahenService,
+    public translate : TranslateService
+  ) {
+  }
+
+  ngOnInit(): void {
+    this.translate.onLangChange.subscribe((event: LangChangeEvent) => {
+      this.getAllTickets()
+    });
+  }
+  ngAfterViewInit() {
+    // Optional: refresh initially
+    this.refreshChart()
+  }
+  refreshChart() {
+    this.getAllTickets()
+  }
+ 
+  groupByTypeOfIssue(data: any[]): Record<string, any[]> {
+    return data.reduce((acc, item) => {
+      acc[item.typeOfIssue] = acc[item.typeOfIssue] || [];
+      acc[item.typeOfIssue].push(item);
+      return acc;
+    }, {} as Record<string, any[]>);
+  }
+
+  getAllTickets() {
+    let token = localStorage.getItem('token')
+    this.rayahenService.getAllTickets(token).subscribe((res) => {
+      this.mainTickets = res.body
+      this.mainTickets.forEach((ticket : any)=>{
+        if(ticket.isActive == true) this.activeArray.push(ticket)
+        if(ticket.isActive == false) this.deactiveArray.push(ticket)
+      })
+      const activeCount = this.activeArray.length;
+      const inactiveCount = this.deactiveArray.length;
+      console.log('Active:', activeCount, 'Inactive:', inactiveCount);
+      this.barChartData = [
+        { name: this.translate.instant('tickets.tcktsCrd.active'), value: activeCount },
+        { name: this.translate.instant('tickets.tcktsCrd.deactive'), value: inactiveCount }
+      ];
+      const grouped = this.groupByTypeOfIssue(this.mainTickets);
+      this.pieChartData = Object.entries(grouped).map(([type, items]) => ({
+        name: type,
+        value: items.length
+      }));
+      // this.pieChartData = [
+      //   { name: 'Active', value: activeCount },
+      //   { name: 'Inactive', value: inactiveCount }
+      // ];
+    })
+  }
 }
