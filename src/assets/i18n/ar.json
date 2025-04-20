@@ -16,6 +16,7 @@
             "activetckts": "التذاكر النشطة",
             "deactivetckts": "التذاكر غير النشطة",
             "addtckt": "إضافة تذكرة",
+            "updTicket": "تعديل",
             "submit":"إضافة"
         },
         "tcktsCrd": {

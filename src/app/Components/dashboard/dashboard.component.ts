@@ -25,6 +25,7 @@ export class DashboardComponent {
   mainTickets: any
   chosenTckt: any;
   addTcktForm:any;
+  updTcktForm:any;
   addusrForm: any;
   shownavElmnt: any;
   userData: any;
@@ -83,13 +84,27 @@ export class DashboardComponent {
       role: ['', [Validators.required]],
     })
     this.addTcktForm = this.fb.group({
-      Title: ['', [Validators.required]],
+      title: ['', [Validators.required]],
       description: ['', [Validators.required]],
       priority: ['', [Validators.required]],
       isActive: ['', [Validators.required]],
       createdByUser :['', [Validators.required]],
       typeOfIssue:['', [Validators.required]],
       typeOfIssueId:['', [Validators.required]]
+    })  
+    this.updTcktForm = this.fb.group({
+      id: ['', [Validators.required]],
+      title: ['', [Validators.required]],
+      description: ['', [Validators.required]],
+      priority: ['', [Validators.required]],
+      isActive: ['', [Validators.required]],
+      createdByUser :['', [Validators.required]],
+      typeOfIssue:['', [Validators.required]],
+      typeOfIssueId:['', [Validators.required]],
+      imageUrl:[''],
+      userNameCreated:[''],
+      createdOn:[''],
+      readFlg:['']
     })
     this.addIssueForm = this.fb.group({
       name : ['']
@@ -251,7 +266,23 @@ export class DashboardComponent {
 
   }
   updTckt(event:any){
-    console.log(event)
+    const ticket = Object.entries(event);
+    console.log(ticket)
+    ticket.forEach((element:any)=>{
+      let control = element[0]
+      let val = element[1]
+      this.updTcktForm.controls[control].setValue(val)
+    })
+    this.openModal('updTcktModal')
+  }
+  submitUpdTicket(){
+    let token = localStorage.getItem('token')
+    this.rayahenService.updTicket(this.updTcktForm.value,token).subscribe({
+      next:(res)=>{
+        console.log(res)
+      }
+    })
+
   }
   
   onFileSelected(event: Event): void {
@@ -323,12 +354,26 @@ export class DashboardComponent {
     }).then((result) => {
       if (result.isConfirmed) {
         let token = localStorage.getItem('token')
-        this.rayahenService.deleteIssue(issueId,token).subscribe((res)=>{
-          this.toastMessage = res.body.message
-          this.toastBgColor = 'bg-success'
-          this.toastComponent.show();
-          this. getAllIssues()
-        })
+        this.rayahenService.deleteIssue(issueId, token).subscribe({
+          next: (res) => {
+            this.toastMessage = res.body.message;
+            this.toastBgColor = 'bg-success';
+            this.toastComponent.show();
+            this.getAllIssues();
+          },
+          error: (err) => {
+            if (err.status === 400) {
+              this.toastMessage = err.error.message
+            } else if (err.status === 500) {
+              this.toastMessage = 'Server Error: Please try again later.';
+            } else {
+              this.toastMessage = 'An unexpected error occurred.';
+            }
+            this.toastBgColor = 'bg-warning';
+            this.toastComponent.show();
+          }
+        });
+        
       }
     });
 

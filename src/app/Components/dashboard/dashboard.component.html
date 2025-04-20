@@ -283,7 +283,7 @@
                 <div class="row">
                     <div class="col-12 col-md-6 col-lg-6 col-sm-12">
                         <div class="form-floating  mb-3">
-                            <input type="text" class="form-control" name="Title" formControlName="Title"
+                            <input type="text" class="form-control" name="title" formControlName="title"
                                 id="floatingtitle" [placeholder]="'tickets.tcktsCrd.tcktTitle'| translate">
                             <label for="floatingtitle">{{'tickets.tcktsCrd.tcktTitle'| translate}}</label>
                         </div>
@@ -319,6 +319,61 @@
                     <input type="file" (change)="onFileSelected($event)" />
                     <div class="col-12">
                         <button type="submit" class="btn btn-primary ms-auto" (click)="addTckt()">{{'tickets.mainLabels.submit'| translate}}</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal fade" id="updTcktModal" tabindex="-1" role="dialog" data-bs-backdrop="static" aria-labelledby="updUsrModalTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modalCustom" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="staticBackdropLabel">{{'tickets.mainLabels.updTicket'| translate}}</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+        <div class="modal-body">
+            <form [formGroup]="updTcktForm">
+                <div class="row">
+                    <div class="col-12 col-md-6 col-lg-6 col-sm-12">
+                        <div class="form-floating  mb-3">
+                            <input type="text" class="form-control" name="title" formControlName="title"
+                                id="floatingtitle" [placeholder]="'tickets.tcktsCrd.tcktTitle'| translate">
+                            <label for="floatingtitle">{{'tickets.tcktsCrd.tcktTitle'| translate}}</label>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-6 col-lg-6 col-sm-12">
+                        <div class="form-floating  mb-3">
+                            <input type="text" class="form-control" name="description" formControlName="description"
+                                id="floatingdescription" [placeholder]="'tickets.tcktsCrd.tcktDes'| translate">
+                            <label for="floatingdescription">{{'tickets.tcktsCrd.tcktDes'| translate}}</label>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-6 col-lg-6 col-sm-12">
+                        <div class="form-floating  mb-3">
+                            <select class="form-select" name="priority" formControlName="priority" id="floatingSelectGridtcktPrty"
+                                aria-label="Floating label select example">
+                                <option [ngValue]="1">{{'tickets.tcktsCrd.high'| translate}}</option>
+                                <option [ngValue]="2">{{'tickets.tcktsCrd.medium'| translate}}</option>
+                                <option [ngValue]="3">{{'tickets.tcktsCrd.low'| translate}}</option>
+                            </select>
+                            <label for="floatingSelectGridtcktPrty">{{'tickets.tcktsCrd.tcktPrty'| translate}}</label>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-6 col-lg-6 col-sm-12">
+                        <div class="form-floating  mb-3">
+                            <select class="form-select" name="typeOfIssue" formControlName="typeOfIssue" id="floatingSelectGridtypeOfIssue"
+                                aria-label="Floating label select example">
+                                @for(issue of allIssues; track issue){
+                                <option [ngValue]="issue.name">{{issue.name}}</option>}
+                            </select>
+                            <label for="floatingSelectGridtypeOfIssue">{{'tickets.tcktsCrd.typeOfIssue'| translate}}</label>
+                        </div>
+                    </div>
+                    <input type="file" (change)="onFileSelected($event)" />
+                    <div class="col-12">
+                        <button type="submit" class="btn btn-primary ms-auto" (click)="submitUpdTicket()">{{'tickets.mainLabels.submit'| translate}}</button>
                     </div>
                 </div>
             </form>
