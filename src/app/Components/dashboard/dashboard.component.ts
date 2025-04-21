@@ -125,10 +125,16 @@ export class DashboardComponent {
   }
   
  getAllTickets(){
-  let token = localStorage.getItem('token')
-    this.rayahenService.getAllTickets(token).subscribe((res)=>{
+    this.rayahenService.getAllTickets().subscribe({
+      next: (res) => {
       this.mainTickets = res.body
       this.tickets = this.mainTickets
+      },
+      error:(err)=>{
+        this.toastMessage = err.message
+        this.toastBgColor = 'bg-danger'
+        this.toastComponent.show();
+      }
     })
  }
  openLangDrop(){
@@ -190,12 +196,13 @@ export class DashboardComponent {
       this.tickets = this.mainTickets.filter((ticket:any) => ticket.isActive == false)
     }
   }
-  getTicketbyId(event:any){
-    let token = localStorage.getItem('token')
-    this.rayahenService.getTicketById(event , token).subscribe((res)=>{
-      console.log(res)
-      this.chosenTckt = res.body.ticket
-      this.openModal('displayTcktModal')
+  getTicketbyId(event: any) {
+    this.rayahenService.getTicketById(event).subscribe({
+      next: (res) => {
+        this.chosenTckt = res.body.ticket
+        this.openModal('displayTcktModal')
+        this.rayahenService.readTickt(event).subscribe()
+      }
     })
   }
   openImg(imageUrl:any){
@@ -203,9 +210,8 @@ export class DashboardComponent {
 
   }
   addUser(){
-    let token = localStorage.getItem('token')
     if(!this.addusrForm.invalid){
-      this.rayahenService.addUser(this.addusrForm.value , token).subscribe({
+      this.rayahenService.addUser(this.addusrForm.value ).subscribe({
       next:(res)=>{
         console.log(res)
           this.toastMessage = "Done"
@@ -244,7 +250,6 @@ export class DashboardComponent {
   }
   
   addTckt(){
-    let token = localStorage.getItem('token')
     this.addTcktForm.value.createdByUser =1;
     this.addTcktForm.value.isActive = true;
     debugger
@@ -253,7 +258,7 @@ export class DashboardComponent {
       if(this.addTcktForm.value.typeOfIssue == issue.name) this.addTcktForm.value.typeOfIssueId = issue.id
     })
     debugger
-      this.rayahenService.addTickt(this.addTcktForm.value,token).subscribe((res)=>{
+      this.rayahenService.addTickt(this.addTcktForm.value).subscribe((res)=>{
         if(res.status == 200 ){
           this.uploadImage()
           this.toastMessage = res.body.message
@@ -276,10 +281,20 @@ export class DashboardComponent {
     this.openModal('updTcktModal')
   }
   submitUpdTicket(){
-    let token = localStorage.getItem('token')
-    this.rayahenService.updTicket(this.updTcktForm.value,token).subscribe({
+    this.rayahenService.updTicket(this.updTcktForm.value,this.updTcktForm.value.id).subscribe({
       next:(res)=>{
         console.log(res)
+        this.getAllTickets()
+        this.toastMessage = 'Done'
+        this.toastBgColor = 'bg-success'
+        this.toastComponent.show();
+        this.closeModal('updTcktModal')
+      },
+      error:(err)=>{
+        console.log(err)
+        this.toastMessage = err.message
+        this.toastBgColor = 'bg-danger'
+        this.toastComponent.show();
       }
     })
 
@@ -307,14 +322,12 @@ export class DashboardComponent {
   }
 
   getAllIssues(){
-    let token = localStorage.getItem('token')
-    this.rayahenService.getallIssues(token).subscribe((res)=>{
+    this.rayahenService.getallIssues().subscribe((res)=>{
       this.allIssues = res.body
     })
   }
   addNewIssue(){
-    let token = localStorage.getItem('token')
-      this.rayahenService.addIssue(this.addIssueForm.value,token).subscribe((res)=>{
+      this.rayahenService.addIssue(this.addIssueForm.value).subscribe((res)=>{
         if(res.status == 201 ){
           this.toastMessage = res.body.message
           this.toastBgColor = 'bg-success'
@@ -331,9 +344,8 @@ export class DashboardComponent {
     this.openModal('updIssueModal')
   }
   updateIssue( ){
-    let token = localStorage.getItem('token')
     this.updIssueForm.value.id = this.issueID
-    this.rayahenService.updIssue(this.updIssueForm.value,token).subscribe((res)=>{
+    this.rayahenService.updIssue(this.updIssueForm.value).subscribe((res)=>{
       this.toastMessage = res.body.message
       this.toastBgColor = 'bg-success'
       this.toastComponent.show();
@@ -353,8 +365,7 @@ export class DashboardComponent {
       cancelButtonColor: '#d33'
     }).then((result) => {
       if (result.isConfirmed) {
-        let token = localStorage.getItem('token')
-        this.rayahenService.deleteIssue(issueId, token).subscribe({
+        this.rayahenService.deleteIssue(issueId).subscribe({
           next: (res) => {
             this.toastMessage = res.body.message;
             this.toastBgColor = 'bg-success';
