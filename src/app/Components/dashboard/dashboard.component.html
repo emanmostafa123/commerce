@@ -55,10 +55,13 @@
                         </li>
                     </ul>
                 </div>
-                <a class="btn btn-sm btn-outline logoutbtn mx-1">
-                    <i class="fa-solid fa-user px-2"></i>{{userData.Email}}
+                <a class="btn btn-sm logoutbtn mx-1">
+                    <span>
+                        <img src="../../../assets/user-profile.avif" class="rounded-circle " style="width: 30px;">
+                        {{userData.Email}}
+                    </span>
                 </a>
-                <a class="btn btn-sm btn-outline mx-1 logoutbtn" (click)="logout()">{{'log.logout'| translate}}</a>
+                <a class="btn btn-sm btn-outline mx-1 logoutbtn border" (click)="logout()">{{'log.logout'| translate}}</a>
 
             </div>
         </div>
