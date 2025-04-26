@@ -2,7 +2,7 @@ import { Component, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { RayahenService } from '../../Services/rayahen.service';
 import { CommonModule } from '@angular/common';
-import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AuthService } from '../../shared/auth.service';
 import $ from 'jquery';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
@@ -10,13 +10,17 @@ import { ChartsComponent } from '../charts/charts.component';
 import { ToastComponent } from "../toast/toast.component";
 import Swal from 'sweetalert2';
 import { AccumulationChartComponent } from '@syncfusion/ej2-angular-charts';
+import { TicketsComponent } from "../tickets/tickets.component";
+import { General } from '../../shared/general';
+import { SidemenuComponent } from '../sidemenu/sidemenu.component';
 
 // declare let $ : any
 declare var bootstrap: any;
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, TranslateModule, ChartsComponent, ToastComponent],
+  imports: [CommonModule, ReactiveFormsModule, TranslateModule,FormsModule,
+    SidemenuComponent, ChartsComponent, ToastComponent, TicketsComponent],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss'
 })
@@ -25,13 +29,11 @@ export class DashboardComponent {
   mainTickets: any
   chosenTckt: any;
   addTcktForm:any;
-  updTcktForm:any;
   addusrForm: any;
   shownavElmnt: any;
   userData: any;
   addIssueForm: any;
   lang: string | undefined;
-  dirVal: string;
   getTckts: any;
   showHome: any;
   showTckts: any;
@@ -52,14 +54,16 @@ export class DashboardComponent {
     public rayahenService : RayahenService,
     public fb : FormBuilder,
     public authService : AuthService,
+    public general : General,
     private translate: TranslateService) {
+    this.general.openNavElmnt = this.openNavElmnt.bind(this);
 
     const defaultLang = localStorage.getItem('lang') || 'en';
     this.lang = defaultLang
     if(this.lang == 'ar'){
-      this.dirVal = 'rtl'
+      this.general.dirVal = 'rtl'
     }else{
-      this.dirVal = 'ltr'
+      this.general.dirVal = 'ltr'
     }
     this.translate.setDefaultLang(defaultLang);
     this.translate.use(defaultLang);
@@ -92,7 +96,7 @@ export class DashboardComponent {
       typeOfIssue:['', [Validators.required]],
       typeOfIssueId:['', [Validators.required]]
     })  
-    this.updTcktForm = this.fb.group({
+    this.general.updTcktForm = this.fb.group({
       id: ['', [Validators.required]],
       title: ['', [Validators.required]],
       description: ['', [Validators.required]],
@@ -129,6 +133,7 @@ export class DashboardComponent {
       next: (res) => {
       this.mainTickets = res.body
       this.tickets = this.mainTickets
+      this.showTckts = true
       },
       error:(err)=>{
         this.toastMessage = err.message
@@ -144,17 +149,20 @@ export class DashboardComponent {
   switchLanguage(lang: string) {
     this.lang = lang
     if(lang == 'ar'){
-      this.dirVal = 'rtl'
+      this.general.dirVal = 'rtl'
       this.lang = 'العربية'
     }else{
-      this.dirVal = 'ltr'
+      this.general.dirVal = 'ltr'
     }
     this.translate.use(lang);
     localStorage.setItem('lang', lang);
   }
   //
   // Apply the transformation
- 
+  handleNavEvent(eventValue: string) {
+    this.openNavElmnt(eventValue)
+    console.log('Event received in parent component:', eventValue);
+  }
   //P@ssw0rd
   openNavElmnt(event:any, openIssueodal?:boolean){
     this.shownavElmnt = event
@@ -167,8 +175,8 @@ export class DashboardComponent {
     if(event == 'tickets'){
       this.showHome = false
       this.showIssues = false
-      this.showTckts = true
       this.getAllTickets()
+      this.showTckts = false
       this.chartSide = false
     }
 
@@ -184,27 +192,9 @@ export class DashboardComponent {
   openChart(){
     this.chartSide = true
     this.chartComponent?.refreshChart();
+  }
 
-  }
-  getTickets(event :  any){
-    this.getTckts = event
-    if(event == 'all'){
-      this.tickets = this.mainTickets
-    }else if(event == 'active'){
-      this.tickets = this.mainTickets.filter((ticket:any) => ticket.isActive == true)
-    }else if(event == 'deactive'){
-      this.tickets = this.mainTickets.filter((ticket:any) => ticket.isActive == false)
-    }
-  }
-  getTicketbyId(event: any) {
-    this.rayahenService.getTicketById(event).subscribe({
-      next: (res) => {
-        this.chosenTckt = res.body.ticket
-        this.openModal('displayTcktModal')
-        this.rayahenService.readTickt(event).subscribe()
-      }
-    })
-  }
+
   openImg(imageUrl:any){
     window.open(imageUrl, '_blank');
 
@@ -217,7 +207,7 @@ export class DashboardComponent {
           this.toastMessage = "Done"
           this.toastBgColor = 'bg-success'
           this.toastComponent.show();
-          this.closeModal('addUsrModal')
+          this.general.closeModal('addUsrModal')
       } ,
       error: (err) =>{
         console.log(err)
@@ -229,25 +219,7 @@ export class DashboardComponent {
     })
   }
 }
-  openModal(event: any){
-      const modalElement = document.getElementById(event);
-      const modal = new bootstrap.Modal(modalElement);
-      modal.show();
-      if(event == 'addUsrModal'){
-        this.openNavElmnt(event)
-      }
-  }
-  closeModal(modalId: string) {
-    const modalElement = document.getElementById(modalId);
-    if (!modalElement) {
-      return;
-    }
-    const modalInstance = bootstrap.Modal.getInstance(modalElement) || new bootstrap.Modal(modalElement);
-    modalInstance.hide();
-    if (modalId === 'addUsrModal') {
-      this.openNavElmnt(modalId);
-    }
-  }
+
   
   addTckt(){
     this.addTcktForm.value.createdByUser =1;
@@ -265,30 +237,21 @@ export class DashboardComponent {
           this.toastBgColor = 'bg-success'
           this.toastComponent.show();
           this.getAllTickets()
-          this.closeModal('addTcktModal')
+          this.general.closeModal('addTcktModal')
         }
       })
 
   }
-  updTckt(event:any){
-    const ticket = Object.entries(event);
-    console.log(ticket)
-    ticket.forEach((element:any)=>{
-      let control = element[0]
-      let val = element[1]
-      this.updTcktForm.controls[control].setValue(val)
-    })
-    this.openModal('updTcktModal')
-  }
+
   submitUpdTicket(){
-    this.rayahenService.updTicket(this.updTcktForm.value,this.updTcktForm.value.id).subscribe({
+    this.rayahenService.updTicket(this.general.updTcktForm.value,this.general.updTcktForm.value.id).subscribe({
       next:(res)=>{
         console.log(res)
         this.getAllTickets()
         this.toastMessage = 'Done'
         this.toastBgColor = 'bg-success'
         this.toastComponent.show();
-        this.closeModal('updTcktModal')
+        this.general.closeModal('updTcktModal')
       },
       error:(err)=>{
         console.log(err)
@@ -333,7 +296,7 @@ export class DashboardComponent {
           this.toastBgColor = 'bg-success'
           this.toastComponent.show();
           this. getAllIssues()
-          this.closeModal('addIssueModal')
+          this.general.closeModal('addIssueModal')
         }
       })
     // }
@@ -341,7 +304,7 @@ export class DashboardComponent {
   openIssue(issueId : any, issueNm:any){
     this.issueID = issueId
     this.issueNm = issueNm
-    this.openModal('updIssueModal')
+    this.general.openModal('updIssueModal')
   }
   updateIssue( ){
     this.updIssueForm.value.id = this.issueID
@@ -350,7 +313,7 @@ export class DashboardComponent {
       this.toastBgColor = 'bg-success'
       this.toastComponent.show();
       this. getAllIssues()
-      this.closeModal('updIssueModal')
+      this.general.closeModal('updIssueModal')
     })
   }
   deleteIssue(issueId : any, issueNm:any){

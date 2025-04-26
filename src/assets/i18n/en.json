@@ -20,6 +20,7 @@
             "submit":"submit"
         },
         "tcktsCrd":{
+            "id":"Ticket ID",
             "subject":"Subject",
             "description":"Description",
             "active":"Active",
@@ -31,7 +32,10 @@
             "crtOn":"Created On",
             "high":"High",
             "medium":"Medium",
-            "low":"Low"
+            "low":"Low",
+            "tcktStatus":"Ticket Status",
+            "noTckts":"No Tickets Found",
+            "of":"of"
         },
         "issueCrd":{
             "issueNm":"Issue Name"
@@ -65,5 +69,14 @@
             "confirmButtonText":"yes",
             "cancelButtonText":"No"
         }
+    },
+    "charts":{
+        "allTcktCount":"Tickets Count",
+        "allIssueCount":"Issues Count",
+        "activeTckt":"Active Tickets",
+        "deactiveTckt":"Deactive Tickets",
+        "highPrtyTckt":"High Priority Tickets",
+        "mediumPrtyTckt":"Medium Priority Tickets",
+        "lowPrtyTckt":"Low Priority Tickets"
     }
 }

@@ -1,4 +1,20 @@
+@if(displaydata){
 <div class="row">
+    <div class="col-12">
+        <div class="row d-flex my-5  justify-content-center">
+            @for( tcktCount of chartsCountArray ; track tcktCount ){
+            
+                <div class="card text-center mx-3 px-0 my-1">
+                    <div class="card-header bg-rayahen text-light ">
+                        {{'charts.'+tcktCount.label | translate}}
+                    </div>
+                    <div class="card-body fw-bold fs-4">
+                        {{tcktCount.count}}
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
     <ngx-charts-pie-chart class="col-12 col-md-6 col-xl-6 col-xxl-6 col-lg-6" [view]="[600, 400]"
         [results]="pieChartData" [scheme]="colorSchemePie" [legend]="true" [explodeSlices]="false" [labels]="true"
         [doughnut]="false" [gradient]="false">
@@ -11,4 +27,5 @@
     </ngx-charts-bar-vertical>
 
 </div>
+}
 <app-toast #toastRef [message]="toastMessage" [bgColor]="toastBgColor"></app-toast>

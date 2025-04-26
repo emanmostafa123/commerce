@@ -20,6 +20,7 @@
             "submit":"إضافة"
         },
         "tcktsCrd": {
+            "id":"رقم التذكرة",
             "subject": "الموضوع",
             "description": "الوصف",
             "active": "نشط",
@@ -31,7 +32,11 @@
             "typeOfIssue":"نوع المشكلة",
             "high":"عالي",
             "medium":"متوسط",
-            "low":"منخفض"
+            "low":"منخفض",
+            "tcktStatus":"الحالة",
+            "noTckts":"لا توجد تذاكر",
+            "of":"من"
+
         },
         "issueCrd": {
             "issueNm": "اسم المشكلة"
@@ -64,5 +69,14 @@
             "confirmButtonText":"نعم",
             "cancelButtonText":"لا"
         }
+    },
+    "charts":{
+        "allTcktCount":"عدد التذاكر",
+        "allIssueCount":"عدد المشكلات",
+        "activeTckt":"التذاكر النشطة",
+        "deactiveTckt":"التذاكر غير النشطة",
+        "highPrtyTckt":"التذاكر ذات الأولوية العالية",
+        "mediumPrtyTckt":"التذاكر ذات الأولوية المتوسطة",
+        "lowPrtyTckt":"التذاكر ذات الأولوية المنخفضة"
     }
 }

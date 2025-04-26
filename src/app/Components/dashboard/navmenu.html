@@ -1,0 +1,72 @@
+<nav class="navbar sticky-top navbar-expand-lg navbar-dark bg-rayahen" aria-label="Eighth navbar example">
+    <div class="container">
+        <a class="navbar-brand">
+            <img src="../../../assets/rayahenLogo.png" alt="">
+            <!-- {{'main.nav.brand' | translate}} -->
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsExample07"
+            aria-controls="navbarsExample07" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarsExample07">
+            <ul class="navbar-nav  mb-2 mb-lg-0" [ngClass]="general.dirVal =='rtl'?'ms-auto':'me-auto'">
+                <li class="nav-item" [ngClass]="shownavElmnt == 'home' ? 'active':''">
+                    <a class="nav-link active" aria-current="page" (click)="openNavElmnt('home')"><i
+                            class="fa-solid fa-house" [ngClass]="general.dirVal =='rtl'?' ps-2':' pe-2'">
+                        </i>{{'main.nav.home'| translate}}</a>
+                </li>
+                <li class="nav-item align-middle " [ngClass]="shownavElmnt == 'tickets' ? 'active':''"
+                    (click)="openNavElmnt('tickets')">
+                    <a class="nav-link p-0">
+                        <i class="fa-solid fa-ticket" [ngClass]="general.dirVal =='rtl'?' ps-2':' pe-2'"></i><span
+                            class="ms-1 d-none d-sm-inline">{{'tickets.mainLabels.tckts'| translate}}</span>
+                    </a>
+                </li>
+                @if(userData.Role =='Admin'){
+                <li class="nav-item  align-middle" (click)="openNavElmnt('addIssue',true)"
+                    [ngClass]="shownavElmnt == 'addIssue' ? 'active':''">
+                    <a class="nav-link p-0">
+                        <i class="fa-solid fa-ticket" [ngClass]="general.dirVal =='rtl'?' ps-2':' pe-2'"></i><span
+                            class="ms-1 d-none d-sm-inline">{{'tickets.mainLabels.allissue'| translate}}</span>
+                    </a>
+                </li>
+                }
+
+                <li class="nav-item align-middle" [ngClass]="shownavElmnt == 'addUsrModal' ? 'active':''"
+                    (click)="general.openModal('addUsrModal')">
+                    <a class="nav-link p-0">
+                        <i class="fa-solid fa-user-plus" [ngClass]="general.dirVal =='rtl'?' ps-2':' pe-2'"></i><span
+                            class="ms-1 d-none d-sm-inline">{{'tickets.mainLabels.adduser'| translate}}</span>
+                    </a>
+                </li>
+            </ul>
+            <a class="btn btn-sm logoutbtn mx-1">
+                <span>
+                    <i class="fas fa-bell"></i>
+                </span>
+            </a>
+            <div class="dropdown me-2 lngDrp">
+                <a class="btn dropdown-toggle" (click)="openLangDrop()" role="button" id="dropdownMenuLinklang"
+                    data-bs-toggle="dropdown" aria-expanded="false">
+                    {{lang}}
+                </a>
+
+                <ul class="dropdown-menu lang" id="langDropMenu" aria-labelledby="dropdownMenuLinklang">
+                    <li><a class="dropdown-item cursor_pointer langitem" (click)="switchLanguage('ar')">العربية</a>
+                    </li>
+                    <li><a class="dropdown-item cursor_pointer langitem" (click)="switchLanguage('en')">English</a>
+                    </li>
+                </ul>
+            </div>
+            <a class="btn btn-sm logoutbtn mx-1">
+                <span>
+                    <img src="../../../assets/user-profile.avif" class="rounded-circle " style="width: 30px;">
+                    {{userData.Email}}
+                </span>
+            </a>
+            <a class="btn btn-sm btn-outline mx-1 logoutbtn border" (click)="logout()">{{'log.logout'| translate}}</a>
+
+        </div>
+    </div>
+</nav>
