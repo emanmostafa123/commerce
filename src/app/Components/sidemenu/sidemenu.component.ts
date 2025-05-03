@@ -49,21 +49,7 @@ export class SidemenuComponent {
     return user;
   }
   
-   openLangDrop(){
-    $('#langDropMenu').toggleClass('show')
-   }
-   switchLanguage(lang: string) {
-    this.lang = lang
-    if(lang == 'ar'){
-      this.general.dirVal = 'rtl'
-      this.lang = 'العربية'
-    }else{
-      this.general.dirVal = 'ltr'
-    }
-    this.translate.use(lang);
-    localStorage.setItem('lang', lang);
-  }
-
+  
   openNavElmnt(event:any, openIssueodal?:boolean){
     this.shownavElmnt = event
     this.navEvent.emit(event);

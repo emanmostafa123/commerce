@@ -1,8 +1,43 @@
 <div class="section" [lang]="lang" [dir]="general.dirVal" [ngClass]="general.dirVal =='rtl'?' rtl':' '">
+   
    <div class="d-flex">
        <app-sidemenu (navEvent)="handleNavEvent($event)"></app-sidemenu>
        <div class="container-fluid">
+           <nav class="navbar sticky-top navbar-expand-lg  bg-light" aria-label="Eighth navbar example">
+               <div class="container">
+                   <div class="collapse navbar-collapse" id="navbarsExample07">
+                       
+                       <a class="btn btn-sm logoutbtn mx-1"  [ngClass]="general.dirVal =='rtl'?' me-auto':' ms-auto'">
+                           <span >
+                               <i class="fas fa-bell text-rayahen"></i>
+                           </span>
+                       </a>
+                       <div class="dropdown me-2 lngDrp">
+                           <a class="btn dropdown-toggle text-rayahen" (click)="openLangDrop()" role="button" id="dropdownMenuLinklang"
+                               data-bs-toggle="dropdown" aria-expanded="false">
+                               {{lang}}
+                           </a>
+           
+                           <ul class="dropdown-menu lang" id="langDropMenu" aria-labelledby="dropdownMenuLinklang">
+                               <li><a class="dropdown-item cursor_pointer langitem" (click)="switchLanguage('ar')">العربية</a>
+                               </li>
+                               <li><a class="dropdown-item cursor_pointer langitem" (click)="switchLanguage('en')">English</a>
+                               </li>
+                           </ul>
+                       </div>
+                       <a class="btn btn-sm logoutbtn mx-1">
+                           <span class="text-rayahen">
+                               <img src="../../../assets/user-profile.avif" class="rounded-circle " style="width: 30px;">
+                               {{userData.Email}}
+                           </span>
+                       </a>
+                       <a class="btn btn-sm btn-outline mx-1 logoutbtn border text-rayahen" (click)="logout()">{{'log.logout'| translate}}</a>
+           
+                   </div>
+               </div>
+           </nav>
            <div class="row flex-nowrap">
+    
                <div class="col  main">
                    @if(showTckts){
                    <div class="main-screen mt-3">
@@ -16,6 +51,7 @@
                        }
                    </div>
                    }
+                   
                    @if(showIssues){
                    <div class="row bg-white cursor_pointer">
                        <div class="col-11 row">
@@ -223,7 +259,7 @@
                             </div>
                         </div>
                         <input type="file" (change)="onFileSelected($event)" />
-                        <div class="col-12">
+                        <div class="col-12 mt-2">
                             <button type="submit" class="btn btn-primary ms-auto"
                                 (click)="addTckt()">{{'tickets.mainLabels.submit'| translate}}</button>
                         </div>
@@ -299,7 +335,7 @@
                         <div class="col-12 my-2">
                             <input type="file" (change)="onFileSelected($event)" />
                         </div>
-                        <div class="col-12 my-2">
+                        <div class="col-12 my-2 mt-2">
                             <button type="submit" class="btn btn-primary ms-auto"
                                 (click)="submitUpdTicket()">{{'tickets.mainLabels.submit'| translate}}</button>
                         </div>

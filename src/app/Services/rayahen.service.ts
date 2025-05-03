@@ -18,6 +18,12 @@ export class RayahenService {
     });
     return this.http.post<any>('http://ticket-sys.runasp.net/api/Auth/login', req, { headers, responseType: 'json', observe: 'response' })
   }
+  forgetPass(req: any): Observable<any> {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json'
+    });
+    return this.http.post<any>('http://ticket-sys.runasp.net/api/Auth/forgot-password', req, { headers, responseType: 'json', observe: 'response' })
+  }
   getAllTickets() {
     return this.http.get<any>('http://ticket-sys.runasp.net/api/Ticket/GetAllTicket', { responseType: 'json', observe: 'response' })
   }

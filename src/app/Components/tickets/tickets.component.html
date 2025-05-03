@@ -91,8 +91,8 @@
             <td>{{ticket.id}}</td>
             <td>{{ticket.title}}</td>
             <td class="tdDes">{{ticket.description}}</td>
-            <td>{{ticket.priority == 1 ? 'High' : (ticket.priority == 2 ? 'Medium' : 'Low')}}</td>
-            <td>{{ticket.isActive ? 'Active' : 'Inactive'}}</td>
+            <td>{{(ticket.priority == 1 ? 'tickets.tcktsCrd.high' : (ticket.priority == 2 ? 'tickets.tcktsCrd.medium' : 'tickets.tcktsCrd.low')) | translate}}</td>
+            <td>{{(ticket.isActive ? 'tickets.tcktsCrd.active' : 'tickets.tcktsCrd.deactive') | translate}}</td>
             <td>
                 
             <span class="text-warning mx-1 cursor-pointer" (click)="updTckt(ticket)"><i

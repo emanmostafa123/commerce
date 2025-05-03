@@ -49,6 +49,8 @@ export class DashboardComponent {
   issueNm: any;
   selectedFile: File | undefined;
   chartSide: boolean | undefined;
+  deactiveArray: { isActive: boolean }[] = [];
+  activeArray: { isActive: boolean }[] = [];
   constructor(
     public router : Router,
     public rayahenService : RayahenService,
@@ -62,6 +64,7 @@ export class DashboardComponent {
     this.lang = defaultLang
     if(this.lang == 'ar'){
       this.general.dirVal = 'rtl'
+      this.lang = 'العربية'
     }else{
       this.general.dirVal = 'ltr'
     }
@@ -134,6 +137,29 @@ export class DashboardComponent {
       this.mainTickets = res.body
       this.tickets = this.mainTickets
       this.showTckts = true
+      this.activeArray = []
+      this.deactiveArray = []
+      this.mainTickets.forEach((ticket : any) => {
+        if (ticket.isActive === true) this.activeArray.push(ticket as { isActive: boolean });
+        if (ticket.isActive === false) this.deactiveArray.push(ticket as { isActive: boolean });
+                      
+      })
+      const activeCount = this.activeArray.length;
+      const inactiveCount = this.deactiveArray.length;
+      this.general.ticketsStatusCount = [
+        {
+          label : 'allTcktCount',
+          count: this.mainTickets.length
+        },
+        {
+          label : 'activeTckt',
+          count: activeCount
+        },
+        {
+          label : 'deactiveTckt',
+          count: inactiveCount
+        },
+      ]
       },
       error:(err)=>{
         this.toastMessage = err.message
@@ -145,18 +171,19 @@ export class DashboardComponent {
  openLangDrop(){
   $('#langDropMenu').toggleClass('show')
  }
-  // language 
-  switchLanguage(lang: string) {
-    this.lang = lang
-    if(lang == 'ar'){
-      this.general.dirVal = 'rtl'
-      this.lang = 'العربية'
-    }else{
-      this.general.dirVal = 'ltr'
-    }
-    this.translate.use(lang);
-    localStorage.setItem('lang', lang);
+ switchLanguage(lang: string) {
+  this.lang = lang
+  if(lang == 'ar'){
+    this.general.dirVal = 'rtl'
+    this.lang = 'العربية'
+  }else{
+    this.general.dirVal = 'ltr'
   }
+  $('#langDropMenu').removeClass('show')
+  this.translate.use(lang);
+  localStorage.setItem('lang', lang);
+}
+
   //
   // Apply the transformation
   handleNavEvent(eventValue: string) {
@@ -222,7 +249,7 @@ export class DashboardComponent {
 
   
   addTckt(){
-    this.addTcktForm.value.createdByUser =1;
+    this.addTcktForm.value.createdByUser = this.userData.UserId;
     this.addTcktForm.value.isActive = true;
     debugger
     // if(!this.addTcktForm.invalid){
@@ -354,6 +381,8 @@ export class DashboardComponent {
   }
   logout(){
     localStorage.removeItem("token") ;
+    localStorage.removeItem('tokenStartTime')
+    localStorage.removeItem('tokenExpTime')
     this.router.navigate(['/login']);
   }
 }

@@ -60,7 +60,12 @@
         "usrNm":"User Name",
         "password":"Password",
         "wlcmBck":"Welcome Back",
-        "forgetpsswrd":"Forget Password..?"
+        "forgetpsswrd":"Forget Password..?",
+        "email":"Email",
+        "resetpsswrd": "Reset Password",      
+        "reset":"Reset",
+        "logininstead":"Login Instead",
+        "idErr":"Please enter numbers only."
     },
     "fire":{
         "issue":{
