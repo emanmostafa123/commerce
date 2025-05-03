@@ -1,0 +1,62 @@
+.sidebar {
+    width: 250px;
+    background-color: #2d3f3f;
+    min-height: 100vh;
+    border-radius: 20px 0 0 20px;
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+  }
+  
+//   .nav-link {
+//     color: #fff;
+//     font-weight: 500;
+//     border-radius: 10px;
+//     padding: 10px 12px;
+//     transition: background 0.2s;
+//   }
+  
+//   .nav-link:hover {
+//     background-color: #425e5e;
+//   }
+  
+//   .nav-link.active {
+//     background-color: #f5eecb;
+//     color: #2d3f3f !important;
+//   }
+  
+  .nav-link {
+    color: #ffffff;
+    font-weight: 500;
+    border-radius: 12px;
+    padding: 12px 16px 12px 20px;
+    margin-bottom: 8px;
+    transition: all 0.3s ease;
+    position: relative;
+    z-index: 1;
+  }
+  
+  .nav-link:hover {
+    background-color: #3d5656;
+  }
+  
+  .nav-link.active {
+    background-color: #f5eecb;
+    color: #2d3f3f !important;
+    padding-left: 32px;
+  }
+  
+  .nav-link.active i {
+    color: #2d3f3f;
+  }
+  
+  .active-pill {
+    content: '';
+    position: absolute;
+    left: 8px;
+    top: 12px;
+    bottom: 12px;
+    width: 6px;
+    background-color: #e5c44d;
+    border-radius: 4px;
+    z-index: 2;
+  }
+  

@@ -1,0 +1,49 @@
+<div class="sidebar d-flex flex-column text-white p-4">
+    <!-- Profile -->
+    <div class="text-center mb-4">
+      <img
+        src="https://randomuser.me/api/portraits/men/75.jpg"
+        class="rounded-circle mb-2"
+        width="70"
+        height="70"
+        alt="User"
+      />
+      <h5 class="mb-0">Alex Johnson</h5>
+      <small class="text-muted">alex.johnson9gmail.com</small>
+    </div>
+  
+    <!-- Navigation -->
+    <nav class="nav flex-column mb-4">
+        <a
+          *ngFor="let item of navItems"
+          class="nav-link d-flex align-items-center gap-2 position-relative"
+          [ngClass]="{ active: item.active }"
+          (click)="setActive(item.label)"
+          href="#"
+        >
+          <span
+            class="active-pill"
+            *ngIf="item.active"
+          ></span>
+          <i class="bi" [ngClass]="item.icon"></i>
+          <span>{{ item.label }}</span>
+        </a>
+      </nav>
+  
+    <!-- Active Users -->
+    <div class="mt-auto">
+      <p class="text-uppercase text-warning fw-bold small">Active Users</p>
+      <div class="d-flex align-items-center mb-3">
+        <ng-container *ngFor="let img of activeUsers">
+          <img [src]="img" class="rounded-circle me-1" width="30" height="30" />
+        </ng-container>
+        <span class="badge bg-light text-dark ms-2">+70</span>
+      </div>
+      <img
+        src="https://i.ibb.co/MsfVhnp/map-icon.png"
+        alt="Map Graphic"
+        class="img-fluid"
+      />
+    </div>
+  </div>
+  

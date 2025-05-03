@@ -5,6 +5,8 @@ import { enableRtl } from '@syncfusion/ej2-base';
 import { LangChangeEvent, TranslateModule, TranslateService } from '@ngx-translate/core';
 import { CommonModule } from '@angular/common';
 import { AccumulationChartComponent, AccumulationChartModule } from '@syncfusion/ej2-angular-charts';
+import { ToastComponent } from '../toast/toast.component';
+import { General } from '../../shared/general';
 
 // ✅ Interface for chart data
 interface single {
@@ -38,12 +40,12 @@ enableRtl(true);
 @Component({
   selector: 'app-charts',
   standalone: true,
-  imports: [NgxChartsModule, TranslateModule,CommonModule,AccumulationChartModule],
+  imports: [NgxChartsModule, TranslateModule, CommonModule, AccumulationChartModule, ToastComponent],
   templateUrl: './charts.component.html',
   styleUrl: './charts.component.scss'
 })
 
-export class ChartsComponent implements AfterViewInit{
+export class ChartsComponent implements AfterViewInit {
   @ViewChild('pieChart') pieChart: AccumulationChartComponent | undefined;
 
   view: [number, number] = [700, 400];
@@ -58,22 +60,31 @@ export class ChartsComponent implements AfterViewInit{
     group: ScaleType.Ordinal,
     domain: ['#28a745', '#dc3545'] // green (active), red (inactive)
   };
-  
-  colorSchemePie : Color = {
+
+  colorSchemePie: Color = {
     name: 'customColorScheme',
     selectable: true,
     group: ScaleType.Ordinal,  // Correct usage of ScaleType
     domain: ['#007bff', '#28a745', '#ffc107', '#dc3545', '#6f42c1', '#17a2b8', '#fd7e14']    // green for active, red for inactive
   };
+  @ViewChild('toastRef') toastComponent!: ToastComponent;
 
+  displaydata:boolean = false;
   mainTickets: mainTickets[] = [];
   tickets: any;
-  activeArray : Ticket[] = [];
-  deactiveArray : Ticket[] = [];
+  activeArray: Ticket[] = [];
+  deactiveArray: Ticket[] = [];
+  chartsCountArray: any[] = []
   allIssues: any;
+  toastMessage: any;
+  toastBgColor: string | undefined;
+  lowprtyArray: any[] = []
+  mdmprtyArray: any[] = []
+  highprtyArray: any[] = []
   constructor(
     public rayahenService: RayahenService,
-    public translate : TranslateService
+    public translate: TranslateService,
+    public general: General,
   ) {
   }
 
@@ -89,7 +100,7 @@ export class ChartsComponent implements AfterViewInit{
   refreshChart() {
     this.getAllTickets()
   }
- 
+
   groupByTypeOfIssue(data: any[]): Record<string, any[]> {
     return data.reduce((acc, item) => {
       acc[item.typeOfIssue] = acc[item.typeOfIssue] || [];
@@ -99,29 +110,85 @@ export class ChartsComponent implements AfterViewInit{
   }
 
   getAllTickets() {
-    let token = localStorage.getItem('token')
-    this.rayahenService.getAllTickets(token).subscribe((res) => {
-      this.mainTickets = res.body
-      this.mainTickets.forEach((ticket : any)=>{
-        if(ticket.isActive == true) this.activeArray.push(ticket)
-        if(ticket.isActive == false) this.deactiveArray.push(ticket)
-      })
-      const activeCount = this.activeArray.length;
-      const inactiveCount = this.deactiveArray.length;
-      console.log('Active:', activeCount, 'Inactive:', inactiveCount);
-      this.barChartData = [
-        { name: this.translate.instant('tickets.tcktsCrd.active'), value: activeCount },
-        { name: this.translate.instant('tickets.tcktsCrd.deactive'), value: inactiveCount }
-      ];
-      const grouped = this.groupByTypeOfIssue(this.mainTickets);
-      this.pieChartData = Object.entries(grouped).map(([type, items]) => ({
-        name: type,
-        value: items.length
-      }));
-      // this.pieChartData = [
-      //   { name: 'Active', value: activeCount },
-      //   { name: 'Inactive', value: inactiveCount }
-      // ];
+    this.rayahenService.getAllTickets().subscribe({
+      next: (res) => {
+        debugger
+        this.displaydata = true
+        this.activeArray = []
+        this.deactiveArray = []
+        this.highprtyArray = []
+        this.mdmprtyArray = []
+        this.lowprtyArray = []
+        this.mainTickets = res.body
+        this.mainTickets.forEach((ticket: any) => {
+          if (ticket.isActive == true) this.activeArray.push(ticket)
+          if (ticket.isActive == false) this.deactiveArray.push(ticket)
+          if (ticket.priority == 1) this.highprtyArray.push(ticket)
+          if (ticket.priority == 2) this.mdmprtyArray.push(ticket)
+          if (ticket.priority == 3) this.lowprtyArray.push(ticket)
+                        
+        })
+        const activeCount = this.activeArray.length;
+        const inactiveCount = this.deactiveArray.length;
+        console.log('activeCount', activeCount)
+        console.log('inactiveCount', inactiveCount)
+        this.barChartData = [
+          { name: this.translate.instant('tickets.tcktsCrd.active'), value: activeCount },
+          { name: this.translate.instant('tickets.tcktsCrd.deactive'), value: inactiveCount }
+        ];
+        const grouped = this.groupByTypeOfIssue(this.mainTickets);
+        this.pieChartData = Object.entries(grouped).map(([type, items]) => ({
+          name: type,
+          value: items.length
+        }));
+        this.chartsCountArray = [
+          {
+            label : 'allTcktCount',
+            count: this.mainTickets.length
+          },
+          {
+            label : 'activeTckt',
+            count: activeCount
+          },
+          {
+            label : 'deactiveTckt',
+            count: inactiveCount
+          },
+          {
+            label : 'highPrtyTckt',
+            count: this.highprtyArray.length
+          },
+          {
+            label : 'mediumPrtyTckt',
+            count: this.mdmprtyArray.length
+          },
+          {
+            label : 'lowPrtyTckt',
+            count: this.lowprtyArray.length
+          }
+
+        ]
+        this.general.ticketsStatusCount = [
+          {
+            label : 'allTcktCount',
+            count: this.mainTickets.length
+          },
+          {
+            label : 'activeTckt',
+            count: activeCount
+          },
+          {
+            label : 'deactiveTckt',
+            count: inactiveCount
+          },
+        ]
+      },
+      error: (err) => {
+        this.displaydata = false
+        this.toastMessage = err.message
+        this.toastBgColor = 'bg-danger'
+        this.toastComponent.show();
+      }
     })
   }
 }

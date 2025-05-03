@@ -1,0 +1,55 @@
+<div class="d-flex flex-column flex-shrink-0 p-3 text-white bg-rayahen" 
+    style="width: 280px;min-height: 100%;height: 100vh;">
+    <div class="d-block text-center sideMenutop">
+        <li>
+            <a class="navbar-brand">
+                <img src="../../../assets/rayahenLogo.png" alt="">
+                <!-- {{'main.nav.brand' | translate}} -->
+            </a>
+        </li>
+    </div>
+
+    <hr>
+    <ul class="nav nav-pills flex-column mb-auto p-0">
+      <li class="nav-item my-1">
+        <a  class="nav-link text-white" aria-current="page" 
+            [ngClass]="shownavElmnt == 'home' ? 'active':''"
+            (click)="openNavElmnt('home')">
+          <svg class="bi me-2" width="16" height="16"><use xlink:href="#home"></use></svg>
+          {{'main.nav.home'| translate}}
+        </a>
+      </li>
+      <li>
+        <a  class="nav-link text-white my-1" 
+            [ngClass]="shownavElmnt == 'tickets' ? 'active':''"
+            (click)="openNavElmnt('tickets')">
+          <svg class="bi me-2" width="16" height="16"><use xlink:href="#speedometer2"></use></svg>
+          {{'tickets.mainLabels.tckts'| translate}}
+        </a>
+      </li>
+      @if(userData.Role =='Admin'){
+
+      <li>
+        <a  class="nav-link text-white my-1" 
+            [ngClass]="shownavElmnt == 'addIssue' ? 'active':''" 
+            (click)="openNavElmnt('addIssue',true)">
+          <svg class="bi me-2" width="16" height="16"><use xlink:href="#table"></use></svg>
+          {{'tickets.mainLabels.allissue'| translate}}
+        </a>
+      </li>
+    }
+    @if(userData.Role =='Admin'){
+
+      <li>
+        <a  class="nav-link text-white my-1" 
+            [ngClass]="shownavElmnt == 'addUsrModal' ? 'active':''"
+            (click)="general.openModal('addUsrModal')">
+          <svg class="bi me-2" width="16" height="16"><use xlink:href="#grid"></use></svg>
+          {{'tickets.mainLabels.adduser'| translate}}
+        </a>
+      </li>
+    }
+    </ul>
+    <hr>
+    
+  </div>
