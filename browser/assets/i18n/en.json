@@ -1,0 +1,87 @@
+{
+    "main":{
+        "nav":{
+            "brand":"Rayahen",
+            "home":"Home"
+        }
+    },
+    "tickets":{
+        "mainLabels":{
+            "tckts": "Tickets",
+            "addissue":"Add Issue",
+            "allissue":"Issues",
+            "adduser":"Add User",
+            "dashboard":"Dashboard",
+            "alltckts":"All Tickets",
+            "activetckts": "Active Tickets",
+            "deactivetckts": "Deactive Tickets",
+            "addtckt":"Add Ticket",
+            "updTicket": "update Ticket",
+            "submit":"submit"
+        },
+        "tcktsCrd":{
+            "id":"Ticket ID",
+            "subject":"Subject",
+            "description":"Description",
+            "active":"Active",
+            "deactive":"Deactive",
+            "tcktTitle":"Title",
+            "tcktDes":"Description",
+            "tcktPrty":"priority",
+            "typeOfIssue":"Issue Type",
+            "crtOn":"Created On",
+            "high":"High",
+            "medium":"Medium",
+            "low":"Low",
+            "tcktStatus":"Ticket Status",
+            "noTckts":"No Tickets Found",
+            "of":"of"
+        },
+        "issueCrd":{
+            "issueNm":"Issue Name"
+        },
+        "usrCard":{
+            "id":"User ID",
+            "usrNm": "User Name",
+            "email":"Email",
+            "password":"Password",
+            "branch": "Branch",
+            "role":"Role",
+            "department":"Department",
+            "issue":"Issue",
+            "admin":"Admin",
+            "usr":"User"
+        }
+
+    },
+    "log":{
+        "login":"Login",
+        "logout":"Logout",
+        "usrNm":"User Name",
+        "password":"Password",
+        "wlcmBck":"Welcome Back",
+        "forgetpsswrd":"Forget Password..?",
+        "email":"Email",
+        "resetpsswrd": "Reset Password",      
+        "reset":"Reset",
+        "logininstead":"Login Instead",
+        "idErr":"Please enter numbers only."
+    },
+    "fire":{
+        "issue":{
+            "title":"Are you sure?",
+            "text":"This action cannot be undone!",
+            "confirmButtonText":"yes",
+            "cancelButtonText":"No"
+        }
+    },
+    "charts":{
+        "allTcktCount":"Tickets Count",
+        "allIssueCount":"Issues Count",
+        "activeTckt":"Active Tickets",
+        "deactiveTckt":"Deactive Tickets",
+        "highPrtyTckt":"High Priority Tickets",
+        "mediumPrtyTckt":"Medium Priority Tickets",
+        "lowPrtyTckt":"Low Priority Tickets"
+    }
+}

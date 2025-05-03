@@ -1,0 +1,88 @@
+{
+    "main":{
+        "nav":{
+            "brand":"رياحين",
+            "home":"الرئيسية"
+        }
+    },
+    "tickets": {
+        "mainLabels": {
+            "tckts": "التذاكر",
+            "addissue": "إضافة مشكلة",
+            "adduser": "إضافة مستخدم",
+            "allissue":"المشكلات",
+            "dashboard": "لوحة التحكم",
+            "alltckts": "كل التذاكر",
+            "activetckts": "التذاكر النشطة",
+            "deactivetckts": "التذاكر غير النشطة",
+            "addtckt": "إضافة تذكرة",
+            "updTicket": "تعديل",
+            "submit":"إضافة"
+        },
+        "tcktsCrd": {
+            "id":"رقم التذكرة",
+            "subject": "الموضوع",
+            "description": "الوصف",
+            "active": "نشط",
+            "deactive": "غير نشط",
+            "tcktTitle": "العنوان",
+            "tcktDes": "الوصف",
+            "tcktPrty": "الأولوية",
+            "crtOn":"تاريخ الانشاء",
+            "typeOfIssue":"نوع المشكلة",
+            "high":"عالي",
+            "medium":"متوسط",
+            "low":"منخفض",
+            "tcktStatus":"الحالة",
+            "noTckts":"لا توجد تذاكر",
+            "of":"من"
+
+        },
+        "issueCrd": {
+            "issueNm": "اسم المشكلة"
+        },
+        "usrCard": {
+            "id": "معرّف المستخدم",
+            "usrNm": "اسم المستخدم",
+            "email": "البريد الإلكتروني",
+            "password": "كلمة المرور",
+            "branch": "الفرع",
+            "role": "الدور",
+            "department": "القسم",
+            "issue":"المشكلة",
+            "admin":"مسئول",
+            "usr":"مستخدم"
+        }
+    },
+    "log": {
+        "login": "تسجيل الدخول",
+        "logout": "تسجيل الخروج",
+        "usrNm": "اسم المستخدم",
+        "password": "كلمة المرور",
+        "wlcmBck": "مرحبًا بعودتك",
+        "forgetpsswrd": "نسيت كلمة المرور..؟",
+        "email": "البريد الإلكتروني",
+        "resetpsswrd": "إعادة تعيين كلمة المرور",      
+        "reset":"إعادة تعيين",
+        "logininstead":"تسجيل الدخول بدلاً من ذلك" ,
+        "idErr":"من فضلك أدخل ارقام فقط"
+
+    },
+    "fire":{
+        "issue":{
+            "title":"هل أنت متأكد؟",
+            "text":"لا يمكنك التراجع عن هذا الإجراء",
+            "confirmButtonText":"نعم",
+            "cancelButtonText":"لا"
+        }
+    },
+    "charts":{
+        "allTcktCount":"عدد التذاكر",
+        "allIssueCount":"عدد المشكلات",
+        "activeTckt":"التذاكر النشطة",
+        "deactiveTckt":"التذاكر غير النشطة",
+        "highPrtyTckt":"التذاكر ذات الأولوية العالية",
+        "mediumPrtyTckt":"التذاكر ذات الأولوية المتوسطة",
+        "lowPrtyTckt":"التذاكر ذات الأولوية المنخفضة"
+    }
+}
