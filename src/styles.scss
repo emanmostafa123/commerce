@@ -1,4 +1,8 @@
 /* You can add global styles to this file, and also import other style files */
+@import'assets/generalStyle.scss';
+// @import 'animate.css';
+// @import "~animate.css/animate.css";
+
 body{
     font-family: 'Cairo', sans-serif !important;
 }
@@ -8,6 +12,11 @@ html,
 body {
   margin: 0;
   padding: 0;
+}
+.dropdown-menu{
+  border: 1px solid #805e1f59 !important;
+  border-radius: 10px !important;
+
 }
 
 /* use viewport-relative units to cover page fully */
@@ -32,3 +41,9 @@ body::-webkit-scrollbar {
     background: #B8935E;
   }
   
+
+  .modal-content{
+    border-radius: 0px;
+    border: none;
+    height: 30rem;
+  }

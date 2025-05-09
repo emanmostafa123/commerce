@@ -8,6 +8,8 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import $ from 'jquery';
 import { General } from '../../shared/general';
 import { ToastComponent } from '../toast/toast.component';
+import { LanguageSwitchComponent } from '../language-switch/language-switch.component';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-login',
@@ -17,6 +19,7 @@ import { ToastComponent } from '../toast/toast.component';
     ReactiveFormsModule,
     TranslateModule,
     RouterModule,
+     LanguageSwitchComponent,
     ToastComponent
   ],
   templateUrl: './login.component.html',
@@ -24,30 +27,24 @@ import { ToastComponent } from '../toast/toast.component';
 })
 export class LoginComponent {
   loginForm : any
-  lang: string;
   @ViewChild('toastRef') toastComponent!: ToastComponent;
   toastMessage: any;
   toastBgColor: any;
-
+  lang: any;
   constructor(
     public fb : FormBuilder,
     public router : Router,
     public rayahenService : RayahenService,
     private translate: TranslateService,
-    public general : General
+    public general : General,
+    public title : Title
   ) { 
-    
+    this.title.setTitle('Rayahen | Login ');
     const defaultLang = localStorage.getItem('lang') || 'en';
     this.lang = defaultLang
-    if(this.lang == 'ar'){
-      this.general.dirVal = 'rtl'
-      this.lang = 'العربية'
-    }else{
-      this.general.dirVal = 'ltr'
-    }
     this.translate.setDefaultLang(defaultLang);
     this.translate.use(defaultLang);
-    if(localStorage.getItem("token") != null) this.router.navigate(['/dashboard'])
+    if(localStorage.getItem("token") != null) this.router.navigate(['/rayahen'])
   }
 
   ngOnInit(): void {
@@ -91,7 +88,7 @@ export class LoginComponent {
         console.log("res",res)
         if(res.body.success != false){
         localStorage.setItem('token',res.body.data.token) 
-        this.router.navigate(['/dashboard'])
+        this.router.navigate(['/rayahen'])
         this.getLoginDate()
         this.getExpDate()
         }else{

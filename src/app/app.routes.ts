@@ -10,10 +10,11 @@ export const routes: Routes = [
     {path:'forgetpassword', component: ForgetPasswordComponent},
     { path: '', component: LoginComponent },
     {
-        path: 'dashboard',
+        path: 'rayahen',
         component: DashboardComponent,
         canActivate:  [AuthGuard]
     },
+    
     // {
     //     path: 'newdashboard',
     //     component: LangingPageComponent,

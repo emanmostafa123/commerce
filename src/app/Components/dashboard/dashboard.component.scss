@@ -188,26 +188,8 @@ nav {
     background-color: #805e1f;
     padding: .5rem;
 }
-.lngDrp .btn {
-    font-size: 13px !important;
-    background: transparent !important;
-    // color: white !important;
-    border: none !important;
-}
 
-.cursor_pointer{
-    cursor: pointer;
-}
 
-.lang{
-    .dropdown-item.active, .dropdown-item:active{
-        background-color: transparent !important;
-    }
-    .dropdown-item:hover{
-        background-color: #805e1f !important;
-        color: white!important;
-    }
-}
 // .sideMenu{
 //     // background: url('../../../assets/login.png');
 //     // background-size: contain;
@@ -236,13 +218,6 @@ app-toast{
     left: auto !important;
 }
 
-.rtl{
-    app-toast{
-        left: 25px !important;
-        right: auto !important;
-    }
-    
-}
 
 .float-right{
     float: right;
@@ -252,4 +227,8 @@ app-toast{
 }
 .cursor-pointer{
     cursor: pointer;
+}
+
+.bg-Basic{
+    background: rgb(235 234 232) !important;
 }

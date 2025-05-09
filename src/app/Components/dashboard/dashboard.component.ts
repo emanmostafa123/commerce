@@ -13,14 +13,18 @@ import { AccumulationChartComponent } from '@syncfusion/ej2-angular-charts';
 import { TicketsComponent } from "../tickets/tickets.component";
 import { General } from '../../shared/general';
 import { SidemenuComponent } from '../sidemenu/sidemenu.component';
+import { LanguageSwitchComponent } from "../language-switch/language-switch.component";
+import { NotificationsComponent } from '../notifications/notifications.component';
+import { DisplayTicketComponent } from "../display-ticket/display-ticket.component";
 
 // declare let $ : any
 declare var bootstrap: any;
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, TranslateModule,FormsModule,
-    SidemenuComponent, ChartsComponent, ToastComponent, TicketsComponent],
+  imports: [CommonModule, ReactiveFormsModule, TranslateModule, FormsModule, LanguageSwitchComponent,
+    NotificationsComponent, DisplayTicketComponent,
+    SidemenuComponent, ChartsComponent, ToastComponent, TicketsComponent, LanguageSwitchComponent, DisplayTicketComponent],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss'
 })
@@ -35,20 +39,18 @@ export class DashboardComponent {
   addIssueForm: any;
   lang: string | undefined;
   getTckts: any;
-  showHome: any;
-  showTckts: any;
   allIssues: any;
   showIssues: any;
   updIssueForm: any;
   issueID: any;
   toastMessage: any;
+  showSingleTckt:any;
   toastBgColor:any;
   @ViewChild('toastRef') toastComponent!: ToastComponent;
   @ViewChild('chartComp') chartComponent: ChartsComponent | undefined;
 
   issueNm: any;
   selectedFile: File | undefined;
-  chartSide: boolean | undefined;
   deactiveArray: { isActive: boolean }[] = [];
   activeArray: { isActive: boolean }[] = [];
   constructor(
@@ -62,17 +64,8 @@ export class DashboardComponent {
 
     const defaultLang = localStorage.getItem('lang') || 'en';
     this.lang = defaultLang
-    if(this.lang == 'ar'){
-      this.general.dirVal = 'rtl'
-      this.lang = 'العربية'
-    }else{
-      this.general.dirVal = 'ltr'
-    }
     this.translate.setDefaultLang(defaultLang);
     this.translate.use(defaultLang);
-    this.userData = this.authService.getDecodedToken();
-    this.userData = this.transformUserData(this.userData);
-    console.log(this.userData )
   }
 
   ngOnInit(): void {
@@ -123,20 +116,14 @@ export class DashboardComponent {
   
   this.getAllIssues()
   }
-  transformUserData(user: any): any {
-    if (user["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"]) {
-      user.role = user["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"];
-      delete user["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"];
-    }
-    return user;
-  }
+ 
   
  getAllTickets(){
     this.rayahenService.getAllTickets().subscribe({
       next: (res) => {
       this.mainTickets = res.body
       this.tickets = this.mainTickets
-      this.showTckts = true
+      this.general.showTckts = true
       this.activeArray = []
       this.deactiveArray = []
       this.mainTickets.forEach((ticket : any) => {
@@ -168,21 +155,7 @@ export class DashboardComponent {
       }
     })
  }
- openLangDrop(){
-  $('#langDropMenu').toggleClass('show')
- }
- switchLanguage(lang: string) {
-  this.lang = lang
-  if(lang == 'ar'){
-    this.general.dirVal = 'rtl'
-    this.lang = 'العربية'
-  }else{
-    this.general.dirVal = 'ltr'
-  }
-  $('#langDropMenu').removeClass('show')
-  this.translate.use(lang);
-  localStorage.setItem('lang', lang);
-}
+ 
 
   //
   // Apply the transformation
@@ -194,30 +167,30 @@ export class DashboardComponent {
   openNavElmnt(event:any, openIssueodal?:boolean){
     this.shownavElmnt = event
     if(event == 'home'){
-      this.showTckts = false
-      this.showIssues = false
-      this.showHome = true
+      this.general.showTckts = false
+      this.general.showIssues = false
+      this.general.showHome = true
       this.openChart()
     } 
     if(event == 'tickets'){
-      this.showHome = false
-      this.showIssues = false
+      this.general.showHome = false
+      this.general.showIssues = false
       this.getAllTickets()
-      this.showTckts = false
-      this.chartSide = false
+      this.general.showTckts = false
+      this.general.chartSide = false
     }
 
     if(event == 'addIssue'){
       // this.openModal('addIssueModal')
-      this.showHome = false
-      this.showTckts = false
+      this.general.showHome = false
+      this.general.showTckts = false
       this.getAllIssues()
-      this.showIssues = true
-      this.chartSide = false
+      this.general.showIssues = true
+      this.general.chartSide = false
     }
   }
   openChart(){
-    this.chartSide = true
+    this.general.chartSide = true
     this.chartComponent?.refreshChart();
   }
 
@@ -249,7 +222,7 @@ export class DashboardComponent {
 
   
   addTckt(){
-    this.addTcktForm.value.createdByUser = this.userData.UserId;
+    this.addTcktForm.value.createdByUser = this.general.userData.UserId;
     this.addTcktForm.value.isActive = true;
     debugger
     // if(!this.addTcktForm.invalid){

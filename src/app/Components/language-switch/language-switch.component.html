@@ -1,0 +1,13 @@
+<div class="dropdown me-2 lngDrp" id="langDrop">
+    <a class="btn dropdown-toggle text-rayahen" (click)="openLangDrop()" role="button" id="dropdownMenuLinklang"
+        data-bs-toggle="dropdown" aria-expanded="false">
+        {{lang}}
+    </a>
+
+    <ul class="dropdown-menu lang" id="langDropMenu" aria-labelledby="dropdownMenuLinklang">
+        <li><a class="dropdown-item cursor_pointer langitem" (click)="switchLanguage('ar')">العربية</a>
+        </li>
+        <li><a class="dropdown-item cursor_pointer langitem" (click)="switchLanguage('en')">English</a>
+        </li>
+    </ul>
+</div>

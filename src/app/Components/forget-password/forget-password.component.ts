@@ -8,12 +8,15 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import $ from 'jquery';
 import { General } from '../../shared/general';
 import { ToastComponent } from '../toast/toast.component';
+import { LanguageSwitchComponent } from '../language-switch/language-switch.component';
+import { Title } from '@angular/platform-browser';
 @Component({
   selector: 'app-forget-password',
   imports: [
     CommonModule,
     ReactiveFormsModule,
     TranslateModule,
+     LanguageSwitchComponent,
     RouterModule,
     ToastComponent
   ],
@@ -31,19 +34,14 @@ export class ForgetPasswordComponent {
     public translate : TranslateService,
     public general : General,
     public fb : FormBuilder,
-    public rayahenService : RayahenService
+    public rayahenService : RayahenService,
+    public title: Title
   ){
 
     const defaultLang = localStorage.getItem('lang') || 'en';
-    this.lang = defaultLang
-    if(this.lang == 'ar'){
-      this.general.dirVal = 'rtl'
-      this.lang = 'العربية'
-    }else{
-      this.general.dirVal = 'ltr'
-    }
     this.translate.setDefaultLang(defaultLang);
     this.translate.use(defaultLang);
+    this.title.setTitle('Rayahen | ResetPassword');
   }
     ngOnInit(): void {
       this.forgetPassForm = this.fb.group({

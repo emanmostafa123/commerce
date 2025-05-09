@@ -1,15 +1,6 @@
 <div class="section"  [lang]="lang" [dir]="general.dirVal" [ngClass]="general.dirVal == 'rtl'?'rtl':''">
     <div class="container">
-        <div class="dropdown me-2 lngDrp">
-            <a class="btn dropdown-toggle"
-            role="button" id="dropdownMenuLink" (click)="openLangDrop()" data-bs-toggle="dropdown" aria-expanded="false">
-              {{lang}}
-            </a>
-            <ul class="dropdown-menu lang" id="langDropMenuLogin" aria-labelledby="dropdownMenuLink">
-              <li><a class="dropdown-item cursor_pointer langitem" (click)="switchLanguage('ar')">العربية</a></li>
-              <li><a class="dropdown-item cursor_pointer langitem" (click)="switchLanguage('en')">English</a></li>
-            </ul>
-          </div>
+        <app-language-switch></app-language-switch>
         <form [formGroup]="loginForm">
             <div class="row justify-content-center">
                 <div class="m-5 col-12 col-sm-12 col-md-8 col-lg-6 col-xl-6 col-xxl-6 ">

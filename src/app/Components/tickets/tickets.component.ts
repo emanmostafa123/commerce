@@ -4,6 +4,7 @@ import { LangChangeEvent, TranslateModule, TranslateService } from '@ngx-transla
 import { RayahenService } from '../../Services/rayahen.service';
 import { DeclarationHelper } from '../../shared/DeclarationHelper';
 import { General } from '../../shared/general';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-tickets',
@@ -30,13 +31,18 @@ tickets: any[] = [];
   constructor(
     public translate: TranslateService,
     public rayahenService: RayahenService,
-    public general: General
+    public general: General,
+    public title: Title
   ) {
     // Initialize any properties or services here if needed
+    this.title.setTitle('Rayahen | Tickets');
   }
   ngOnChanges(changes: SimpleChanges) {
+    console.log(changes)
     if (changes['mainTickets']) {
+      this.title.setTitle('Rayahen | Tickets');
       this.getTickets('all')
+
     }
   }
   ngoninit() {
@@ -74,8 +80,11 @@ tickets: any[] = [];
   getTicketbyId(event: any) {
     this.rayahenService.getTicketById(event).subscribe({
       next: (res) => {
-        this.general.chosenTckt = res.body.ticket
-        this.general.openModal('displayTcktModal')
+        this.general.displayedTckt = res.body.ticket
+        this.general.showTckts = false;
+        this.general.showreturnBtn = true
+        this.general.showSingleTckt = true;
+        // this.general.openModal('displayTcktModal')
         this.rayahenService.readTickt(event).subscribe()
       }
     })

@@ -7,28 +7,12 @@
                <div class="container">
                    <div class="collapse navbar-collapse" id="navbarsExample07">
                        
-                       <a class="btn btn-sm logoutbtn mx-1"  [ngClass]="general.dirVal =='rtl'?' me-auto':' ms-auto'">
-                           <span >
-                               <i class="fas fa-bell text-rayahen"></i>
-                           </span>
-                       </a>
-                       <div class="dropdown me-2 lngDrp">
-                           <a class="btn dropdown-toggle text-rayahen" (click)="openLangDrop()" role="button" id="dropdownMenuLinklang"
-                               data-bs-toggle="dropdown" aria-expanded="false">
-                               {{lang}}
-                           </a>
-           
-                           <ul class="dropdown-menu lang" id="langDropMenu" aria-labelledby="dropdownMenuLinklang">
-                               <li><a class="dropdown-item cursor_pointer langitem" (click)="switchLanguage('ar')">العربية</a>
-                               </li>
-                               <li><a class="dropdown-item cursor_pointer langitem" (click)="switchLanguage('en')">English</a>
-                               </li>
-                           </ul>
-                       </div>
+                       <app-notifications [ngClass]="general.dirVal =='rtl'?' me-auto':' ms-auto'"></app-notifications>
+                       <app-language-switch></app-language-switch>
                        <a class="btn btn-sm logoutbtn mx-1">
                            <span class="text-rayahen">
                                <img src="../../../assets/user-profile.avif" class="rounded-circle " style="width: 30px;">
-                               {{userData.Email}}
+                               {{general.userData.Email}}
                            </span>
                        </a>
                        <a class="btn btn-sm btn-outline mx-1 logoutbtn border text-rayahen" (click)="logout()">{{'log.logout'| translate}}</a>
@@ -39,20 +23,24 @@
            <div class="row flex-nowrap">
     
                <div class="col  main">
-                   @if(showTckts){
+                   @if(general.showTckts){
                    <div class="main-screen mt-3">
                        <app-tickets [mainTickets]="tickets"></app-tickets>
                    </div>
                    }
-                   @if(showHome){
+                   @if(general.showHome){
                    <div class="main-screen mt-3">
-                       @if(chartSide){
+                       @if(general.chartSide){
                        <app-charts #chartComp></app-charts>
                        }
                    </div>
                    }
-                   
-                   @if(showIssues){
+                   @if(general.showSingleTckt){
+                    <div class="main-screen mt-3 bg-Basic">
+                       <app-display-ticket [ticket]="general.displayedTckt"></app-display-ticket>
+                    </div>
+                    }
+                   @if(general.showIssues){
                    <div class="row bg-white cursor_pointer">
                        <div class="col-11 row">
                            @for(issue of allIssues; track issue){
@@ -317,7 +305,7 @@
                                     translate}}</label>
                             </div>
                         </div>
-                       @if(userData.Role =='Admin'){
+                       @if(general.userData.Role =='Admin'){
                         <!-- <div class="form-check form-switch col-12 col-md-6 col-lg-6 col-sm-12">
                             <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked" formControlName="isActive"
                                 [checked]="general.updTcktForm.value.isActive" >
