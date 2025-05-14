@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { RayahenService } from '../../Services/rayahen.service';
 import { Title } from '@angular/platform-browser';
+import { ActivatedRoute, Router } from '@angular/router';
 @Component({
   selector: 'app-display-ticket',
   imports: [
@@ -14,13 +15,21 @@ import { Title } from '@angular/platform-browser';
   styleUrl: './display-ticket.component.scss'
 })
 export class DisplayTicketComponent {
-@Input('ticket') ticket: any;
+  ticket: any;
+  ticketId: any;
   constructor(
     public general : General,
     public rayahenService : RayahenService,
     public translate: TranslateService,
-    public title: Title
+    public title: Title,
+    public route : ActivatedRoute,
+    public router : Router
   ){
+    this.ticket = this.general.displayedTckt;
+    if(!this.ticket){
+      this.getTicket()
+    }
+    
   }
   ngOnInit(): void {
     this.title.setTitle('Rayahen | Ticket' + this.ticket.id);
@@ -32,8 +41,19 @@ export class DisplayTicketComponent {
     this.title.setTitle('Rayahen | Ticket' + this.ticket.id);
       }
     }
+
+  getTicket(){
+    this.ticketId = this.route.snapshot.paramMap.get('id');
+      this.rayahenService.getTicketById(this.ticketId).subscribe({
+      next: (res) => {
+        this.general.displayedTckt = res.body.ticket
+        this.ticket = this.general.displayedTckt
+        this.rayahenService.readTickt(this.ticketId).subscribe()
+      }
+    })
+  }
   returnToTckts(){
-    this.general.showSingleTckt = false;
-    this.general.showTckts = true;
+    this.router.navigate(['/tickets'])
+    this.general.openNavElmnt('tickets')
   }
 }

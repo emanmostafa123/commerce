@@ -89,6 +89,8 @@ export class ChartsComponent implements AfterViewInit {
     public title: Title,
   ) {
     this.title.setTitle('Rayahen | Dashboard');
+    this.general.openNavElmnt('home')
+
   }
 
   ngOnInit(): void {

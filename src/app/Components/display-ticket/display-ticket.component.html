@@ -1,43 +1,46 @@
-@if(general.showreturnBtn) {
-    <div class="row" >
-       <div class="btn" (click)="returnToTckts()">
-           <i class="fa-solid fa-chevron-left"></i>
-       </div>
-   </div>
-}
+<div class="main-screen mt-3 bg-Basic">
 
-
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-12 col-md-8 col-lg-8 col-xl-8 col-xxl-8 bg-white shadow-sm p-4 rounded-3">
-            <div class="title">
-                {{'tickets.tcktsCrd.id' | translate}} {{ticket.id}}
-            </div>
-            <div>
-                <div class="">
-                    <div class="title_card">{{'tickets.tcktsCrd.subject' | translate}} :</div>
-                    <div class="des">{{ticket.title}}</div>
+    <div class="row">
+        <div class="btn" (click)="returnToTckts()">
+            <i class="fa-solid fa-chevron-left"></i>
+        </div>
+    </div>
+    
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-12 col-md-8 col-lg-8 col-xl-8 col-xxl-8 bg-white shadow-sm p-4 rounded-3">
+                <div class="title">
+                    {{'tickets.tcktsCrd.id' | translate}} {{ticket.id}}
                 </div>
-                <div class="">
-                    <div class="title_card">{{'tickets.tcktsCrd.tcktDes' | translate}} :</div>
-                    <div class="des">{{ticket.description}}</div>
-                </div>
-                <div class="">
-                    <div class="title_card">{{'tickets.tcktsCrd.tcktPrty'|translate}} :</div>
-                    <div class="des" [ngClass]="ticket.priority == 1? 'text-danger': ticket.priority == 2? 'text-warning':'text-success'">
-                        {{(ticket.priority == 1 ? 'tickets.tcktsCrd.high' : (ticket.priority == 2 ? 'tickets.tcktsCrd.medium' : 'tickets.tcktsCrd.low')) | translate}}
+                <div>
+                    <div class="">
+                        <div class="title_card">{{'tickets.tcktsCrd.subject' | translate}} :</div>
+                        <div class="des">{{ticket.title}}</div>
                     </div>
-                </div>
-                <div class="">
-                    <div class="title_card">{{'tickets.tcktsCrd.tcktStatus' | translate}} :</div>
-                    <div class="des" [ngClass]="ticket.isActive? 'text-success':'text-danger'">{{(ticket.isActive ? 'tickets.tcktsCrd.active' : 'tickets.tcktsCrd.deactive') | translate}}</div>
-                </div>
-                <div class="date">
-                    <div class="des">{{ticket.createdOn | date:'short'}}</div>
-                </div>
-                
-            </div>
+                    <div class="">
+                        <div class="title_card">{{'tickets.tcktsCrd.tcktDes' | translate}} :</div>
+                        <div class="des">{{ticket.description}}</div>
+                    </div>
+                    <div class="">
+                        <div class="title_card">{{'tickets.tcktsCrd.tcktPrty'|translate}} :</div>
+                        <div class="des"
+                            [ngClass]="ticket.priority == 1? 'text-danger': ticket.priority == 2? 'text-warning':'text-success'">
+                            {{(ticket.priority == 1 ? 'tickets.tcktsCrd.high' : (ticket.priority == 2 ?
+                            'tickets.tcktsCrd.medium' : 'tickets.tcktsCrd.low')) | translate}}
+                        </div>
+                    </div>
+                    <div class="">
+                        <div class="title_card">{{'tickets.tcktsCrd.tcktStatus' | translate}} :</div>
+                        <div class="des" [ngClass]="ticket.isActive? 'text-success':'text-danger'">{{(ticket.isActive ?
+                            'tickets.tcktsCrd.active' : 'tickets.tcktsCrd.deactive') | translate}}</div>
+                    </div>
+                    <div class="date">
+                        <div class="des">{{ticket.createdOn | date:'short'}}</div>
+                    </div>
 
+                </div>
+
+            </div>
         </div>
     </div>
 </div>

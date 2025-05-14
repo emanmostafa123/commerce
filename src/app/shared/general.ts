@@ -7,7 +7,6 @@ declare var bootstrap: any;
 })
 
 export class General {
-    openNavElmnt?: (event: any) => void; 
     dirVal : any
     updTcktForm:any;
     ticketsStatusCount : any;
@@ -20,7 +19,9 @@ export class General {
     showSingleTckt: any;
     displayedTckt:any;
     userData: any;
-showreturnBtn: any;
+    showreturnBtn: any;
+    ticketsAdded: boolean = false;
+shownavElmnt: any;
     constructor(
       public authService: AuthService
     ) {
@@ -35,6 +36,10 @@ showreturnBtn: any;
       }
       return user;
     }
+
+  openNavElmnt(event:any){
+    this.shownavElmnt = event
+  }
 
     openModal(event: any){
         const modalElement = document.getElementById(event);

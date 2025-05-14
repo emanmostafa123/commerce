@@ -60,12 +60,6 @@ a {
     background-color: #3c2e211a;
 }
 
-.main-screen {
-    min-height: 90vh;
-    background: white;
-    border-radius: 4px;
-    padding: 8px;
-}
 
 nav {
     a {
@@ -200,15 +194,6 @@ nav {
 .text-rayahen{
     color: #805e1f;
 }
-.tcktsBtn{
-    color: #805e1f;
-    border: 1px solid #805e1f;
-}
-.tcktsBtn.active{
-    color: #ffffff;
-    border: 1px solid #805e1f;
-    background-color: #805e1f;
-}
 
 app-toast{
     z-index: 10000 !important;
@@ -219,16 +204,8 @@ app-toast{
 }
 
 
-.float-right{
-    float: right;
-}
-.float-left{
-    float: left;
-}
+
 .cursor-pointer{
     cursor: pointer;
 }
 
-.bg-Basic{
-    background: rgb(235 234 232) !important;
-}

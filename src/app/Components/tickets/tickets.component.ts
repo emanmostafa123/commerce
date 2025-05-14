@@ -1,24 +1,27 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input, SimpleChanges } from '@angular/core';
+import { Component, Input, SimpleChanges, ViewChild } from '@angular/core';
 import { LangChangeEvent, TranslateModule, TranslateService } from '@ngx-translate/core';
 import { RayahenService } from '../../Services/rayahen.service';
 import { DeclarationHelper } from '../../shared/DeclarationHelper';
 import { General } from '../../shared/general';
 import { Title } from '@angular/platform-browser';
+import { ToastComponent } from '../toast/toast.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-tickets',
   imports: [
     CommonModule,
-    TranslateModule
+    TranslateModule,
+    ToastComponent
   ],
   templateUrl: './tickets.component.html',
   styleUrl: './tickets.component.scss'
 })
 export class TicketsComponent {
   
-@Input('mainTickets') mainTickets: any;
-tickets: any[] = [];
+// @Input('mainTickets') mainTickets: any;
+  tickets: any[] = [];
   getTckts: any;
   currentPage = 1;
   pageSize = 10;
@@ -28,36 +31,86 @@ tickets: any[] = [];
   chosenTckt: any;
   numberOfPages: number | undefined;
   pagesArray: number[] | undefined;
+  activeArray: { isActive: boolean }[] = [];
+  deactiveArray: { isActive: boolean }[] = [];
+  toastMessage: any;
+  toastBgColor: any;
+  @ViewChild('toastRef') toastComponent!: ToastComponent;
+  mainTickets: any;
+  
   constructor(
     public translate: TranslateService,
     public rayahenService: RayahenService,
     public general: General,
+    public router: Router,
     public title: Title
   ) {
     // Initialize any properties or services here if needed
     this.title.setTitle('Rayahen | Tickets');
-  }
-  ngOnChanges(changes: SimpleChanges) {
-    console.log(changes)
-    if (changes['mainTickets']) {
-      this.title.setTitle('Rayahen | Tickets');
-      this.getTickets('all')
+    this.general.openNavElmnt('tickets')
+    this.getAllTickets()
 
-    }
   }
-  ngoninit() {
-    debugger
-    this.paging({pageIndex: 0, pageSize: 10}, this.mainTickets)
-    this.getTickets('all')
+  
+  ngOnInit() {
     this.translate.onLangChange.subscribe((event: LangChangeEvent) => {
-      this.mainTickets
+      debugger
+      this.getAllTickets()
     });
+    // this.paging({pageIndex: 0, pageSize: 10}, this.mainTickets)
+    // this.getTickets('all')
   }
   getNumberOfPages(array:any, pageSize: number) {
     this.numberOfPages = Math.ceil(array.length / pageSize);
     this.pagesArray = Array.from({ length: this.numberOfPages }, (_, i) => i + 1);
 
   }
+  goToAddTicket(){
+    this.router.navigate(['/addTicket'])
+  }
+  goToUpdTicket(id : any){
+    this.router.navigate(['/updTicket/'+id])
+  }
+  getAllTickets(){
+    this.rayahenService.getAllTickets().subscribe({
+      next: (res) => {
+      this.mainTickets = res.body
+      this.tickets = this.mainTickets
+      this.general.ticketsAdded = true
+      this.general.showTckts = true
+      this.activeArray = []
+      this.deactiveArray = []
+      this.mainTickets.forEach((ticket : any) => {
+        if (ticket.isActive === true) this.activeArray.push(ticket as { isActive: boolean });
+        if (ticket.isActive === false) this.deactiveArray.push(ticket as { isActive: boolean });
+                      
+      })
+      this.getTickets('all')
+      const activeCount = this.activeArray.length;
+      const inactiveCount = this.deactiveArray.length;
+      this.general.ticketsStatusCount = [
+        {
+          label : 'allTcktCount',
+          count: this.mainTickets.length
+        },
+        {
+          label : 'activeTckt',
+          count: activeCount
+        },
+        {
+          label : 'deactiveTckt',
+          count: inactiveCount
+        },
+      ]
+      },
+      error:(err)=>{
+        this.toastMessage = err.message
+        this.toastBgColor = 'bg-danger'
+        this.toastComponent.show();
+      }
+    })
+ }
+ 
   getTickets(event :  any){
     debugger
     this.getTckts = event
@@ -81,10 +134,8 @@ tickets: any[] = [];
     this.rayahenService.getTicketById(event).subscribe({
       next: (res) => {
         this.general.displayedTckt = res.body.ticket
-        this.general.showTckts = false;
-        this.general.showreturnBtn = true
-        this.general.showSingleTckt = true;
-        // this.general.openModal('displayTcktModal')
+          this.router.navigate(['/ticket', this.general.displayedTckt.id]);
+
         this.rayahenService.readTickt(event).subscribe()
       }
     })
@@ -100,6 +151,7 @@ tickets: any[] = [];
     this.general.openModal('updTcktModal')
   }
   paging(event: any,tickets:any) {
+    debugger
     this.currentPage = event.pageIndex + 1;
     this.pageSize = event.pageSize;
     this.tickets = tickets.slice((this.currentPage - 1) * this.pageSize, this.currentPage * this.pageSize);  

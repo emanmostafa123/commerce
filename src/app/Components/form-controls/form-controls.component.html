@@ -1,0 +1,128 @@
+<div class="main-screen mt-3">
+
+@if(addMode){
+    <div class="m-3">
+        <form [formGroup]="addTcktForm">
+            <div class="row">
+                <div class="col-12 col-md-6 col-lg-6 col-sm-12">
+                    <div class="form-floating  mb-3">
+                        <input type="text" class="form-control" name="title" formControlName="title" id="floatingtitle"
+                            [placeholder]="'tickets.tcktsCrd.tcktTitle'| translate">
+                        <label for="floatingtitle">{{'tickets.tcktsCrd.tcktTitle'| translate}}</label>
+                    </div>
+                </div>
+                <div class="col-12">
+                    <div class="form-floating  mb-3">
+                        <textarea type="text" class="form-control" name="description" formControlName="description"
+                            id="floatingdescription" [placeholder]="'tickets.tcktsCrd.tcktDes'| translate"></textarea>
+                        <label for="floatingdescription">{{'tickets.tcktsCrd.tcktDes'| translate}}</label>
+                    </div>
+                </div>
+                <div class="col-12 col-md-6 col-lg-6 col-sm-12">
+                    <p-dropdown 
+                        formControlName="priority" 
+                        [options]="prtyOptions"
+                        optionLabel="name"
+                        [placeholder]="'tickets.tcktsCrd.tcktPrty'| translate" />
+                    <div class="form-floating  mb-3">
+                        <select class="form-select" name="priority" formControlName="priority"
+                            id="floatingSelectGridtcktPrty" aria-label="Floating label select example">
+                            <option [ngValue]="1">{{'tickets.tcktsCrd.high'| translate}}</option>
+                            <option [ngValue]="2">{{'tickets.tcktsCrd.medium'| translate}}</option>
+                            <option [ngValue]="3">{{'tickets.tcktsCrd.low'| translate}}</option>
+                        </select>
+                        <label for="floatingSelectGridtcktPrty">{{'tickets.tcktsCrd.tcktPrty'|
+                            translate}}</label>
+                    </div>
+                </div>
+                <div class="col-12 col-md-6 col-lg-6 col-sm-12">
+                    <div class="form-floating  mb-3">
+                        <select class="form-select" name="typeOfIssue" formControlName="typeOfIssue"
+                            id="floatingSelectGridtypeOfIssue" aria-label="Floating label select example">
+                            @for(issue of allIssues; track issue){
+                            <option [ngValue]="issue.name">{{issue.name}}</option>}
+                        </select>
+                        <label for="floatingSelectGridtypeOfIssue">{{'tickets.tcktsCrd.typeOfIssue'|
+                            translate}}</label>
+                    </div>
+                </div>
+                <input type="file" (change)="onFileSelected($event)" />
+                <div class="col-12 mt-2">
+                    <button type="submit" class="btn btn-primary ms-auto" (click)="addTckt()">{{'tickets.mainLabels.submit'|
+                        translate}}</button>
+                </div>
+            </div>
+        </form>
+    </div>
+}
+
+@if(updMode){
+        <div class="m-3">
+    <form [formGroup]="general.updTcktForm">
+                    <div class="row">
+                        <div class="col-12 col-md-6 col-lg-6 col-sm-12">
+                            <div class="form-floating  mb-3">
+                                <input type="text" class="form-control" name="title" formControlName="title"
+                                    id="floatingtitleupd" [placeholder]="'tickets.tcktsCrd.tcktTitle'| translate">
+                                <label for="floatingtitleupd">{{'tickets.tcktsCrd.tcktTitle'| translate}}</label>
+                            </div>
+                        </div>
+                        <div class="col-12 ">
+                            <div class="form-floating  mb-3">
+                                <textarea type="text" class="form-control" name="description" formControlName="description"
+                                    id="floatingdescriptionupd" [placeholder]="'tickets.tcktsCrd.tcktDes'| translate"></textarea>
+                                <label for="floatingdescriptionupd">{{'tickets.tcktsCrd.tcktDes'| translate}}</label>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-6 col-lg-6 col-sm-12">
+                            <div class="form-floating  mb-3">
+                                <select class="form-select" name="priority" formControlName="priority"
+                                    id="floatingSelectGridtcktPrtyupd" aria-label="Floating label select example">
+                                    <option [ngValue]="1">{{'tickets.tcktsCrd.high'| translate}}</option>
+                                    <option [ngValue]="2">{{'tickets.tcktsCrd.medium'| translate}}</option>
+                                    <option [ngValue]="3">{{'tickets.tcktsCrd.low'| translate}}</option>
+                                </select>
+                                <label for="floatingSelectGridtcktPrtyupd">{{'tickets.tcktsCrd.tcktPrty'|
+                                    translate}}</label>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-6 col-lg-6 col-sm-12">
+                            <div class="form-floating  mb-3">
+                                <select class="form-select" name="typeOfIssue" formControlName="typeOfIssue"
+                                    id="floatingSelectGridtypeOfIssueupd" aria-label="Floating label select example">
+                                    @for(issue of allIssues; track issue){
+                                    <option [ngValue]="issue.name">{{issue.name}}</option>}
+                                </select>
+                                <label for="floatingSelectGridtypeOfIssueupd">{{'tickets.tcktsCrd.typeOfIssue'|
+                                    translate}}</label>
+                            </div>
+                        </div>
+                       @if(general.userData.Role =='Admin'){
+                        <!-- <div class="form-check form-switch col-12 col-md-6 col-lg-6 col-sm-12">
+                            <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked" formControlName="isActive"
+                                [checked]="general.updTcktForm.value.isActive" >
+                            <label class="form-check-label" for="flexSwitchCheckChecked">Checked switch checkbox input</label>
+                          </div> -->
+                          <div class="form-check col-12 col-md-6 col-lg-6 col-sm-12 ms-3 my-2">
+                            <input class="form-check-input" type="checkbox" [value]="general.updTcktForm.value.isActive"
+                                formControlName="isActive" id="flexCheckDefault">
+                            <label class="form-check-label" for="flexCheckDefault">
+                                {{'tickets.tcktsCrd.active'| translate}}
+                            </label>
+                          </div>
+                          
+                        }
+                        <div class="col-12 my-2">
+                            <!-- <input type="file" (change)="onFileSelected($event)" /> -->
+                        </div>
+                        <div class="col-12 my-2 mt-2">
+                            <button type="submit" class="btn btn-primary ms-auto"
+                                (click)="submitUpdTicket()">{{'tickets.mainLabels.submit'| translate}}</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+}
+</div>
+
+<app-toast #toastRef [message]="toastMessage" [bgColor]="toastBgColor"></app-toast>

@@ -1,0 +1,87 @@
+<div class="main-screen mt-3">
+    <div class="row cursor_pointer">
+        <div class="col-11 row">
+            @for(issue of allIssues; track issue){
+            <div class="card m-2 col-2 col-md-2 col-lg-2 col-sm-12">
+                <div class="card-content p-2">
+                    <span>{{issue.name}} </span>
+                    <span class="mx-1 text-danger" [ngClass]="general.dirVal =='rtl'?' float-left':' float-right'"
+                        (click)="deleteIssue(issue.id ,issue.name)"><i class="fas fa-trash-alt"></i></span>
+                    <span class="text-warning" [ngClass]="general.dirVal =='rtl'?' float-left':' float-right'"
+                        (click)="openIssue(issue.id ,issue.name)"><i class="fas fa-edit"></i></span>
+                </div>
+            </div>
+            }
+        </div>
+        <div class="col-1 m-2" [ngClass]="general.dirVal =='rtl'?'me-auto':'ms-auto'">
+            <a class="btn btn-sm btn-outline tcktsBtn mx-1  " (click)="general.openModal('addIssueModal')"><i
+                    class="fa-solid fa-plus"></i></a>
+        </div>
+    </div>
+</div>
+
+<app-toast #toastRef [message]="toastMessage" [bgColor]="toastBgColor"></app-toast>
+
+<div class="modal fade" id="addIssueModal" tabindex="-1" role="dialog" data-bs-backdrop="static"
+    aria-labelledby="addIssueModalTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modalCustom" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">{{'tickets.mainLabels.addissue'| translate}}</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="addIssueForm">
+                    <div class="row">
+
+                        <div class="col-12">
+                            <div class="form-floating  mb-3">
+                                <input type="text" class="form-control" name="name" formControlName="name"
+                                    id="floatingissueNm" [placeholder]="'tickets.issueCrd.issueNm' | translate">
+                                <label for="floatingissueNm">{{'tickets.issueCrd.issueNm'| translate}}</label>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <button type="submit" class="btn btn-primary ms-auto" (click)="addNewIssue()">
+                                {{'tickets.mainLabels.submit'| translate}}
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal upd issue -->
+<div class="modal fade" [id]="'updIssueModal'" tabindex="-1" role="dialog" aria-labelledby="addIssueModalTitle"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modalCustom" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">{{'tickets.mainLabels.addissue'| translate}}</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="updIssueForm">
+                    <div class="row">
+
+                        <div class="col-12">
+                            <div class="form-floating  mb-3">
+                                <input type="text" class="form-control" name="name" formControlName="name"
+                                    id="floatingissueNmupd" [value]="issueNm"
+                                    [placeholder]="'tickets.issueCrd.issueNm' | translate">
+                                <label for="floatingissueNmupd">{{'tickets.issueCrd.issueNm'| translate}}</label>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <button type="submit" class="btn btn-primary ms-auto" (click)="updateIssue()">
+                                {{'tickets.mainLabels.submit'| translate}}
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
