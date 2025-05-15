@@ -2,11 +2,20 @@ import { CommonModule } from '@angular/common';
 import { Component, ViewChild } from '@angular/core';
 import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { LangChangeEvent, TranslateModule, TranslateService } from '@ngx-translate/core';
 import { RayahenService } from '../../Services/rayahen.service';
 import { ToastComponent } from '../toast/toast.component';
 import { General } from '../../shared/general';
-import { DropdownModule } from 'primeng/dropdown';
+import { FloatLabel } from "primeng/floatlabel"
+import { InputTextModule } from 'primeng/inputtext';
+import { Select } from 'primeng/select';
+import { TextareaModule } from 'primeng/textarea';
+import { FileUploadEvent, FileUploadModule } from 'primeng/fileupload';
+import { MessageService } from 'primeng/api';
+interface UploadEvent {
+    originalEvent: Event;
+    files: File[];
+}
 
 @Component({
   selector: 'app-form-controls',
@@ -16,11 +25,17 @@ import { DropdownModule } from 'primeng/dropdown';
     FormsModule,
     TranslateModule,
     ToastComponent,
-    DropdownModule
+    Select,
+    InputTextModule,
+    FileUploadModule,
+    TextareaModule,
+    FloatLabel
   ],
   templateUrl: './form-controls.component.html',
-  styleUrl: './form-controls.component.scss'
+  styleUrl: './form-controls.component.scss',
+  providers: [MessageService]
 })
+
 export class FormControlsComponent {
   ticketId: any;
   addMode: boolean = false;
@@ -32,13 +47,16 @@ export class FormControlsComponent {
   @ViewChild('toastRef') toastComponent!: ToastComponent;
   selectedFile: any;
   prtyOptions:any
-  
+  uploadedFiles: any[] = [];
+  files: File[] | undefined;
+
   constructor(
     private route: ActivatedRoute,
     public translate : TranslateService,
     public rayahenService : RayahenService,
     public general : General,
-    public fb : FormBuilder
+    public fb : FormBuilder,
+    public messageService : MessageService
   ){
     debugger
     this.ticketId = this.route.snapshot.paramMap.get('id');
@@ -47,14 +65,14 @@ export class FormControlsComponent {
     }else{
       this.updMode = true
     }
+    this.intializeObjects()
   }
-
-  ngOnInit(){
+  intializeObjects(){
     this.prtyOptions = [
-      { name: this.translate.instant('tickets.tcktsCrd.high'), code: '1' },
-      { name: this.translate.instant('tickets.tcktsCrd.medium'), code: '2' },
-      { name: this.translate.instant('tickets.tcktsCrd.low'), code: '3' }
-    ];
+        { name: this.translate.instant('tickets.tcktsCrd.high'), code: '1' },
+        { name: this.translate.instant('tickets.tcktsCrd.medium'), code: '2' },
+        { name: this.translate.instant('tickets.tcktsCrd.low'), code: '3' }
+      ];
     this.addTcktForm = this.fb.group({
       title: ['', [Validators.required]],
       description: ['', [Validators.required]],
@@ -79,6 +97,16 @@ export class FormControlsComponent {
       createdOn:[''],
       readFlg:['']
     })
+  }
+
+  ngOnInit(){
+    this.translate.onLangChange.subscribe((event: LangChangeEvent) => {
+      this.prtyOptions = [
+        { name: this.translate.instant('tickets.tcktsCrd.high'), code: '1' },
+        { name: this.translate.instant('tickets.tcktsCrd.medium'), code: '2' },
+        { name: this.translate.instant('tickets.tcktsCrd.low'), code: '3' }
+      ];
+    });
     this.getAllIssues()
   }
 
@@ -129,14 +157,21 @@ export class FormControlsComponent {
 
   }
    onFileSelected(event: Event): void {
+    debugger
     const input = event.target as HTMLInputElement;
     if (input.files && input.files.length > 0) {
       this.selectedFile = input.files[0];
     }
   }
-  
-  
 
+
+onUpload(event: FileUploadEvent) {
+  for (let file of event?.files || []) {
+    this.uploadedFiles.push(file);
+  }
+
+  this.messageService.add({ severity: 'info', summary: 'File Uploaded', detail: '' });
+}
   submitUpdTicket(){
     this.rayahenService.updTicket(this.general.updTcktForm.value,this.general.updTcktForm.value.id).subscribe({
       next:(res)=>{
