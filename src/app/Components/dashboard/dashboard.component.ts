@@ -12,6 +12,7 @@ import { General } from '../../shared/general';
 import { SidemenuComponent } from '../sidemenu/sidemenu.component';
 import { LanguageSwitchComponent } from "../language-switch/language-switch.component";
 import { NotificationsComponent } from '../notifications/notifications.component';
+import { UserData } from '../../shared/userData';
 
 @Component({
   selector: 'app-dashboard',
@@ -53,6 +54,7 @@ export class DashboardComponent {
     public fb : FormBuilder,
     public authService : AuthService,
     public general : General,
+    public usrData : UserData,
     private translate: TranslateService) {
 
     const defaultLang = localStorage.getItem('lang') || 'en';

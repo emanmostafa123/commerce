@@ -25,17 +25,15 @@ shownavElmnt: any;
     constructor(
       public authService: AuthService
     ) {
-      
-    this.userData = this.authService.getDecodedToken();
-    this.userData = this.transformUserData(this.userData);
+      // if(localStorage.getItem('token') != null){
+      //   this.userData = this.authService.getDecodedToken();
+      //   this.userData = this.transformUserData(this.userData);
+      // }
     }
-    transformUserData(user: any): any {
-      if (user["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"]) {
-        user.role = user["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"];
-        delete user["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"];
-      }
-      return user;
-    }
+
+
+    
+
 
   openNavElmnt(event:any){
     this.shownavElmnt = event

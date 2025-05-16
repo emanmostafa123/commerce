@@ -3,6 +3,7 @@ import { Component } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { General } from '../../shared/general';
 import { RayahenService } from '../../Services/rayahen.service';
+import { UserData } from '../../shared/userData';
 
 @Component({
   selector: 'app-notifications',
@@ -18,14 +19,14 @@ export class NotificationsComponent {
     private translate: TranslateService,
     public general: General,
     public rayahenService : RayahenService,
-    
+    public usrData: UserData
   ) { }
 
   ngOnInit(): void {
     this.getNotification()
   }
   getNotification(){
-    this.rayahenService.getNotification(this.general.userData.UserId).subscribe({
+    this.rayahenService.getNotification(this.usrData.userData.UserId).subscribe({
       next: (res) => {
         this.notifications = res.body;
       },

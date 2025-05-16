@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { LangChangeEvent, TranslateModule, TranslateService } from '@ngx-translate/core';
@@ -12,6 +12,7 @@ import { Select } from 'primeng/select';
 import { TextareaModule } from 'primeng/textarea';
 import { FileUploadEvent, FileUploadModule } from 'primeng/fileupload';
 import { MessageService } from 'primeng/api';
+import { UserData } from '../../shared/userData';
 interface UploadEvent {
     originalEvent: Event;
     files: File[];
@@ -36,7 +37,7 @@ interface UploadEvent {
   providers: [MessageService]
 })
 
-export class FormControlsComponent {
+export class FormControlsComponent implements OnInit {
   ticketId: any;
   addMode: boolean = false;
   updMode: boolean = false;
@@ -49,6 +50,7 @@ export class FormControlsComponent {
   prtyOptions:any
   uploadedFiles: any[] = [];
   files: File[] | undefined;
+  selectedFileName: any;
 
   constructor(
     private route: ActivatedRoute,
@@ -56,7 +58,8 @@ export class FormControlsComponent {
     public rayahenService : RayahenService,
     public general : General,
     public fb : FormBuilder,
-    public messageService : MessageService
+    public messageService : MessageService,
+    public usrData: UserData
   ){
     debugger
     this.ticketId = this.route.snapshot.paramMap.get('id');
@@ -122,7 +125,7 @@ export class FormControlsComponent {
   }
     
   addTckt(){
-    this.addTcktForm.value.createdByUser = this.general.userData.UserId;
+    this.addTcktForm.value.createdByUser = this.usrData.userData.UserId;
     this.addTcktForm.value.isActive = true;
     debugger
     // if(!this.addTcktForm.invalid){
@@ -156,13 +159,16 @@ export class FormControlsComponent {
       })
 
   }
-   onFileSelected(event: Event): void {
-    debugger
-    const input = event.target as HTMLInputElement;
-    if (input.files && input.files.length > 0) {
-      this.selectedFile = input.files[0];
-    }
+
+  onFileSelected(event: Event) {
+  const input = event.target as HTMLInputElement;
+  if (input.files && input.files.length > 0) {
+    this.selectedFileName = input.files[0].name;
+    this.selectedFile = input.files[0];
+    const file = input.files[0];
+    console.log(file);
   }
+}
 
 
 onUpload(event: FileUploadEvent) {

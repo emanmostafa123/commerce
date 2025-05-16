@@ -83,5 +83,6 @@
         "highPrtyTckt":"High Priority Tickets",
         "mediumPrtyTckt":"Medium Priority Tickets",
         "lowPrtyTckt":"Low Priority Tickets"
-    }
+    },
+    "req":"This field is required"
 }

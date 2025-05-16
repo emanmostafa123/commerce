@@ -9,17 +9,35 @@
                             <h3>{{'log.wlcmBck' | translate}}</h3>
                         </div>
                         <div class="controls_container col-12">
-                            <input type="text" name="id" formControlName="id" (keyup)="getIDData($event)"
+                            <p-inputgroup>
+                                <p-inputgroup-addon>
+                                    <i class="fa-solid fa-user text-rayahen"></i>
+                                </p-inputgroup-addon>
+                                <p-floatlabel variant="on">
+                                    <input pInputText id="id_on_label" name="id" formControlName="id"  (keyup)="getIDData($event)" />
+                                    <label for="id_on_label">{{'log.usrNm' | translate}}</label>
+                                </p-floatlabel>
+                            </p-inputgroup>
+                            <!-- <input type="text" (keyup)="getIDData($event)"
                             id="usrNm" class="mt-4 col-12" [placeholder]="'log.usrNm' | translate">
-                            <i class="fa-solid fa-user icon_usrNm"></i>
+                            <i class="fa-solid fa-user icon_usrNm"></i> -->
                             <small *ngIf="loginForm.get('id')?.errors?.['pattern'] && loginForm.get('id')?.touched && loginForm.get('id')?.invalid" class="text-danger">
                                 {{'log.idErr' | translate}}
                             </small>
-                              
-                            <input type="password" name="password" formControlName="password"
+                             
+                            <p-inputgroup class="mt-4 mb-3">
+                                <p-inputgroup-addon>
+                                    <i class="fa-solid fa-key  text-rayahen"></i>
+                                </p-inputgroup-addon>
+                                <p-floatlabel variant="on">
+                                    <input type="password" pInputText id="pass_on_label" name="password" formControlName="password"/>
+                                    <label for="pass_on_label">{{'log.password' | translate}}</label>
+                                </p-floatlabel>
+                            </p-inputgroup>
+                            <!-- <input type="password" name="password" formControlName="password"
                             id="usrPss" class="my-4 col-12" [placeholder]="'log.password' | translate">
-                            <i class="fa-solid fa-key icon_pass"></i>
-                            <a [routerLink]="['/forgetpassword']" routerLinkActive="router-link-active"  rel="noopener noreferrer" class="">{{'log.forgetpsswrd' | translate}}</a>
+                            <i class="fa-solid fa-key icon_pass"></i> -->
+                            <a [routerLink]="['/forgetpassword']" routerLinkActive="router-link-active"  rel="noopener noreferrer" class="mt-2">{{'log.forgetpsswrd' | translate}}</a>
                         </div>
                         <button class="w-25 me-3 " (click)="login()" type="button"  
                         [ngClass]="general.dirVal == 'rtl'?'me-auto':'ms-auto'"

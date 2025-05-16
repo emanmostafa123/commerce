@@ -10,12 +10,22 @@ import { General } from '../../shared/general';
 import { ToastComponent } from '../toast/toast.component';
 import { LanguageSwitchComponent } from '../language-switch/language-switch.component';
 import { Title } from '@angular/platform-browser';
+import { InputGroupModule } from 'primeng/inputgroup';
+import { InputGroupAddonModule } from 'primeng/inputgroupaddon';
+import { InputTextModule } from 'primeng/inputtext';
+import { InputNumberModule } from 'primeng/inputnumber';
+import { FloatLabelModule } from 'primeng/floatlabel';
+
 
 @Component({
   selector: 'app-login',
   standalone: true,
   imports: [
     CommonModule,
+    InputGroupModule,
+    InputGroupAddonModule,
+    InputTextModule,
+    FloatLabelModule,
     ReactiveFormsModule,
     TranslateModule,
     RouterModule,
