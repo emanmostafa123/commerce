@@ -24,6 +24,9 @@
             (click)="getTickets('active')">{{'tickets.mainLabels.activetckts'| translate}}</a>
         <a class="btn btn-sm btn-outline tcktsBtn mx-1" [ngClass]="getTckts == 'deactive'? 'active':''"
             (click)="getTickets('deactive')">{{'tickets.mainLabels.deactivetckts'| translate}}</a>
+            <span>
+                <input type="text" (change)="searchTicket($event)" class="form-control form-control-sm mx-1" placeholder="{{'tickets.tcktsCrd.search'| translate}}">
+            </span>
         <a class="btn btn-sm btn-outline tcktsBtn mx-1 " [ngClass]="general.dirVal =='rtl'?'me-auto':'ms-auto'"
             (click)="goToAddTicket()"><i class="fa-solid fa-plus"></i></a>
 
@@ -91,12 +94,21 @@
                 <td>{{ticket.id}}</td>
                 <td>{{ticket.title}}</td>
                 <td class="tdDes">{{ticket.description}}</td>
-                <td>{{(ticket.priority == 1 ? 'tickets.tcktsCrd.high' : (ticket.priority == 2 ?
-                    'tickets.tcktsCrd.medium' : 'tickets.tcktsCrd.low')) | translate}}</td>
-                <td>{{(ticket.isActive ? 'tickets.tcktsCrd.active' : 'tickets.tcktsCrd.deactive') | translate}}</td>
+                <td>
+                    <span class="text-white rounded px-2" [ngClass]="ticket.priority == 1 ?'bg-danger': ticket.priority == 2 ?'bg-warning' : 'bg-primary'" style="width: fit-content;">
+
+                    {{(ticket.priority == 1 ? 'tickets.tcktsCrd.high' : (ticket.priority == 2 ?
+                    'tickets.tcktsCrd.medium' : 'tickets.tcktsCrd.low')) | translate}}
+                    </span>    
+                </td>
+                <td>
+                    <span class="text-white rounded px-2" [ngClass]="ticket.isActive ? 'bg-success':'bg-secondary'" style="width: fit-content;">
+                    {{(ticket.isActive ? 'tickets.tcktsCrd.active' : 'tickets.tcktsCrd.deactive') | translate}}
+                    </span>
+                </td>
                 <td>
 
-                    <span class="text-warning mx-1 cursor-pointer" (click)="goToUpdTicket(ticket.id)"><i
+                    <span class="text-warning mx-1 cursor-pointer" (click)="goToUpdTicket(ticket)"><i
                             class="fas fa-edit"></i></span>
                 </td>
             </tr>
@@ -132,5 +144,6 @@
             </div>
         </tfoot>
     </table>
+    
 </div>
 <app-toast #toastRef [message]="toastMessage" [bgColor]="toastBgColor"></app-toast>

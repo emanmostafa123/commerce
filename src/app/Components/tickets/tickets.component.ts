@@ -13,7 +13,7 @@ import { Router } from '@angular/router';
   imports: [
     CommonModule,
     TranslateModule,
-    ToastComponent
+    ToastComponent,
   ],
   templateUrl: './tickets.component.html',
   styleUrl: './tickets.component.scss'
@@ -68,8 +68,16 @@ export class TicketsComponent {
   goToAddTicket(){
     this.router.navigate(['/addTicket'])
   }
-  goToUpdTicket(id : any){
-    this.router.navigate(['/updTicket/'+id])
+  goToUpdTicket(event : any){
+    console.log(event)
+    const ticket = Object.entries(event);
+    ticket.forEach((element:any)=>{
+      let control = element[0]
+      let val = element[1]
+      this.general.updTcktForm.controls[control].setValue(val)
+    })
+    this.router.navigate(['/updTicket/'+event.id])
+
   }
   getAllTickets(){
     this.rayahenService.getAllTickets().subscribe({
@@ -140,6 +148,16 @@ export class TicketsComponent {
       }
     })
   }
+  searchTicket(event: any) {
+    this.tickets = this.mainTickets.filter((ticket: any) => {
+      return ticket.title.toLowerCase().includes(event.target.value.toLowerCase()) ||
+        ticket.description.toLowerCase().includes(event.target.value.toLowerCase()) // ||
+        // ticket.priority.toLowerCase().includes(event.target.value.toLowerCase()) ||
+        // ticket.isActive.toLowerCase().includes(event.target.value.toLowerCase())
+    })
+    this.getNumberOfPages(this.tickets, this.pageSize)
+    this.paging({pageIndex: 0, pageSize: 10} , this.tickets)
+  }
   updTckt(event:any){
     const ticket = Object.entries(event);
     console.log(ticket)
@@ -148,7 +166,7 @@ export class TicketsComponent {
       let val = element[1]
       this.general.updTcktForm.controls[control].setValue(val)
     })
-    this.general.openModal('updTcktModal')
+    // this.general.openModal('updTcktModal')
   }
   paging(event: any,tickets:any) {
     debugger

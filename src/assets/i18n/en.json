@@ -35,7 +35,8 @@
             "low":"Low",
             "tcktStatus":"Ticket Status",
             "noTckts":"No Tickets Found",
-            "of":"of"
+            "of":"of",
+            "search":"Search Tickets"
         },
         "issueCrd":{
             "issueNm":"Issue Name"

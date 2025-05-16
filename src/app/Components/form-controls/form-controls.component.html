@@ -8,49 +8,49 @@
                     <p-floatlabel variant="on">
                         <input pInputText id="id_on_label" autocomplete="off" 
                             class="w-100"
-                            type="text"  formControlName="title" name="title"/>
+                            type="text"  formControlName="Title" name="Title"/>
                         <label for="id_on_label">{{'tickets.tcktsCrd.tcktTitle'| translate}}
                             <span class="text-danger">*</span>
                         </label>
                         
                     </p-floatlabel>
-                    @if(addTcktForm.controls['title'].hasError('required') && addTcktForm.controls['title'].touched){
+                    @if(addTcktForm.controls['Title'].hasError('required') && addTcktForm.controls['Title'].touched){
                     <small id="" class="text-danger">{{'req' | translate}}</small>
                     }
                 </div>
                 <div class="col-12 my-2">
                     <p-floatlabel variant="on">
                         <textarea pTextarea id="description_on_label" 
-                        formControlName="description" name="description" rows="3" style="resize: none" class="h-full w-100"></textarea>
+                        formControlName="Description" name="Description" rows="3" style="resize: none" class="h-full w-100"></textarea>
                         <label for="description_on_label">{{'tickets.tcktsCrd.tcktDes'| translate}}
                             <span class="text-danger">*</span>
                         </label>
                     </p-floatlabel>
-                    @if(addTcktForm.controls['description'].hasError('required') && addTcktForm.controls['description'].touched){
+                    @if(addTcktForm.controls['Description'].hasError('required') && addTcktForm.controls['Description'].touched){
                     <small id="" class="text-danger">{{'req' | translate}}</small>
                     }
                 </div>
                 <div class="col-12 col-md-6 col-lg-6 col-sm-12 my-2">
                     <p-floatlabel class="w-full " variant="on">
-                        <p-select formControlName="priority" inputId="priority_on_label" [options]="prtyOptions"
+                        <p-select formControlName="PriorityFld" inputId="priority_on_label" [options]="prtyOptions"
                             optionLabel="name" styleClass="w-full w-100"  [showClear]="true"/>
                         <label for="priority_on_label">{{'tickets.tcktsCrd.tcktPrty'| translate}}
                             <span class="text-danger">*</span>
                         </label>
                     </p-floatlabel>
-                      @if(addTcktForm.controls['priority'].hasError('required') && addTcktForm.controls['priority'].touched){
+                      @if(addTcktForm.controls['PriorityFld'].hasError('required') && addTcktForm.controls['PriorityFld'].touched){
                     <small id="" class="text-danger">{{'req' | translate}}</small>
                     }
                 </div>
                 <div class="col-12 col-md-6 col-lg-6 col-sm-12 my-2">
                     <p-floatlabel class="w-full " variant="on">
-                    <p-select formControlName="typeOfIssue" inputId="typeOfIssue_on_label" [options]="allIssues"
+                    <p-select formControlName="TypeOfIssueFld" inputId="typeOfIssue_on_label" [options]="allIssues"
                         optionLabel="name" styleClass="w-full w-100"  [showClear]="true"/>
                     <label for="typeOfIssue_on_label">{{'tickets.tcktsCrd.typeOfIssue'| translate}}
                         <span class="text-danger">*</span>
                     </label>
                 </p-floatlabel>
-                     @if(addTcktForm.controls['typeOfIssue'].hasError('required') && addTcktForm.controls['typeOfIssue'].touched){
+                     @if(addTcktForm.controls['TypeOfIssueFld'].hasError('required') && addTcktForm.controls['TypeOfIssueFld'].touched){
                     <small id="" class="text-danger">{{'req' | translate}}</small>
                     }
                 </div>

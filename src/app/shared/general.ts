@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AuthService } from './auth.service';
+import { FormBuilder, Validators } from '@angular/forms';
 
 declare var bootstrap: any;
 @Injectable({
@@ -23,16 +24,34 @@ export class General {
     ticketsAdded: boolean = false;
 shownavElmnt: any;
     constructor(
-      public authService: AuthService
+      public authService: AuthService,
+      public fb: FormBuilder,
     ) {
       // if(localStorage.getItem('token') != null){
       //   this.userData = this.authService.getDecodedToken();
       //   this.userData = this.transformUserData(this.userData);
       // }
+      this.intializeObjects()
     }
 
 
-    
+    intializeObjects(){
+        this.updTcktForm = this.fb.group({
+            id: ['', [Validators.required]],
+            title: ['', [Validators.required]],
+            description: ['', [Validators.required]],
+            priority: ['', [Validators.required]],
+            isActive: ['', [Validators.required]],
+            createdByUser :['', [Validators.required]],
+            typeOfIssue:['', [Validators.required]],
+            typeOfIssueId:['', [Validators.required]],
+            image:[''],
+            imageUrl:[''],
+            userNameCreated:[''],
+            createdOn:[''],
+            readFlg:['']
+          })
+    }
 
 
   openNavElmnt(event:any){

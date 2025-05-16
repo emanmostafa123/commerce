@@ -72,42 +72,33 @@ export class FormControlsComponent implements OnInit {
   }
   intializeObjects(){
     this.prtyOptions = [
-        { name: this.translate.instant('tickets.tcktsCrd.high'), code: '1' },
-        { name: this.translate.instant('tickets.tcktsCrd.medium'), code: '2' },
-        { name: this.translate.instant('tickets.tcktsCrd.low'), code: '3' }
+        { name: this.translate.instant('tickets.tcktsCrd.high'), id: '1' },
+        { name: this.translate.instant('tickets.tcktsCrd.medium'), id: '2' },
+        { name: this.translate.instant('tickets.tcktsCrd.low'), id: '3' }
       ];
     this.addTcktForm = this.fb.group({
-      title: ['', [Validators.required]],
-      description: ['', [Validators.required]],
-      priority: ['', [Validators.required]],
-      isActive: ['', [Validators.required]],
-      createdByUser :['', [Validators.required]],
-      typeOfIssue:['', [Validators.required]],
-      typeOfIssueId:['', [Validators.required]],
-      image: [''],
+      Title: ['', [Validators.required]],
+      Description: ['', [Validators.required]],
+      Priority: [''],
+      PriorityFld: ['', [Validators.required]],
+      IsActive: ['', [Validators.required]],
+      CreatedByUser :['', [Validators.required]],
+      TypeOfIssueFld:['', [Validators.required]],
+      TypeOfIssue:[''],
+      TypeOfIssueId:[''],
+      Image: [''],
+      CreatedOn:[''],
+
     })  
-    this.general.updTcktForm = this.fb.group({
-      id: ['', [Validators.required]],
-      title: ['', [Validators.required]],
-      description: ['', [Validators.required]],
-      priority: ['', [Validators.required]],
-      isActive: ['', [Validators.required]],
-      createdByUser :['', [Validators.required]],
-      typeOfIssue:['', [Validators.required]],
-      typeOfIssueId:['', [Validators.required]],
-      imageUrl:[''],
-      userNameCreated:[''],
-      createdOn:[''],
-      readFlg:['']
-    })
+  
   }
 
   ngOnInit(){
     this.translate.onLangChange.subscribe((event: LangChangeEvent) => {
       this.prtyOptions = [
-        { name: this.translate.instant('tickets.tcktsCrd.high'), code: '1' },
-        { name: this.translate.instant('tickets.tcktsCrd.medium'), code: '2' },
-        { name: this.translate.instant('tickets.tcktsCrd.low'), code: '3' }
+        { name: this.translate.instant('tickets.tcktsCrd.high'), id: '1' },
+        { name: this.translate.instant('tickets.tcktsCrd.medium'), id: '2' },
+        { name: this.translate.instant('tickets.tcktsCrd.low'), id: '3' }
       ];
     });
     this.getAllIssues()
@@ -124,14 +115,37 @@ export class FormControlsComponent implements OnInit {
     })
   }
     
+  getDate(){
+    const now = new Date();
+
+  const day = String(now.getDate()).padStart(2, '0');
+  const month = String(now.getMonth() + 1).padStart(2, '0'); // Months are 0-based
+  const year = now.getFullYear();
+
+  let hours = now.getHours();
+  const minutes = String(now.getMinutes()).padStart(2, '0');
+  const ampm = hours >= 12 ? 'PM' : 'AM';
+
+  hours = hours % 12;
+  hours = hours ? hours : 12; // the hour '0' should be '12'
+  const formattedHours = String(hours).padStart(2, '0');
+
+   this.addTcktForm.value.CreatedOn = `${day}/${month}/${year} ${formattedHours}:${minutes} ${ampm}`;
+
+  }
   addTckt(){
-    this.addTcktForm.value.createdByUser = this.usrData.userData.UserId;
-    this.addTcktForm.value.isActive = true;
+    this.addTcktForm.value.CreatedByUser = this.usrData.userData.UserId;
+    this.addTcktForm.value.IsActive = true;
+    this.getDate()
     debugger
+    this.addTcktForm.value.TypeOfIssueId = this.addTcktForm.value.TypeOfIssueFld.id
+    this.addTcktForm.value.TypeOfIssue = this.addTcktForm.value.TypeOfIssueFld.name
+    this.addTcktForm.value.Priority = this.addTcktForm.value.PriorityFld.id
+
     // if(!this.addTcktForm.invalid){
-    this.allIssues.forEach((issue:any)=>{
-      if(this.addTcktForm.value.typeOfIssue == issue.name) this.addTcktForm.value.typeOfIssueId = issue.id
-    })
+    // this.allIssues.forEach((issue:any)=>{
+    //   if(this.addTcktForm.value.typeOfIssue == issue.name) this.addTcktForm.value.typeOfIssueId = issue.id
+    // })
     debugger
     const formData = new FormData();
     Object.entries(this.addTcktForm.value).forEach(([key, value]) => {
