@@ -6,12 +6,15 @@
     width: 100%;
     background-size: cover;
 }
+.text-rayahen{
+    color: #B8935E;
+}
 .login_card{
     background-color: #ffffff4d;
     border-radius: 8px;
     color: white;
     justify-content: center;
-    display: grid;
+    // display: grid;
     overflow: auto;
     top: 25%;
     position: relative;
@@ -20,19 +23,19 @@
         text-align: center;
         color: #5d4624;
     }
-    input{
-        background: #8686865d;
-        border: none;
-        color: white;
-        border-radius: 8px;
-        height: 40px;
-        padding: 0px 28px;
-    }
-    input:focus{
-        outline: none !important;
-        background-color: white;
-        color: #5d4624;
-    }
+    // input{
+    //     background: #8686865d;
+    //     border: none;
+    //     color: white;
+    //     border-radius: 8px;
+    //     height: 40px;
+    //     padding: 0px 28px;
+    // }
+    // input:focus{
+    //     outline: none !important;
+    //     background-color: white;
+    //     color: #5d4624;
+    // }
     a{
         color: #5d4624;
     }

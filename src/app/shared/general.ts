@@ -1,4 +1,6 @@
 import { Injectable } from '@angular/core';
+import { AuthService } from './auth.service';
+import { FormBuilder, Validators } from '@angular/forms';
 
 declare var bootstrap: any;
 @Injectable({
@@ -6,18 +8,57 @@ declare var bootstrap: any;
 })
 
 export class General {
-    openNavElmnt?: (event: any) => void; 
     dirVal : any
     updTcktForm:any;
     ticketsStatusCount : any;
     chosenTckt:any
-    showTckts: any
+    showTckts: boolean = false;
     showIssues: any
     showHome: any
     chartSide: any
     showChart: any
-    constructor() {
+    showSingleTckt: any;
+    displayedTckt:any;
+    userData: any;
+    showreturnBtn: any;
+    ticketsAdded: boolean = false;
+shownavElmnt: any;
+    constructor(
+      public authService: AuthService,
+      public fb: FormBuilder,
+    ) {
+      // if(localStorage.getItem('token') != null){
+      //   this.userData = this.authService.getDecodedToken();
+      //   this.userData = this.transformUserData(this.userData);
+      // }
+      this.intializeObjects()
     }
+
+
+    intializeObjects(){
+        this.updTcktForm = this.fb.group({
+            id: ['', [Validators.required]],
+            title: ['', [Validators.required]],
+            description: ['', [Validators.required]],
+            priority: ['', [Validators.required]],
+            isActive: ['', [Validators.required]],
+            createdByUser :['', [Validators.required]],
+            // typeOfIssue:['', [Validators.required]],
+            typeOfIssueId:['', [Validators.required]],
+            // image:[''],
+            TypeOfIssueFld:['', [Validators.required]],
+            PriorityFld:['', [Validators.required]],
+            // imageUrl:[''],
+            // userNameCreated:[''],
+            // createdOn:[''],
+            readFlg:['']
+          })
+    }
+
+
+  openNavElmnt(event:any){
+    this.shownavElmnt = event
+  }
 
     openModal(event: any){
         const modalElement = document.getElementById(event);

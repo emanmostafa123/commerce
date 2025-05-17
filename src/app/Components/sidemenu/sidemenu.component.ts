@@ -2,20 +2,21 @@ import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Output } from '@angular/core';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { AuthService } from '../../shared/auth.service';
-import { Router } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { General } from '../../shared/general';
+import { UserData } from '../../shared/userData';
 
 @Component({
   selector: 'app-sidemenu',
   imports: [
     TranslateModule,
-    CommonModule
+    CommonModule,
+    RouterModule
   ],
   templateUrl: './sidemenu.component.html',
   styleUrl: './sidemenu.component.scss'
 })
 export class SidemenuComponent {
-  userData: any;
   lang: string | undefined;
   shownavElmnt: any;
   @Output() navEvent = new EventEmitter<string>();
@@ -24,7 +25,8 @@ export class SidemenuComponent {
     public translate: TranslateService,
     public authService: AuthService,
     public router : Router,
-    public general: General
+    public general: General,
+    public usrData : UserData
   ){
     const defaultLang = localStorage.getItem('lang') || 'en';
     this.lang = defaultLang
@@ -35,27 +37,10 @@ export class SidemenuComponent {
     }
     this.translate.setDefaultLang(defaultLang);
     this.translate.use(defaultLang);
-    this.userData = this.authService.getDecodedToken();
-    this.userData = this.transformUserData(this.userData);
-    console.log(this.userData )
-    this.openNavElmnt('home')
-    // this.general.openNavElmnt = this.openNavElmnt.bind(this);
-  }
-  transformUserData(user: any): any {
-    if (user["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"]) {
-      user.role = user["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"];
-      delete user["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"];
-    }
-    return user;
-  }
-  
-  
-  openNavElmnt(event:any, openIssueodal?:boolean){
-    this.shownavElmnt = event
-    this.navEvent.emit(event);
+    
   }
 
-  
+
 
   logout(){
     localStorage.removeItem("token") ;

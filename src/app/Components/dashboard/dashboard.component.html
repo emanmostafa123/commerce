@@ -1,34 +1,18 @@
 <div class="section" [lang]="lang" [dir]="general.dirVal" [ngClass]="general.dirVal =='rtl'?' rtl':' '">
    
    <div class="d-flex">
-       <app-sidemenu (navEvent)="handleNavEvent($event)"></app-sidemenu>
+       <app-sidemenu ></app-sidemenu>
        <div class="container-fluid">
-           <nav class="navbar sticky-top navbar-expand-lg  bg-light" aria-label="Eighth navbar example">
+           <nav class="navbar sticky-top navbar-expand-lg  bg-white" aria-label="Eighth navbar example">
                <div class="container">
                    <div class="collapse navbar-collapse" id="navbarsExample07">
                        
-                       <a class="btn btn-sm logoutbtn mx-1"  [ngClass]="general.dirVal =='rtl'?' me-auto':' ms-auto'">
-                           <span >
-                               <i class="fas fa-bell text-rayahen"></i>
-                           </span>
-                       </a>
-                       <div class="dropdown me-2 lngDrp">
-                           <a class="btn dropdown-toggle text-rayahen" (click)="openLangDrop()" role="button" id="dropdownMenuLinklang"
-                               data-bs-toggle="dropdown" aria-expanded="false">
-                               {{lang}}
-                           </a>
-           
-                           <ul class="dropdown-menu lang" id="langDropMenu" aria-labelledby="dropdownMenuLinklang">
-                               <li><a class="dropdown-item cursor_pointer langitem" (click)="switchLanguage('ar')">العربية</a>
-                               </li>
-                               <li><a class="dropdown-item cursor_pointer langitem" (click)="switchLanguage('en')">English</a>
-                               </li>
-                           </ul>
-                       </div>
+                       <app-notifications [ngClass]="general.dirVal =='rtl'?' me-auto':' ms-auto'"></app-notifications>
+                       <app-language-switch></app-language-switch>
                        <a class="btn btn-sm logoutbtn mx-1">
                            <span class="text-rayahen">
                                <img src="../../../assets/user-profile.avif" class="rounded-circle " style="width: 30px;">
-                               {{userData.Email}}
+                               {{usrData.userData.Email}}
                            </span>
                        </a>
                        <a class="btn btn-sm btn-outline mx-1 logoutbtn border text-rayahen" (click)="logout()">{{'log.logout'| translate}}</a>
@@ -39,41 +23,14 @@
            <div class="row flex-nowrap">
     
                <div class="col  main">
-                   @if(showTckts){
-                   <div class="main-screen mt-3">
-                       <app-tickets [mainTickets]="tickets"></app-tickets>
-                   </div>
-                   }
-                   @if(showHome){
-                   <div class="main-screen mt-3">
-                       @if(chartSide){
-                       <app-charts #chartComp></app-charts>
-                       }
-                   </div>
-                   }
-                   
-                   @if(showIssues){
-                   <div class="row bg-white cursor_pointer">
-                       <div class="col-11 row">
-                           @for(issue of allIssues; track issue){
-                           <div class="card m-2 col-2 col-md-2 col-lg-2 col-sm-12">
-                               <div class="card-content p-2">
-                                   <span>{{issue.name}} </span>
-                                   <span class="mx-1 text-danger" [ngClass]="general.dirVal =='rtl'?' float-left':' float-right'"
-                                       (click)="deleteIssue(issue.id ,issue.name)"><i class="fas fa-trash-alt"></i></span>
-                                   <span class="text-warning" [ngClass]="general.dirVal =='rtl'?' float-left':' float-right'"
-                                       (click)="openIssue(issue.id ,issue.name)"><i class="fas fa-edit"></i></span>
-                               </div>
-                           </div>
-                           }
-                       </div>
-                       <div class="col-1 m-2" [ngClass]="general.dirVal =='rtl'?'me-auto':'ms-auto'">
-                           <a class="btn btn-sm btn-outline tcktsBtn mx-1  " (click)="general.openModal('addIssueModal')"><i
-                                   class="fa-solid fa-plus"></i></a>
-                       </div>
-   
-                   </div>
-                   }
+                
+                <router-outlet></router-outlet>
+
+                  
+                  
+                   <!-- @if(general.showIssues){
+                    <app-issues></app-issues>
+                   } -->
                </div>
            </div>
        </div>
@@ -147,258 +104,6 @@
                         </div>
                         <div class="col-12">
                             <button type="submit" class="btn btn-primary ms-auto" (click)="addUser()">
-                                {{'tickets.mainLabels.submit'| translate}}
-                            </button>
-                        </div>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- Modal for display ticket -->
-<div class="modal fade" id="displayTcktModal" tabindex="-1" role="dialog" aria-labelledby="addUsrModalTitle"
-    aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-body">
-                <div class="card m-2"
-                    [ngClass]="general.chosenTckt?.priority == 1 ? 'high' : (general.chosenTckt?.priority == 2 ? 'medium' : 'low')">
-                    <span class="d-flex">
-                        @if(general.chosenTckt?.isActive){
-                        <div class="ribbon ms-auto ribbonActive">{{'tickets.tcktsCrd.active'| translate}}</div>
-                        }
-                        @if(!general.chosenTckt?.isActive){
-                        <div class="ribbon ms-auto ribbonDeactive">{{'tickets.tcktsCrd.deactive'| translate}}</div>
-                        }
-                    </span>
-                    <div class="card-content p-2">
-                        <div class="d-flex">
-                            <span class="title">{{'tickets.tcktsCrd.subject'| translate}} : </span>
-                            <span class="des"> {{general.chosenTckt?.title}}</span>
-                        </div>
-                        <div class="d-block">
-                            <div class="d-flex">
-                                <div class="title">{{'tickets.tcktsCrd.tcktDes'| translate}} : </div>
-                                <!-- <span class="title ms-auto" ><i class="far fa-image"></i></span>  -->
-                                <!-- <div class="dropdown ms-auto">
-                                    <button class="btn imgBtn dropdown-toggle" type="button" id="dropdownMenuButton"
-                                        data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        <i class="far fa-image"></i>
-                                    </button>
-                                    <div class="dropdown-menu" aria-bs-labelledby="dropdownMenuButton">
-                                        <a class="dropdown-item" (click)="openImg(general.chosenTckt?.imageUrl)">
-                                            <i class="far fa-image"></i>
-                                        </a>
-                                        <a class="dropdown-item" (click)="openImg(general.chosenTckt?.imageUrl)">
-                                            <i class="far fa-image"></i>
-                                        </a>
-                                    </div>
-                                </div> -->
-                                <div class="des"> {{general.chosenTckt?.description}}</div>
-                            </div>
-                        </div>
-                        <div class="d-flex">
-                            <div class="title">{{'tickets.tcktsCrd.crtOn'| translate}} : </div>
-                            <div class="des"> {{general.chosenTckt?.createdOn}}</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- Modal -->
-<div class="modal fade" id="addTcktModal" tabindex="-1" role="dialog" data-bs-backdrop="static"
-    aria-labelledby="addUsrModalTitle" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modalCustom" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="staticBackdropLabel">{{'tickets.mainLabels.addtckt'| translate}}</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <form [formGroup]="addTcktForm">
-                    <div class="row">
-                        <div class="col-12 col-md-6 col-lg-6 col-sm-12">
-                            <div class="form-floating  mb-3">
-                                <input type="text" class="form-control" name="title" formControlName="title"
-                                    id="floatingtitle" [placeholder]="'tickets.tcktsCrd.tcktTitle'| translate">
-                                <label for="floatingtitle">{{'tickets.tcktsCrd.tcktTitle'| translate}}</label>
-                            </div>
-                        </div>
-                        <div class="col-12">
-                            <div class="form-floating  mb-3">
-                                <textarea type="text" class="form-control" name="description" formControlName="description"
-                                    id="floatingdescription" [placeholder]="'tickets.tcktsCrd.tcktDes'| translate"></textarea>
-                                <label for="floatingdescription">{{'tickets.tcktsCrd.tcktDes'| translate}}</label>
-                            </div>
-                        </div>
-                        <div class="col-12 col-md-6 col-lg-6 col-sm-12">
-                            <div class="form-floating  mb-3">
-                                <select class="form-select" name="priority" formControlName="priority"
-                                    id="floatingSelectGridtcktPrty" aria-label="Floating label select example">
-                                    <option [ngValue]="1">{{'tickets.tcktsCrd.high'| translate}}</option>
-                                    <option [ngValue]="2">{{'tickets.tcktsCrd.medium'| translate}}</option>
-                                    <option [ngValue]="3">{{'tickets.tcktsCrd.low'| translate}}</option>
-                                </select>
-                                <label for="floatingSelectGridtcktPrty">{{'tickets.tcktsCrd.tcktPrty'|
-                                    translate}}</label>
-                            </div>
-                        </div>
-                        <div class="col-12 col-md-6 col-lg-6 col-sm-12">
-                            <div class="form-floating  mb-3">
-                                <select class="form-select" name="typeOfIssue" formControlName="typeOfIssue"
-                                    id="floatingSelectGridtypeOfIssue" aria-label="Floating label select example">
-                                    @for(issue of allIssues; track issue){
-                                    <option [ngValue]="issue.name">{{issue.name}}</option>}
-                                </select>
-                                <label for="floatingSelectGridtypeOfIssue">{{'tickets.tcktsCrd.typeOfIssue'|
-                                    translate}}</label>
-                            </div>
-                        </div>
-                        <input type="file" (change)="onFileSelected($event)" />
-                        <div class="col-12 mt-2">
-                            <button type="submit" class="btn btn-primary ms-auto"
-                                (click)="addTckt()">{{'tickets.mainLabels.submit'| translate}}</button>
-                        </div>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="modal fade" id="updTcktModal" tabindex="-1" role="dialog" data-bs-backdrop="static"
-    aria-labelledby="updUsrModalTitle" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modalCustom" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="staticBackdropLabel">{{'tickets.mainLabels.updTicket'| translate}}</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <form [formGroup]="general.updTcktForm">
-                    <div class="row">
-                        <div class="col-12 col-md-6 col-lg-6 col-sm-12">
-                            <div class="form-floating  mb-3">
-                                <input type="text" class="form-control" name="title" formControlName="title"
-                                    id="floatingtitleupd" [placeholder]="'tickets.tcktsCrd.tcktTitle'| translate">
-                                <label for="floatingtitleupd">{{'tickets.tcktsCrd.tcktTitle'| translate}}</label>
-                            </div>
-                        </div>
-                        <div class="col-12 ">
-                            <div class="form-floating  mb-3">
-                                <textarea type="text" class="form-control" name="description" formControlName="description"
-                                    id="floatingdescriptionupd" [placeholder]="'tickets.tcktsCrd.tcktDes'| translate"></textarea>
-                                <label for="floatingdescriptionupd">{{'tickets.tcktsCrd.tcktDes'| translate}}</label>
-                            </div>
-                        </div>
-                        <div class="col-12 col-md-6 col-lg-6 col-sm-12">
-                            <div class="form-floating  mb-3">
-                                <select class="form-select" name="priority" formControlName="priority"
-                                    id="floatingSelectGridtcktPrtyupd" aria-label="Floating label select example">
-                                    <option [ngValue]="1">{{'tickets.tcktsCrd.high'| translate}}</option>
-                                    <option [ngValue]="2">{{'tickets.tcktsCrd.medium'| translate}}</option>
-                                    <option [ngValue]="3">{{'tickets.tcktsCrd.low'| translate}}</option>
-                                </select>
-                                <label for="floatingSelectGridtcktPrtyupd">{{'tickets.tcktsCrd.tcktPrty'|
-                                    translate}}</label>
-                            </div>
-                        </div>
-                        <div class="col-12 col-md-6 col-lg-6 col-sm-12">
-                            <div class="form-floating  mb-3">
-                                <select class="form-select" name="typeOfIssue" formControlName="typeOfIssue"
-                                    id="floatingSelectGridtypeOfIssueupd" aria-label="Floating label select example">
-                                    @for(issue of allIssues; track issue){
-                                    <option [ngValue]="issue.name">{{issue.name}}</option>}
-                                </select>
-                                <label for="floatingSelectGridtypeOfIssueupd">{{'tickets.tcktsCrd.typeOfIssue'|
-                                    translate}}</label>
-                            </div>
-                        </div>
-                       @if(userData.Role =='Admin'){
-                        <!-- <div class="form-check form-switch col-12 col-md-6 col-lg-6 col-sm-12">
-                            <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked" formControlName="isActive"
-                                [checked]="general.updTcktForm.value.isActive" >
-                            <label class="form-check-label" for="flexSwitchCheckChecked">Checked switch checkbox input</label>
-                          </div> -->
-                          <div class="form-check col-12 col-md-6 col-lg-6 col-sm-12 ms-3 my-2">
-                            <input class="form-check-input" type="checkbox" [value]="general.updTcktForm.value.isActive"
-                                formControlName="isActive" id="flexCheckDefault">
-                            <label class="form-check-label" for="flexCheckDefault">
-                                {{'tickets.tcktsCrd.active'| translate}}
-                            </label>
-                          </div>
-                          
-                        }
-                        <div class="col-12 my-2">
-                            <input type="file" (change)="onFileSelected($event)" />
-                        </div>
-                        <div class="col-12 my-2 mt-2">
-                            <button type="submit" class="btn btn-primary ms-auto"
-                                (click)="submitUpdTicket()">{{'tickets.mainLabels.submit'| translate}}</button>
-                        </div>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- Modal add issue -->
-<div class="modal fade" id="addIssueModal" tabindex="-1" role="dialog" data-bs-backdrop="static"
-    aria-labelledby="addIssueModalTitle" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modalCustom" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="staticBackdropLabel">{{'tickets.mainLabels.addissue'| translate}}</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <form [formGroup]="addIssueForm">
-                    <div class="row">
-
-                        <div class="col-12">
-                            <div class="form-floating  mb-3">
-                                <input type="text" class="form-control" name="name" formControlName="name"
-                                    id="floatingissueNm" [placeholder]="'tickets.issueCrd.issueNm' | translate">
-                                <label for="floatingissueNm">{{'tickets.issueCrd.issueNm'| translate}}</label>
-                            </div>
-                        </div>
-                        <div class="col-12">
-                            <button type="submit" class="btn btn-primary ms-auto" (click)="addNewIssue()">
-                                {{'tickets.mainLabels.submit'| translate}}
-                            </button>
-                        </div>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- Modal upd issue -->
-<div class="modal fade" [id]="'updIssueModal'" tabindex="-1" role="dialog" aria-labelledby="addIssueModalTitle"
-    aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modalCustom" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="staticBackdropLabel">{{'tickets.mainLabels.addissue'| translate}}</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <form [formGroup]="updIssueForm">
-                    <div class="row">
-
-                        <div class="col-12">
-                            <div class="form-floating  mb-3">
-                                <input type="text" class="form-control" name="name" formControlName="name"
-                                    id="floatingissueNmupd" [value]="issueNm"
-                                    [placeholder]="'tickets.issueCrd.issueNm' | translate">
-                                <label for="floatingissueNmupd">{{'tickets.issueCrd.issueNm'| translate}}</label>
-                            </div>
-                        </div>
-                        <div class="col-12">
-                            <button type="submit" class="btn btn-primary ms-auto" (click)="updateIssue()">
                                 {{'tickets.mainLabels.submit'| translate}}
                             </button>
                         </div>

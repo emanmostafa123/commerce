@@ -13,36 +13,36 @@
     <ul class="nav nav-pills flex-column mb-auto p-0">
       <li class="nav-item my-1">
         <a  class="nav-link text-white" aria-current="page" 
-            [ngClass]="shownavElmnt == 'home' ? 'active':''"
-            (click)="openNavElmnt('home')">
+            [ngClass]="general.shownavElmnt == 'home' ? 'active':''" [routerLink]="['/rayahen']" routerLinkActive="router-link-active" 
+            (click)="general.openNavElmnt('home')">
           <svg class="bi me-2" width="16" height="16"><use xlink:href="#home"></use></svg>
           {{'main.nav.home'| translate}}
         </a>
       </li>
       <li>
         <a  class="nav-link text-white my-1" 
-            [ngClass]="shownavElmnt == 'tickets' ? 'active':''"
-            (click)="openNavElmnt('tickets')">
+            [ngClass]="general.shownavElmnt == 'tickets' ? 'active':''"  [routerLink]="['/tickets']" routerLinkActive="router-link-active" 
+            (click)="general.openNavElmnt('tickets')">
           <svg class="bi me-2" width="16" height="16"><use xlink:href="#speedometer2"></use></svg>
           {{'tickets.mainLabels.tckts'| translate}}
         </a>
       </li>
-      @if(userData.Role =='Admin'){
+      @if(usrData.userData.Role =='Admin'){
 
       <li>
         <a  class="nav-link text-white my-1" 
-            [ngClass]="shownavElmnt == 'addIssue' ? 'active':''" 
-            (click)="openNavElmnt('addIssue',true)">
+            [ngClass]="general.shownavElmnt == 'issues' ? 'active':''"  [routerLink]="['/issues']" routerLinkActive="router-link-active" 
+            (click)="general.openNavElmnt('issues')">
           <svg class="bi me-2" width="16" height="16"><use xlink:href="#table"></use></svg>
           {{'tickets.mainLabels.allissue'| translate}}
         </a>
       </li>
     }
-    @if(userData.Role =='Admin'){
+    @if(usrData.userData.Role =='Admin'){
 
       <li>
         <a  class="nav-link text-white my-1" 
-            [ngClass]="shownavElmnt == 'addUsrModal' ? 'active':''"
+            [ngClass]="general.shownavElmnt == 'addUsrModal' ? 'active':''"
             (click)="general.openModal('addUsrModal')">
           <svg class="bi me-2" width="16" height="16"><use xlink:href="#grid"></use></svg>
           {{'tickets.mainLabels.adduser'| translate}}

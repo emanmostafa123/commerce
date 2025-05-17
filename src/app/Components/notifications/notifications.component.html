@@ -1,0 +1,21 @@
+
+<div class="dropdown me-2 " id="notifictaionDrop">
+    <a class="btn btn-sm logoutbtn mx-1" (click)="showNotification()" [ngClass]="general.dirVal =='rtl'?' me-auto':' ms-auto'">
+        <span >
+            <i class="fas fa-bell text-rayahen"></i>
+        </span>
+        <span class="notification_count">{{notifications?.length}}</span>
+    </a>
+    <ul class="dropdown-menu notification animate__bounce" id="notifictaionDropMenu" >
+        <div class="notification_container mx-2">
+            <div *ngFor="let notification of notifications" class="notification-item mb-2"
+                (click)="openTicket(notification.ticketId)">
+                <p>{{ notification.ticketSubject }}</p>
+                <small class="date"
+                    >{{ notification.createdAt | date:'short' }}</small>
+            <hr class="m-0">
+            </div>
+        </div>
+            
+    </ul>
+</div>

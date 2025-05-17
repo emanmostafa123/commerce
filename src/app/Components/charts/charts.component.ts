@@ -7,6 +7,7 @@ import { CommonModule } from '@angular/common';
 import { AccumulationChartComponent, AccumulationChartModule } from '@syncfusion/ej2-angular-charts';
 import { ToastComponent } from '../toast/toast.component';
 import { General } from '../../shared/general';
+import { Title } from '@angular/platform-browser';
 
 // ✅ Interface for chart data
 interface single {
@@ -85,7 +86,11 @@ export class ChartsComponent implements AfterViewInit {
     public rayahenService: RayahenService,
     public translate: TranslateService,
     public general: General,
+    public title: Title,
   ) {
+    this.title.setTitle('Rayahen | Dashboard');
+    this.general.openNavElmnt('home')
+
   }
 
   ngOnInit(): void {

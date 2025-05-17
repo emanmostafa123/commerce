@@ -1,34 +1,55 @@
-/* You can add global styles to this file, and also import other style files */
-body{
-    font-family: 'Cairo', sans-serif !important;
+@use 'assets/generalStyle.scss' as *; 
+
+
+body {
+  font-family: 'Cairo', sans-serif !important;
+  margin: 0;
+  padding: 0;
+  height: 100vh;
 }
 
-/* override browser default */
-html,
-body {
+html, body {
   margin: 0;
   padding: 0;
 }
 
-/* use viewport-relative units to cover page fully */
-body {
-  height: 100vh;
+.dropdown-menu {
+  border: 1px solid #805e1f59 !important;
+  border-radius: 10px !important;
 }
 
-/* include border and padding in element width and height */
 * {
   box-sizing: border-box;
 }
+
+.main-screen {
+  min-height: 90vh;
+  background: white;
+  border-radius: 4px;
+  padding: 8px;
+}
+
+.bg-Basic {
+  background: rgb(235 234 232) !important;
+}
+
 body::-webkit-scrollbar {
-    width: 5px;
-  }
-  
-  body::-webkit-scrollbar-track {
-    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
-  }
-  
-  body::-webkit-scrollbar-thumb {
-    border-radius: 10px;
-    background: #B8935E;
-  }
-  
+  width: 5px;
+}
+
+body::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+}
+
+body::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  background: #B8935E;
+}
+
+.modal-content {
+  border-radius: 0px;
+  border: none;
+  height: 30rem;
+}
+
+

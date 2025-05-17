@@ -45,3 +45,10 @@ th,td{
     color: #ffffff;
     border: 1px solid #805e1f;
 }
+app-toast{
+    z-index: 10000 !important;
+    position: absolute !important;
+    right: 25px !important;
+    top: 95px !important;
+    left: auto !important;
+}

@@ -56,4 +56,10 @@ export class RayahenService {
   deleteIssue(req: any) {
     return this.http.delete<any>('http://ticket-sys.runasp.net/api/Admin/DeleteIssue?id=' + req, { responseType: 'json', observe: 'response' })
   }
+  getNotification(req: any) {
+    return this.http.get<any>('http://ticket-sys.runasp.net/api/Notification/GetAllNotifications?userid=' + req, { responseType: 'json', observe: 'response' })
+  }
+  uploudImg(req: any) {
+    return this.http.post<any>('http://ticket-sys.runasp.net/api/Ticket/Image' , req, { responseType: 'json', observe: 'response' })
+  }
 }
