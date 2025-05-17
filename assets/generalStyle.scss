@@ -1,0 +1,27 @@
+.text-rayahen{
+    color: #805e1f;
+}
+
+.cursor_pointer{
+    cursor: pointer;
+}
+
+.bg-rayahen{
+    background-color: #805e1f;
+}
+
+
+.rtl{
+    app-toast{
+        left: 25px !important;
+        right: auto !important;
+    }
+    
+}
+app-toast{
+    z-index: 10000 !important;
+    position: absolute !important;
+    right: 25px !important;
+    top: 95px !important;
+    left: auto !important;
+}

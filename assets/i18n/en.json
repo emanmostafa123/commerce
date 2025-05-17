@@ -35,7 +35,9 @@
             "low":"Low",
             "tcktStatus":"Ticket Status",
             "noTckts":"No Tickets Found",
-            "of":"of"
+            "of":"of",
+            "search":"Search Tickets",
+            "tcktImg":"Ticket File"
         },
         "issueCrd":{
             "issueNm":"Issue Name"
@@ -83,5 +85,6 @@
         "highPrtyTckt":"High Priority Tickets",
         "mediumPrtyTckt":"Medium Priority Tickets",
         "lowPrtyTckt":"Low Priority Tickets"
-    }
+    },
+    "req":"This field is required"
 }
