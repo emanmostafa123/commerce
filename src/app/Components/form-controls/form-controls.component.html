@@ -8,25 +8,25 @@
                     <p-floatlabel variant="on">
                         <input pInputText id="id_on_label" autocomplete="off" 
                             class="w-100"
-                            type="text"  formControlName="Title" name="Title"/>
+                            type="text"  formControlName="title" name="title"/>
                         <label for="id_on_label">{{'tickets.tcktsCrd.tcktTitle'| translate}}
                             <span class="text-danger">*</span>
                         </label>
                         
                     </p-floatlabel>
-                    @if(addTcktForm.controls['Title'].hasError('required') && addTcktForm.controls['Title'].touched){
+                    @if(addTcktForm.controls['title'].hasError('required') && addTcktForm.controls['title'].touched){
                     <small id="" class="text-danger">{{'req' | translate}}</small>
                     }
                 </div>
                 <div class="col-12 my-2">
                     <p-floatlabel variant="on">
                         <textarea pTextarea id="description_on_label" 
-                        formControlName="Description" name="Description" rows="3" style="resize: none" class="h-full w-100"></textarea>
+                        formControlName="description" name="description" rows="3" style="resize: none" class="h-full w-100"></textarea>
                         <label for="description_on_label">{{'tickets.tcktsCrd.tcktDes'| translate}}
                             <span class="text-danger">*</span>
                         </label>
                     </p-floatlabel>
-                    @if(addTcktForm.controls['Description'].hasError('required') && addTcktForm.controls['Description'].touched){
+                    @if(addTcktForm.controls['description'].hasError('required') && addTcktForm.controls['description'].touched){
                     <small id="" class="text-danger">{{'req' | translate}}</small>
                     }
                 </div>
@@ -65,7 +65,7 @@
             
             
             </div>
-                <input type="file" (change)="onFileSelected($event)" />
+                <!-- <input type="file" (change)="onFileSelected($event)" /> -->
                 <div class="col-12 mt-2">
                     <button type="submit" class="btn btn-rayahen ms-auto"
                         (click)="addTckt()">{{'tickets.mainLabels.submit'|
@@ -80,50 +80,67 @@
     <div class="m-3">
         <form [formGroup]="general.updTcktForm">
             <div class="row">
-                <div class="col-12 col-md-6 col-lg-6 col-sm-12">
-                    <div class="form-floating  mb-3">
-                        <input type="text" class="form-control" name="title" formControlName="title"
-                            id="floatingtitleupd" [placeholder]="'tickets.tcktsCrd.tcktTitle'| translate">
-                        <label for="floatingtitleupd">{{'tickets.tcktsCrd.tcktTitle'| translate}}</label>
-                    </div>
+                <div class="title">
+                    {{'tickets.tcktsCrd.id' | translate}} {{general.updTcktForm?.controls['id']?.value}}
                 </div>
-                <div class="col-12 ">
-                    <div class="form-floating  mb-3">
-                        <textarea type="text" class="form-control" name="description" formControlName="description"
-                            id="floatingdescriptionupd"
-                            [placeholder]="'tickets.tcktsCrd.tcktDes'| translate"></textarea>
-                        <label for="floatingdescriptionupd">{{'tickets.tcktsCrd.tcktDes'| translate}}</label>
-                    </div>
+                <!-- Tilte -->
+                <div class="col-12 col-md-6 col-lg-6 col-sm-12 my-2">
+                    <p-floatlabel variant="on">
+                        <input pInputText id="id_on_labelupd" autocomplete="off" 
+                            class="w-100"
+                            type="text"  formControlName="title" name="title"/>
+                        <label for="id_on_labelupd">{{'tickets.tcktsCrd.tcktTitle'| translate}}
+                            <span class="text-danger">*</span>
+                        </label>
+                        
+                    </p-floatlabel>
+                    @if(general.updTcktForm.controls['title'].hasError('required') && general.updTcktForm.controls['title'].touched){
+                    <small id="" class="text-danger">{{'req' | translate}}</small>
+                    }
                 </div>
-                <div class="col-12 col-md-6 col-lg-6 col-sm-12">
-                    <div class="form-floating  mb-3">
-                        <select class="form-select" name="priority" formControlName="priority"
-                            id="floatingSelectGridtcktPrtyupd" aria-label="Floating label select example">
-                            <option [ngValue]="1">{{'tickets.tcktsCrd.high'| translate}}</option>
-                            <option [ngValue]="2">{{'tickets.tcktsCrd.medium'| translate}}</option>
-                            <option [ngValue]="3">{{'tickets.tcktsCrd.low'| translate}}</option>
-                        </select>
-                        <label for="floatingSelectGridtcktPrtyupd">{{'tickets.tcktsCrd.tcktPrty'|
-                            translate}}</label>
-                    </div>
+                <!-- description -->
+                <div class="col-12 my-2">
+                    <p-floatlabel variant="on">
+                        <textarea pTextarea id="description_on_labelupd" 
+                        formControlName="description" name="description" rows="3" style="resize: none" class="h-full w-100"></textarea>
+                        <label for="description_on_labelupd">{{'tickets.tcktsCrd.tcktDes'| translate}}
+                            <span class="text-danger">*</span>
+                        </label>
+                    </p-floatlabel>
+                    @if(general.updTcktForm.controls['description'].hasError('required') && general.updTcktForm.controls['description'].touched){
+                    <small id="" class="text-danger">{{'req' | translate}}</small>
+                    }
                 </div>
-                <div class="col-12 col-md-6 col-lg-6 col-sm-12">
-                    <div class="form-floating  mb-3">
-                        <select class="form-select" name="typeOfIssue" formControlName="typeOfIssue"
-                            id="floatingSelectGridtypeOfIssueupd" aria-label="Floating label select example">
-                            @for(issue of allIssues; track issue){
-                            <option [ngValue]="issue.name">{{issue.name}}</option>}
-                        </select>
-                        <label for="floatingSelectGridtypeOfIssueupd">{{'tickets.tcktsCrd.typeOfIssue'|
-                            translate}}</label>
-                    </div>
+                <!-- priority -->
+                <div class="col-12 col-md-6 col-lg-6 col-sm-12 my-2">
+                    <p-floatlabel class="w-full " variant="on">
+                        <p-select formControlName="PriorityFld" inputId="priority_on_label" [options]="prtyOptions"
+                            optionLabel="name" styleClass="w-full w-100"  [showClear]="true"/>
+                        <label for="priority_on_label">{{'tickets.tcktsCrd.tcktPrty'| translate}}
+                            <span class="text-danger">*</span>
+                        </label>
+                    </p-floatlabel>
+                      @if(general.updTcktForm.controls['PriorityFld'].hasError('required') && general.updTcktForm.controls['PriorityFld'].touched){
+                    <small id="" class="text-danger">{{'req' | translate}}</small>
+                    }
                 </div>
+                <!-- type of issue -->
+                <div class="col-12 col-md-6 col-lg-6 col-sm-12 my-2">
+                    <p-floatlabel class="w-full " variant="on">
+                    <p-select formControlName="TypeOfIssueFld" inputId="typeOfIssue_on_label" [options]="allIssues"
+                        optionLabel="name" styleClass="w-full w-100"  [showClear]="true"/>
+                    <label for="typeOfIssue_on_label">{{'tickets.tcktsCrd.typeOfIssue'| translate}}
+                        <span class="text-danger">*</span>
+                    </label>
+                </p-floatlabel>
+                     @if(general.updTcktForm.controls['TypeOfIssueFld'].hasError('required') && general.updTcktForm.controls['TypeOfIssueFld'].touched){
+                    <small id="" class="text-danger">{{'req' | translate}}</small>
+                    }
+                </div>
+                <!-- status -->
+                
                 @if(usrData.userData.Role =='Admin'){
-                <!-- <div class="form-check form-switch col-12 col-md-6 col-lg-6 col-sm-12">
-                            <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked" formControlName="isActive"
-                                [checked]="general.updTcktForm.value.isActive" >
-                            <label class="form-check-label" for="flexSwitchCheckChecked">Checked switch checkbox input</label>
-                          </div> -->
+                
                 <div class="form-check col-12 col-md-6 col-lg-6 col-sm-12 ms-3 my-2">
                     <input class="form-check-input" type="checkbox" [value]="general.updTcktForm.value.isActive"
                         formControlName="isActive" id="flexCheckDefault">
@@ -133,6 +150,17 @@
                 </div>
 
                 }
+                  <div class="col-12">
+            <div class="custom-file-upload">
+                <label for="fileInput" class="upload-label">
+                    <i class="pi pi-upload"></i> Select File
+                </label>
+                <input type="file" id="fileInput" (change)="onFileSelected($event)" />
+                <span *ngIf="selectedFileName" class="file-name">{{ selectedFileName }}</span>
+            </div>
+            
+            
+            </div>
                 <div class="col-12 my-2">
                     <!-- <input type="file" (change)="onFileSelected($event)" /> -->
                 </div>

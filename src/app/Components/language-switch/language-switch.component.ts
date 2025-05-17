@@ -39,7 +39,6 @@ export class LanguageSwitchComponent {
   @HostListener('document:click', ['$event'])
   onClick(event: MouseEvent) {
     const target = event.target as HTMLElement ;
-    console.log(target.id);
     const langDropMenu = document.getElementById('langDropMenu');
     if (target.id !== 'langDropMenu' && target.id !== 'langDropBtn' && target.id !== 'dropdownMenuLinklang' ) {
       if (langDropMenu) {

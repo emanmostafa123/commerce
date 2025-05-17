@@ -6,7 +6,8 @@ import { DeclarationHelper } from '../../shared/DeclarationHelper';
 import { General } from '../../shared/general';
 import { Title } from '@angular/platform-browser';
 import { ToastComponent } from '../toast/toast.component';
-import { Router } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
+import { id } from '@swimlane/ngx-charts';
 
 @Component({
   selector: 'app-tickets',
@@ -14,6 +15,7 @@ import { Router } from '@angular/router';
     CommonModule,
     TranslateModule,
     ToastComponent,
+    RouterModule
   ],
   templateUrl: './tickets.component.html',
   styleUrl: './tickets.component.scss'
@@ -74,8 +76,20 @@ export class TicketsComponent {
     ticket.forEach((element:any)=>{
       let control = element[0]
       let val = element[1]
-      this.general.updTcktForm.controls[control].setValue(val)
+      if(this.general.updTcktForm.controls[control] != undefined)
+        this.general.updTcktForm.controls[control].setValue(val)
     })
+    this.general.updTcktForm.controls['TypeOfIssueFld'].setValue({name: event.typeOfIssue, id: event.typeOfIssueId})
+    if(event.priority == '1'){
+      event.priorityNm = this.translate.instant('tickets.tcktsCrd.high')
+    }else if(event.priority == '2'){
+      event.priorityNm = this.translate.instant('tickets.tcktsCrd.medium')  
+    }
+    else if(event.priority == '3'){   
+      event.priorityNm = this.translate.instant('tickets.tcktsCrd.low')  
+    }
+    this.general.updTcktForm.controls['PriorityFld'].setValue({name: event.priorityNm, id: event.priority})
+    localStorage.setItem('ticketUpd', JSON.stringify(this.general.updTcktForm.value))
     this.router.navigate(['/updTicket/'+event.id])
 
   }

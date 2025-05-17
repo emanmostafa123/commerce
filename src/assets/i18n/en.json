@@ -36,7 +36,8 @@
             "tcktStatus":"Ticket Status",
             "noTckts":"No Tickets Found",
             "of":"of",
-            "search":"Search Tickets"
+            "search":"Search Tickets",
+            "tcktImg":"Ticket File"
         },
         "issueCrd":{
             "issueNm":"Issue Name"

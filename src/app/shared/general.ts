@@ -43,12 +43,14 @@ shownavElmnt: any;
             priority: ['', [Validators.required]],
             isActive: ['', [Validators.required]],
             createdByUser :['', [Validators.required]],
-            typeOfIssue:['', [Validators.required]],
+            // typeOfIssue:['', [Validators.required]],
             typeOfIssueId:['', [Validators.required]],
-            image:[''],
-            imageUrl:[''],
-            userNameCreated:[''],
-            createdOn:[''],
+            // image:[''],
+            TypeOfIssueFld:['', [Validators.required]],
+            PriorityFld:['', [Validators.required]],
+            // imageUrl:[''],
+            // userNameCreated:[''],
+            // createdOn:[''],
             readFlg:['']
           })
     }

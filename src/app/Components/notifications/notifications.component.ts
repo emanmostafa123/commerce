@@ -4,6 +4,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { General } from '../../shared/general';
 import { RayahenService } from '../../Services/rayahen.service';
 import { UserData } from '../../shared/userData';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-notifications',
@@ -19,7 +20,8 @@ export class NotificationsComponent {
     private translate: TranslateService,
     public general: General,
     public rayahenService : RayahenService,
-    public usrData: UserData
+    public usrData: UserData,
+    public router: Router
   ) { }
 
   ngOnInit(): void {
@@ -47,7 +49,7 @@ export class NotificationsComponent {
         this.general.showSingleTckt = true;
         this.rayahenService.readTickt(id).subscribe()
         this.getNotification()
-
+          this.router.navigate(['/ticket', this.general.displayedTckt.id]);
       }
     })
   }

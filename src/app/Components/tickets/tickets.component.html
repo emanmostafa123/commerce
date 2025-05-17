@@ -79,6 +79,7 @@
                 <th style="width:40px">{{'tickets.tcktsCrd.id' | translate}}</th>
                 <th style="width:100px">{{'tickets.tcktsCrd.subject'| translate}} </th>
                 <th class="thDes">{{'tickets.tcktsCrd.tcktDes'| translate}} </th>
+                <th style="width:100px">{{'tickets.tcktsCrd.tcktImg'| translate}}</th>
                 <th style="width:100px">{{'tickets.tcktsCrd.tcktPrty' | translate}}</th>
                 <th style="width:100px">{{'tickets.tcktsCrd.tcktStatus' | translate}}</th>
                 <th style="width:30px"></th>
@@ -94,6 +95,13 @@
                 <td>{{ticket.id}}</td>
                 <td>{{ticket.title}}</td>
                 <td class="tdDes">{{ticket.description}}</td>
+                <td>
+                    @if(ticket.imageUrl != null && ticket.imageUrl != ""){
+                    <a [href]="ticket.imageUrl" target="_blank">
+                        <i class="fa-solid fa-file"></i>
+                    </a>
+                    }
+                </td>
                 <td>
                     <span class="text-white rounded px-2" [ngClass]="ticket.priority == 1 ?'bg-danger': ticket.priority == 2 ?'bg-warning' : 'bg-primary'" style="width: fit-content;">
 

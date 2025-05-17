@@ -59,4 +59,7 @@ export class RayahenService {
   getNotification(req: any) {
     return this.http.get<any>('http://ticket-sys.runasp.net/api/Notification/GetAllNotifications?userid=' + req, { responseType: 'json', observe: 'response' })
   }
+  uploudImg(req: any) {
+    return this.http.post<any>('http://ticket-sys.runasp.net/api/Ticket/Image' , req, { responseType: 'json', observe: 'response' })
+  }
 }

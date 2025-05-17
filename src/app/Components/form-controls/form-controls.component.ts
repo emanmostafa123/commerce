@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { LangChangeEvent, TranslateModule, TranslateService } from '@ngx-translate/core';
 import { RayahenService } from '../../Services/rayahen.service';
 import { ToastComponent } from '../toast/toast.component';
@@ -59,46 +59,58 @@ export class FormControlsComponent implements OnInit {
     public general : General,
     public fb : FormBuilder,
     public messageService : MessageService,
-    public usrData: UserData
+    public usrData: UserData,
+    public router: Router
   ){
     debugger
     this.ticketId = this.route.snapshot.paramMap.get('id');
     if(!this.ticketId){
       this.addMode = true
     }else{
-      this.updMode = true
+      if(localStorage.getItem('ticketUpd') != null || localStorage.getItem('ticketUpd') != undefined){
+        const ticket =  Object.entries(JSON.parse(localStorage.getItem('ticketUpd') || '{}'))
+        ticket.forEach((element:any)=>{
+          let control = element[0]
+          let val = element[1]
+          this.general.updTcktForm.controls[control].setValue(val)
+        })
+        this.updMode = true
+      }else{
+        this.router.navigate(['/tickets'])
+      }
     }
     this.intializeObjects()
   }
   intializeObjects(){
     this.prtyOptions = [
-        { name: this.translate.instant('tickets.tcktsCrd.high'), id: '1' },
-        { name: this.translate.instant('tickets.tcktsCrd.medium'), id: '2' },
-        { name: this.translate.instant('tickets.tcktsCrd.low'), id: '3' }
+        { name: this.translate.instant('tickets.tcktsCrd.high'), id:  1 },
+        { name: this.translate.instant('tickets.tcktsCrd.medium'), id: 2 },
+        { name: this.translate.instant('tickets.tcktsCrd.low'), id: 3 }
       ];
     this.addTcktForm = this.fb.group({
-      Title: ['', [Validators.required]],
-      Description: ['', [Validators.required]],
-      Priority: [''],
+      title: ['', [Validators.required]],
+      description: ['', [Validators.required]],
+      priority: [''],
       PriorityFld: ['', [Validators.required]],
-      IsActive: ['', [Validators.required]],
-      CreatedByUser :['', [Validators.required]],
+      isActive: ['', [Validators.required]],
+      createdByUser :['', [Validators.required]],
       TypeOfIssueFld:['', [Validators.required]],
-      TypeOfIssue:[''],
-      TypeOfIssueId:[''],
-      Image: [''],
-      CreatedOn:[''],
+      typeOfIssueId:[''],
+      // TypeOfIssue:[''],
+      // Image: [''],
+      // CreatedOn:[''],
+      readFlg : ['']
 
     })  
-  
+    console.log(this.general.updTcktForm)
   }
 
   ngOnInit(){
     this.translate.onLangChange.subscribe((event: LangChangeEvent) => {
       this.prtyOptions = [
-        { name: this.translate.instant('tickets.tcktsCrd.high'), id: '1' },
-        { name: this.translate.instant('tickets.tcktsCrd.medium'), id: '2' },
-        { name: this.translate.instant('tickets.tcktsCrd.low'), id: '3' }
+        { name: this.translate.instant('tickets.tcktsCrd.high'), id: 1 },
+        { name: this.translate.instant('tickets.tcktsCrd.medium'), id: 2 },
+        { name: this.translate.instant('tickets.tcktsCrd.low'), id: 3 }
       ];
     });
     this.getAllIssues()
@@ -134,13 +146,14 @@ export class FormControlsComponent implements OnInit {
 
   }
   addTckt(){
-    this.addTcktForm.value.CreatedByUser = this.usrData.userData.UserId;
-    this.addTcktForm.value.IsActive = true;
-    this.getDate()
+    this.addTcktForm.value.createdByUser = this.usrData.userData.UserId;
+    this.addTcktForm.value.isActive = true;
+    this.addTcktForm.value.readFlg = true;
+    // this.getDate()
     debugger
-    this.addTcktForm.value.TypeOfIssueId = this.addTcktForm.value.TypeOfIssueFld.id
-    this.addTcktForm.value.TypeOfIssue = this.addTcktForm.value.TypeOfIssueFld.name
-    this.addTcktForm.value.Priority = this.addTcktForm.value.PriorityFld.id
+    this.addTcktForm.value.typeOfIssueId = this.addTcktForm.value.TypeOfIssueFld.id
+    // this.addTcktForm.value.TypeOfIssue = this.addTcktForm.value.TypeOfIssueFld.name
+    this.addTcktForm.value.priority = this.addTcktForm.value.PriorityFld.id
 
     // if(!this.addTcktForm.invalid){
     // this.allIssues.forEach((issue:any)=>{
@@ -161,19 +174,47 @@ export class FormControlsComponent implements OnInit {
     }
 
     // this.addTcktForm.value.image =  formData
-      this.rayahenService.addTickt(formData).subscribe((res)=>{
+      this.rayahenService.addTickt(this.addTcktForm.value).subscribe((res)=>{
         if(res.status == 200 ){
           // this.uploadImage()
           this.toastMessage = res.body.message
           this.toastBgColor = 'bg-success'
           this.toastComponent.show();
           // this.getAllTickets()
+          setTimeout(() => {
+            this.uploud(res.body.id)
+            this.router.navigate(['/tickets'])
+          },1000)
           // this.general.closeModal('addTcktModal')
         }
       })
 
   }
 
+  uploud(id: any){
+    const formData = new FormData();
+    formData.append('Image', this.selectedFile);
+    formData.append('Id', id);
+    
+    let request ={
+      image: this.selectedFile,
+      id: 45
+    }
+    this.rayahenService.uploudImg(formData).subscribe({
+      next:(res : any)=>{
+        console.log(res)
+        // this.toastMessage = res.body.message
+        // this.toastBgColor = 'bg-success'
+        // this.toastComponent.show();
+      },
+      error:(err : any)=>{
+        console.log(err)
+        this.toastMessage = err.message
+        this.toastBgColor = 'bg-danger'
+        this.toastComponent.show();
+      }
+    })
+  }
   onFileSelected(event: Event) {
   const input = event.target as HTMLInputElement;
   if (input.files && input.files.length > 0) {
@@ -185,13 +226,7 @@ export class FormControlsComponent implements OnInit {
 }
 
 
-onUpload(event: FileUploadEvent) {
-  for (let file of event?.files || []) {
-    this.uploadedFiles.push(file);
-  }
 
-  this.messageService.add({ severity: 'info', summary: 'File Uploaded', detail: '' });
-}
   submitUpdTicket(){
     this.rayahenService.updTicket(this.general.updTcktForm.value,this.general.updTcktForm.value.id).subscribe({
       next:(res)=>{
@@ -200,6 +235,10 @@ onUpload(event: FileUploadEvent) {
         this.toastMessage = 'Done'
         this.toastBgColor = 'bg-success'
         this.toastComponent.show();
+          setTimeout(() => {
+            this.uploud(this.general.updTcktForm.value.id)
+            this.router.navigate(['/tickets'])
+          },1000)
         // this.general.closeModal('updTcktModal')
       },
       error:(err)=>{
