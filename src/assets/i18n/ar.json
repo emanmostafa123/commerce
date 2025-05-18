@@ -20,6 +20,7 @@
             "submit":"إضافة"
         },
         "tcktsCrd": {
+            "id":"رقم التذكرة",
             "subject": "الموضوع",
             "description": "الوصف",
             "active": "نشط",
@@ -31,7 +32,13 @@
             "typeOfIssue":"نوع المشكلة",
             "high":"عالي",
             "medium":"متوسط",
-            "low":"منخفض"
+            "low":"منخفض",
+            "tcktStatus":"الحالة",
+            "noTckts":"لا توجد تذاكر",
+            "of":"من",
+            "search":"بحث عن تذكرة",
+            "tcktImg":"ملف التذكرة"
+
         },
         "issueCrd": {
             "issueNm": "اسم المشكلة"
@@ -55,7 +62,13 @@
         "usrNm": "اسم المستخدم",
         "password": "كلمة المرور",
         "wlcmBck": "مرحبًا بعودتك",
-        "forgetpsswrd": "نسيت كلمة المرور..؟"
+        "forgetpsswrd": "نسيت كلمة المرور..؟",
+        "email": "البريد الإلكتروني",
+        "resetpsswrd": "إعادة تعيين كلمة المرور",      
+        "reset":"إعادة تعيين",
+        "logininstead":"تسجيل الدخول بدلاً من ذلك" ,
+        "idErr":"من فضلك أدخل ارقام فقط"
+
     },
     "fire":{
         "issue":{
@@ -64,5 +77,16 @@
             "confirmButtonText":"نعم",
             "cancelButtonText":"لا"
         }
-    }
+    },
+    "charts":{
+        "allTcktCount":"عدد التذاكر",
+        "allIssueCount":"عدد المشكلات",
+        "activeTckt":"التذاكر النشطة",
+        "deactiveTckt":"التذاكر غير النشطة",
+        "highPrtyTckt":"التذاكر ذات الأولوية العالية",
+        "mediumPrtyTckt":"التذاكر ذات الأولوية المتوسطة",
+        "lowPrtyTckt":"التذاكر ذات الأولوية المنخفضة"
+    },
+    "req":"هذا الحقل مطلوب"
+
 }

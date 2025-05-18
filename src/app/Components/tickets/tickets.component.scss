@@ -1,0 +1,54 @@
+table {
+    table-layout: fixed; /* Force respect of td width */
+    width: 100%;
+}
+th{
+    background-color: #f1f1f1
+}
+th,td{
+    width: 100px;
+    max-width: 100px;
+    white-space: nowrap;       
+    overflow: hidden;          
+    text-overflow: ellipsis;    
+}
+.thDes,.tdDes{
+    width: 20rem;
+    max-width: unset;
+
+}
+.card{
+    width: 11rem;
+}
+.bg-rayahen{
+    background-color: #805e1f;
+}
+.tcktsBtn{
+    color: #805e1f;
+    border: 1px solid #805e1f;
+}
+.tcktsBtn.active{
+    color: #ffffff;
+    border: 1px solid #805e1f;
+    background-color: #805e1f;
+}
+.cursor-pointer{
+    cursor: pointer;
+}   
+.tcktsBtn:hover{
+    background-color: #805e1f;
+    color: #ffffff;
+    border: 1px solid #805e1f;
+}
+.tcktsBtn:focus{
+    background-color: #805e1f;
+    color: #ffffff;
+    border: 1px solid #805e1f;
+}
+app-toast{
+    z-index: 10000 !important;
+    position: absolute !important;
+    right: 25px !important;
+    top: 95px !important;
+    left: auto !important;
+}

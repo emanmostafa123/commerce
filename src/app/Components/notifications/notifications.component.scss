@@ -1,0 +1,65 @@
+.btn {
+    font-size: 13px !important;
+    background: transparent !important;
+    // color: white !important;
+    border: none !important;
+}
+.notification-item{
+    padding: 10px;
+    width: 16rem;
+    // background: #805e1f21;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 13px;
+    .date{
+        color: #805e1f;
+        left: 60%;
+        position: relative;
+    }
+}
+
+.notification{
+    right: 0;
+}
+.notification_container{
+    max-height: 20rem;
+    overflow: auto;
+    &::-webkit-scrollbar {
+        width: 5px;
+      }
+      
+      &::-webkit-scrollbar-track {
+        -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+        border-radius: 10px;
+      }
+      
+      &::-webkit-scrollbar-thumb {
+        border-radius: 10px;
+        background: #B8935E;
+      }
+      
+}
+#rtl{
+    .notification{
+        left: 0;
+    }
+    .notification-item{
+        text-align: right;
+    }
+    .date{
+        left: auto;
+        right: 60%;
+    }
+}
+
+.notification_count{
+        position: absolute;
+    top: -3px;
+    color: white;
+    background: red;
+    padding: 0px 5px;
+    border-radius: 43px;
+    font-size: 12px;
+    height: fit-content;
+
+}

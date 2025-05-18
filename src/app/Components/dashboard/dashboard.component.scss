@@ -17,18 +17,16 @@
 
 .logoutbtn {
     color: white;
-    border: 1px solid white;
 
-    &:hover,
-    &:active {
-        color: white;
-        border: 1px solid white;
-    }
+    // &:hover,
+    // &:active {
+    //     color: white;
+    // }
 }
 
-.bg-rayahen {
-    background-color: #3C2E21;
-}
+// .bg-rayahen {
+//     background-color: #3C2E21;
+// }
 
 
 .navbar {
@@ -62,12 +60,6 @@ a {
     background-color: #3c2e211a;
 }
 
-.main-screen {
-    min-height: 90vh;
-    background: white;
-    border-radius: 4px;
-    padding: 8px;
-}
 
 nav {
     a {
@@ -190,26 +182,8 @@ nav {
     background-color: #805e1f;
     padding: .5rem;
 }
-.lngDrp .btn {
-    font-size: 13px !important;
-    background: transparent !important;
-    color: white !important;
-    border: none !important;
-}
 
-.cursor_pointer{
-    cursor: pointer;
-}
 
-.lang{
-    .dropdown-item.active, .dropdown-item:active{
-        background-color: transparent !important;
-    }
-    .dropdown-item:hover{
-        background-color: #805e1f !important;
-        color: white!important;
-    }
-}
 // .sideMenu{
 //     // background: url('../../../assets/login.png');
 //     // background-size: contain;
@@ -217,14 +191,8 @@ nav {
 .bg-rayahen{
     background-color: #805e1f;
 }
-.tcktsBtn{
+.text-rayahen{
     color: #805e1f;
-    border: 1px solid #805e1f;
-}
-.tcktsBtn.active{
-    color: #ffffff;
-    border: 1px solid #805e1f;
-    background-color: #805e1f;
 }
 
 app-toast{
@@ -235,20 +203,9 @@ app-toast{
     left: auto !important;
 }
 
-.rtl{
-    app-toast{
-        left: 25px !important;
-        right: auto !important;
-    }
-    
-}
 
-.float-right{
-    float: right;
-}
-.float-left{
-    float: left;
-}
+
 .cursor-pointer{
     cursor: pointer;
 }
+

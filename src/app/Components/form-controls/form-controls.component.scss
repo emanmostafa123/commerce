@@ -1,0 +1,42 @@
+.custom-file-upload {
+  position: relative;
+  display: inline-block;
+}
+
+.upload-label {
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  background-color: transparent;
+  color: #805e1f;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 500;
+  text-decoration: underline;
+//   transition: background-color 0.3s ease;
+}
+
+
+
+input[type="file"] {
+  display: none;
+}
+.file-name {
+  margin-left: 1rem;
+  font-style: italic;
+  color: #333;
+}
+.btn-rayahen{
+    float: inline-end;
+    background-color: #805e1f !important;
+    color: white !important;
+    font-weight: 500;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+.title{
+    font-size: 20px;
+    font-weight: 700;
+    text-align: center;
+}

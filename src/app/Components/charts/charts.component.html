@@ -1,13 +1,33 @@
-<div class="row">
-    <ngx-charts-pie-chart class="col-12 col-md-6 col-xl-6 col-xxl-6 col-lg-6" [view]="[600, 400]"
-        [results]="pieChartData" [scheme]="colorSchemePie" [legend]="true" [explodeSlices]="false" [labels]="true"
-        [doughnut]="false" [gradient]="false">
-    </ngx-charts-pie-chart>
+<div class="main-screen mt-3">
+    @if(displaydata){
+    <div class="row main">
+        <div class="col-12">
+            <div class="row d-flex my-5  justify-content-center">
+                @for( tcktCount of chartsCountArray ; track tcktCount ){
 
-    <ngx-charts-bar-vertical class="col-12 col-md-6 col-xl-6 col-xxl-6 col-lg-6" [view]="[600, 400]"
-        [scheme]="colorScheme" [results]="barChartData" [gradient]="false" [xAxis]="true" [yAxis]="true" [legend]="true"
-        [showXAxisLabel]="true" [xAxisLabel]="'Status'" [showYAxisLabel]="true" [yAxisLabel]="'Number of Tickets'"
-        [barPadding]="20" [roundEdges]="true">
-    </ngx-charts-bar-vertical>
+                <div class="card text-center mx-3 px-0 my-1">
+                    <div class="card-header bg-rayahen text-light ">
+                        {{'charts.'+tcktCount.label | translate}}
+                    </div>
+                    <div class="card-body fw-bold fs-4">
+                        {{tcktCount.count}}
+                    </div>
+                </div>
+                }
+            </div>
+        </div>
+        <ngx-charts-pie-chart class="col-12 col-md-6 col-xl-6 col-xxl-6 col-lg-6" [view]="[600, 400]"
+            [results]="pieChartData" [scheme]="colorSchemePie" [legend]="true" [explodeSlices]="false" [labels]="true"
+            [doughnut]="false" [gradient]="false">
+        </ngx-charts-pie-chart>
 
+        <ngx-charts-bar-vertical class="col-12 col-md-6 col-xl-6 col-xxl-6 col-lg-6" [view]="[600, 400]"
+            [scheme]="colorScheme" [results]="barChartData" [gradient]="false" [xAxis]="true" [yAxis]="true"
+            [legend]="true" [showXAxisLabel]="true" [xAxisLabel]="'Status'" [showYAxisLabel]="true"
+            [yAxisLabel]="'Number of Tickets'" [barPadding]="20" [roundEdges]="true">
+        </ngx-charts-bar-vertical>
+
+    </div>
+    }
 </div>
+<app-toast #toastRef [message]="toastMessage" [bgColor]="toastBgColor"></app-toast>
