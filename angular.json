@@ -23,6 +23,7 @@
             "polyfills": [
               "zone.js"
             ],
+            "baseHref": "/emanmostafa123.github.io/",
             "tsConfig": "tsconfig.app.json",
             "inlineStyleLanguage": "scss",
             "assets": [

@@ -4,11 +4,11 @@
         <span >
             <i class="fas fa-bell text-rayahen"></i>
         </span>
-        <span class="notification_count">{{notifications?.length}}</span>
+        <span class="notification_count">{{general.notifications?.length}}</span>
     </a>
     <ul class="dropdown-menu notification animate__bounce" id="notifictaionDropMenu" >
         <div class="notification_container mx-2">
-            <div *ngFor="let notification of notifications" class="notification-item mb-2"
+            <div *ngFor="let notification of general.notifications" class="notification-item mb-2"
                 (click)="openTicket(notification.ticketId)">
                 <p>{{ notification.ticketSubject }}</p>
                 <small class="date"
