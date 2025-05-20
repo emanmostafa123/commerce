@@ -23,6 +23,7 @@ export class General {
     showreturnBtn: any;
     ticketsAdded: boolean = false;
 shownavElmnt: any;
+  notifications: any;
     constructor(
       public authService: AuthService,
       public fb: FormBuilder,

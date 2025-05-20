@@ -17,19 +17,17 @@
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "outputPath": "dist/e-commerce",
+            "outputPath": "dist/e-commerce/browser",
             "index": "src/index.html",
-            "browser": "src/main.ts",
+            "browser": "src/main.ts",  
             "polyfills": [
               "zone.js"
             ],
+            "baseHref": "/emanmostafa123.github.io/",
             "tsConfig": "tsconfig.app.json",
             "inlineStyleLanguage": "scss",
             "assets": [
-              {
-                "glob": "**/*",
-                "input": "public"
-              },
+              "src/favicon.ico",
               "src/assets"
             ],
             "styles": [
@@ -93,10 +91,7 @@
             "tsConfig": "tsconfig.spec.json",
             "inlineStyleLanguage": "scss",
             "assets": [
-              {
-                "glob": "**/*",
-                "input": "public"
-              },
+              "src/favicon.ico",
               "src/assets"
             ],
             "styles": [
@@ -104,6 +99,9 @@
             ],
             "scripts": []
           }
+        },
+        "deploy": {
+          "builder": "angular-cli-ghpages:deploy"
         }
       }
     }

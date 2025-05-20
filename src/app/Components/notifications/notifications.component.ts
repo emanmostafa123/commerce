@@ -30,7 +30,7 @@ export class NotificationsComponent {
   getNotification(){
     this.rayahenService.getNotification(this.usrData.userData.UserId).subscribe({
       next: (res) => {
-        this.notifications = res.body;
+        this.general.notifications = res.body;
       },
       error: (err) => {
         console.log(err);
