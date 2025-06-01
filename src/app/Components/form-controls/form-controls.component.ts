@@ -182,7 +182,7 @@ export class FormControlsComponent implements OnInit {
           this.toastComponent.show();
           // this.getAllTickets()
           setTimeout(() => {
-            this.uploud(res.body.id)
+            this.upload(res.body.id)
             this.router.navigate(['/tickets'])
           },1000)
         }
@@ -190,22 +190,23 @@ export class FormControlsComponent implements OnInit {
 
   }
 
-  uploud(id: any){
+  upload(id: any){
     const formData = new FormData();
     formData.append('Id', id);
     formData.append('Image', this.selectedFile);
+    if (this.selectedFile != null || this.selectedFile != undefined) {
+      this.rayahenService.uploadImg(formData).subscribe({
+        next: (res: any) => {
 
-    this.rayahenService.uploudImg(formData).subscribe({
-      next:(res : any)=>{
-        
-      },
-      error:(err : any)=>{
-        console.log(err)
-        this.toastMessage = err.message
-        this.toastBgColor = 'bg-danger'
-        this.toastComponent.show();
-      }
-    })
+        },
+        error: (err: any) => {
+          console.log(err)
+          this.toastMessage = err.message
+          this.toastBgColor = 'bg-danger'
+          this.toastComponent.show();
+        }
+      })
+    }
   }
   onFileSelected(event: Event) {
   const input = event.target as HTMLInputElement;
@@ -221,7 +222,7 @@ export class FormControlsComponent implements OnInit {
   submitUpdTicket(){
     this.rayahenService.updTicket(this.general.updTcktForm.value,this.general.updTcktForm.value.id).subscribe({
       next:(res)=>{
-        this.uploud(this.general.updTcktForm.value.id)
+        this.upload(this.general.updTcktForm.value.id)
         this.toastMessage = 'Done'
         this.toastBgColor = 'bg-success'
         this.toastComponent.show();

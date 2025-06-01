@@ -15,7 +15,8 @@ import { InputGroupAddonModule } from 'primeng/inputgroupaddon';
 import { InputTextModule } from 'primeng/inputtext';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { FloatLabelModule } from 'primeng/floatlabel';
-
+import { AuthService  } from '../../shared/auth.service';
+import { UserData } from '../../shared/userData';
 
 @Component({
   selector: 'app-login',
@@ -47,7 +48,9 @@ export class LoginComponent {
     public rayahenService : RayahenService,
     private translate: TranslateService,
     public general : General,
-    public title : Title
+    public title : Title,
+    private authService: AuthService,
+    private userData : UserData
   ) { 
     this.title.setTitle('Rayahen | Login ');
     const defaultLang = localStorage.getItem('lang') || 'en';
@@ -98,6 +101,7 @@ export class LoginComponent {
         console.log("res",res)
         if(res.body.success != false){
         localStorage.setItem('token',res.body.data.token) 
+        this.userData.userData = this.authService.getDecodedToken();
         this.router.navigate(['/rayahen'])
         this.getLoginDate()
         this.getExpDate()
@@ -116,6 +120,15 @@ export class LoginComponent {
       }
     })
 
+    }
+  }
+  onEnterPressed(){
+    if(this.loginForm.valid){
+      this.login();
+    }else{
+      this.toastMessage = 'Please fill in all required fields'
+      this.toastBgColor = 'bg-danger'
+      this.toastComponent.show();
     }
   }
   getLoginDate() {

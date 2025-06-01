@@ -5,11 +5,12 @@ import { provideAnimations } from '@angular/platform-browser/animations';
 import { provideToastr } from 'ngx-toastr';
 import { provideHttpClient, HttpClient, withInterceptors } from '@angular/common/http';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
-import { TranslationLoader } from './translation-loader';
+import { TranslationLoader, createTranslationLoader } from './translation-loader';
 import { AuthInterceptor } from './shared/core/auth.interceptor';
 import { providePrimeNG } from 'primeng/config';
 import Aura from '@primeng/themes/aura';
 import myTheme from './myTheme';
+import { DOCUMENT } from '@angular/common';
 
 export const appConfig: ApplicationConfig = {
   providers: [provideZoneChangeDetection({ eventCoalescing: true }), provideRouter(routes), provideHttpClient(),
@@ -24,15 +25,15 @@ export const appConfig: ApplicationConfig = {
   }),
   provideToastr(),
   provideHttpClient(),
-  importProvidersFrom(
-    TranslateModule.forRoot({
-      loader: {
-        provide: TranslateLoader,
-        useFactory: (http: HttpClient) => new TranslationLoader(http),
-        deps: [HttpClient]
-      }
-    })
-  ),
+   importProvidersFrom(
+      TranslateModule.forRoot({
+        loader: {
+          provide: TranslateLoader,
+          useFactory: createTranslationLoader,
+          deps: [HttpClient, DOCUMENT]
+        }
+      })
+    ),
   provideHttpClient(withInterceptors([AuthInterceptor])),
   ]
 };

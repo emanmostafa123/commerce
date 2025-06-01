@@ -8,6 +8,7 @@ import { TicketsComponent } from './Components/tickets/tickets.component';
 import { IssuesComponent } from './Components/issues/issues.component';
 import { DisplayTicketComponent } from './Components/display-ticket/display-ticket.component';
 import { FormControlsComponent } from './Components/form-controls/form-controls.component';
+import { UserComponent } from './Components/user/user.component';
 
 export const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -29,6 +30,8 @@ export const routes: Routes = [
       { path: 'ticket/:id', component: DisplayTicketComponent },
       { path: 'addTicket', component: FormControlsComponent},
       { path: 'updTicket/:id', component: FormControlsComponent},
+      { path: 'adduser', component: UserComponent},
+
       { path: '', redirectTo: 'rayahen', pathMatch: 'full' }, // Default child route
     ]
   },

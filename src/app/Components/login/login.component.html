@@ -30,7 +30,9 @@
                                     <i class="fa-solid fa-key  text-rayahen"></i>
                                 </p-inputgroup-addon>
                                 <p-floatlabel variant="on">
-                                    <input type="password" pInputText id="pass_on_label" name="password" formControlName="password"/>
+                                    <input type="password" pInputText id="pass_on_label" 
+                                      (keydown.enter)="onEnterPressed()"
+                                        name="password" formControlName="password"/>
                                     <label for="pass_on_label">{{'log.password' | translate}}</label>
                                 </p-floatlabel>
                             </p-inputgroup>

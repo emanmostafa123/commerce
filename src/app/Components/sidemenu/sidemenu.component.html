@@ -3,7 +3,7 @@
     <div class="d-block text-center sideMenutop">
         <li>
             <a class="navbar-brand">
-                <img src="../../../assets/rayahenLogo.png" alt="">
+              <img src="assets/rayahenLogo.png" alt="">
                 <!-- {{'main.nav.brand' | translate}} -->
             </a>
         </li>
@@ -42,8 +42,9 @@
 
       <li>
         <a  class="nav-link text-white my-1" 
-            [ngClass]="general.shownavElmnt == 'addUsrModal' ? 'active':''"
-            (click)="general.openModal('addUsrModal')">
+           [routerLink]="['/adduser']" routerLinkActive="router-link-active"
+            [ngClass]="general.shownavElmnt == 'adduser' ? 'active':''"
+            (click)="general.openNavElmnt('adduser')">
           <svg class="bi me-2" width="16" height="16"><use xlink:href="#grid"></use></svg>
           {{'tickets.mainLabels.adduser'| translate}}
         </a>
