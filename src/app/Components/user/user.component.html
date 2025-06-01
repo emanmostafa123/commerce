@@ -1,0 +1,114 @@
+<div class="main-screen mt-3">
+
+    <!-- @if(addMode){ -->
+    <div class="m-3">
+        <form [formGroup]="addusrForm">
+            <div class="row">
+                <div class="col-12 col-md-6 col-lg-6 col-sm-12 my-2">
+                    <p-floatlabel variant="on">
+                        <input pInputText id="id_on_label" autocomplete="off" 
+                            class="w-100"
+                            type="text"  formControlName="id" name="id"/>
+                        <label for="id_on_label">{{'tickets.usrCard.id'| translate}}
+                            <span class="text-danger">*</span>
+                        </label>
+                        
+                    </p-floatlabel>
+                    @if(addusrForm.controls['id'].hasError('required') && addusrForm.controls['id'].touched){
+                    <small id="" class="text-danger">{{'req' | translate}}</small>
+                    }
+                </div>
+                <div class="col-12 col-md-6 col-lg-6 col-sm-12  my-2">
+                    <p-floatlabel variant="on">
+                        <input pInputText id="usrNm_on_label" autocomplete="off" 
+                            class="w-100"
+                            type="text"  formControlName="userName" name="userName"/>
+                        <label for="usrNm_on_label">{{'tickets.usrCard.usrNm'| translate}}
+                            <span class="text-danger">*</span>
+                        </label>
+                    </p-floatlabel>
+                    @if(addusrForm.controls['userName'].hasError('required') && addusrForm.controls['userName'].touched){
+                    <small id="" class="text-danger">{{'req' | translate}}</small>
+                    }
+                </div>
+                <div class="col-12 col-md-6 col-lg-6 col-sm-12  my-2">
+                    <p-floatlabel variant="on">
+                        <input pInputText id="email_on_label" autocomplete="off" 
+                            class="w-100"
+                            type="text"  formControlName="email" name="email"/>
+                        <label for="email_on_label">{{'tickets.usrCard.email'| translate}}
+                            <span class="text-danger">*</span>
+                        </label>
+                    </p-floatlabel>
+                    @if(addusrForm.controls['email'].hasError('required') && addusrForm.controls['email'].touched){
+                    <small id="" class="text-danger">{{'req' | translate}}</small>
+                    }
+                </div>
+                <div class="col-12 col-md-6 col-lg-6 col-sm-12  my-2">
+                    <p-floatlabel variant="on">
+                        <input pInputText id="password_on_label" autocomplete="off" 
+                            class="w-100"
+                            type="text"  formControlName="password" name="password"/>
+                        <label for="password_on_label">{{'tickets.usrCard.password'| translate}}
+                            <span class="text-danger">*</span>
+                        </label>
+                    </p-floatlabel>
+                    @if(addusrForm.controls['password'].hasError('required') && addusrForm.controls['password'].touched){
+                    <small id="" class="text-danger">{{'req' | translate}}</small>
+                    }
+                </div>
+                 <div class="col-12 col-md-6 col-lg-6 col-sm-12  my-2">
+                    <p-floatlabel variant="on">
+                        <input pInputText id="branch_on_label" autocomplete="off" 
+                            class="w-100"
+                            type="text"  formControlName="branch" name="branch"/>
+                        <label for="branch_on_label">{{'tickets.usrCard.branch'| translate}}
+                            <span class="text-danger">*</span>
+                        </label>
+                    </p-floatlabel>
+                    @if(addusrForm.controls['branch'].hasError('required') && addusrForm.controls['branch'].touched){
+                    <small id="" class="text-danger">{{'req' | translate}}</small>
+                    }
+                </div>
+                    <div class="col-12 col-md-6 col-lg-6 col-sm-12  my-2">
+                    <p-floatlabel variant="on">
+                        <input pInputText id="department_on_label" autocomplete="off" 
+                            class="w-100"
+                            type="text"  formControlName="department" name="department"/>
+                        <label for="department_on_label">{{'tickets.usrCard.department'| translate}}
+                            <span class="text-danger">*</span>
+                        </label>
+                    </p-floatlabel>
+                    @if(addusrForm.controls['department'].hasError('required') && addusrForm.controls['department'].touched){
+                    <small id="" class="text-danger">{{'req' | translate}}</small>
+                    }
+                </div>
+
+
+                <div class="col-12 col-md-6 col-lg-6 col-sm-12 my-2">
+                    <p-floatlabel class="w-full " variant="on">
+                        <p-select formControlName="roleFld" inputId="priority_on_label" [options]="roleOptions"
+                            optionLabel="name" styleClass="w-full w-100"  [showClear]="true"/>
+                        <label for="priority_on_label">{{'tickets.usrCard.role'| translate}}
+                            <span class="text-danger">*</span>
+                        </label>
+                    </p-floatlabel>
+                      @if(addusrForm.controls['roleFld'].hasError('required') && addusrForm.controls['roleFld'].touched){
+                    <small id="" class="text-danger">{{'req' | translate}}</small>
+                    }
+                </div>
+               
+            
+            
+                <div class="col-12 mt-2">
+                    <button type="submit" class="btn btn-rayahen ms-auto"
+                        (click)="addUser()">{{'tickets.mainLabels.submit'|
+                        translate}}</button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <!-- } -->
+
+  </div>
+<app-toast #toastRef [message]="toastMessage" [bgColor]="toastBgColor"></app-toast>
