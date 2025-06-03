@@ -63,3 +63,15 @@
     height: fit-content;
 
 }
+
+@media (max-width: 556px) {
+    .notification {
+        right: -177px;
+    }
+
+    #rtl {
+        .notification {
+            left: -177px;
+        }
+    }
+}

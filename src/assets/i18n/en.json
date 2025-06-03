@@ -2,7 +2,8 @@
     "main":{
         "nav":{
             "brand":"Rayahen",
-            "home":"Home"
+            "home":"Home",
+            "users":"Users"
         }
     },
     "tickets":{
@@ -11,6 +12,7 @@
             "addissue":"Add Issue",
             "allissue":"Issues",
             "adduser":"Add User",
+            "upduser":"Update User",
             "dashboard":"Dashboard",
             "alltckts":"All Tickets",
             "activetckts": "Active Tickets",

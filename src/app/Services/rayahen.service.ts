@@ -31,9 +31,16 @@ export class RayahenService {
     return this.http.get<any>('https://ticket-sys.runasp.net/api/Ticket/GetTicketById?id=' + req, { responseType: 'json', observe: 'response' })
   }
 
+  getAllUsers() {
+    return this.http.get<any>('https://ticket-sys.runasp.net/api/Admin/GetAllUsers', { responseType: 'json', observe: 'response' })
+  }
   addUser(req: any) {
     return this.http.post<any>('https://ticket-sys.runasp.net/api/Auth/register', req, { responseType: 'json', observe: 'response' })
   }
+  updUser(req: any) {
+    return this.http.post<any>('https://ticket-sys.runasp.net/api/Auth/UpdateUser', req, { responseType: 'json', observe: 'response' })
+  }
+
   addTickt(req: any) {
     return this.http.post<any>('https://ticket-sys.runasp.net/api/Ticket/AddTicket', req, { responseType: 'json', observe: 'response' })
   }
@@ -62,4 +69,5 @@ export class RayahenService {
   uploadImg(req: any) {
     return this.http.post<any>('https://ticket-sys.runasp.net/api/Ticket/Image' , req, { responseType: 'json', observe: 'response' })
   }
+  
 }

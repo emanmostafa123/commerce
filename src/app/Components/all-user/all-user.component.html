@@ -1,0 +1,36 @@
+<div class="main-screen mt-3">
+    <div class="row">
+         <div class="col-12 m-2" [ngClass]="general.dirVal =='rtl'?'me-auto':'ms-auto'">
+            <a class="btn btn-sm btn-outline tcktsBtn mx-1 cursor_pointer "
+                [title]="'tickets.mainLabels.adduser' | translate"
+            [routerLink]="['/adduser']" routerLinkActive="router-link-active" ><i
+                    class="fa-solid fa-plus"></i></a>
+        </div>
+        <div class="col-12 row justify-content-center">
+            @for(user of allUsers; track user){
+            <div class="card m-2 col-12 col-md-4 col-lg-3 col-sm-12 col-xl-2 col-xxl-3">
+                <div class="card-content p-2 text-rayahen">
+                    <div class="fw-bold">
+                        <div> {{user.id}} <span class="text-warning cursor_pointer"
+                            [title]="'tickets.mainLabels.upduser' | translate" [ngClass]="general.dirVal =='rtl'?' float-left':' float-right'"
+                        (click)="updUser(user)"><i class="fas fa-edit"></i></span></div> 
+                        <div>{{user.userName}} </div>
+                    </div>
+                    <div class="bg-white py-2 px-3 rounded">
+                        <div><i class="fa-solid fa-envelope me-2"></i> {{user.email}} </div>
+                        <div><i class="fa-solid fa-building me-2"></i> {{user.branch}} </div>
+                        <div><i class="fa-solid fa-toolbox me-2"></i>{{(user.role == 'Admin' ? 'tickets.usrCard.admin' : 'tickets.usrCard.usr') | translate}}</div>   
+                        <div><i class="fa-solid fa-code-branch me-2"></i> {{user.department}} </div> 
+                        <div [ngClass]="user.isActive? 'bg-success': 'bg-danger'"
+                            style="width: fit-content;" class="px-2 rounded text-white">{{(user.isActive ? 'tickets.tcktsCrd.active' : 'tickets.tcktsCrd.deactive') | translate}}</div>  
+                    </div>
+                    
+                </div>
+            </div>
+            }
+        </div>
+       
+    </div>
+</div>
+
+<app-toast #toastRef [message]="toastMessage" [bgColor]="toastBgColor"></app-toast>

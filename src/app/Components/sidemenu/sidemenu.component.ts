@@ -20,6 +20,7 @@ export class SidemenuComponent {
   lang: string | undefined;
   shownavElmnt: any;
   @Output() navEvent = new EventEmitter<string>();
+  isCollapsed: boolean | undefined = false;
 
   constructor(
     public translate: TranslateService,
@@ -40,7 +41,9 @@ export class SidemenuComponent {
     
   }
 
-
+  toggleSidebar(){
+    this.isCollapsed = !this.isCollapsed;
+  }
 
   logout(){
     localStorage.removeItem("token") ;

@@ -1,0 +1,31 @@
+.card{
+    background: #ebe9e9
+}
+.float-right{
+    float: right;
+}
+.float-left{
+    float: left;
+}
+.tcktsBtn{
+    color: #805e1f;
+    border: 1px solid #805e1f;
+}
+.tcktsBtn.active{
+    color: #ffffff;
+    border: 1px solid #805e1f;
+    background-color: #805e1f;
+}
+.cursor-pointer{
+    cursor: pointer;
+}   
+.tcktsBtn:hover{
+    background-color: #805e1f;
+    color: #ffffff;
+    border: 1px solid #805e1f;
+}
+.tcktsBtn:focus{
+    background-color: #805e1f;
+    color: #ffffff;
+    border: 1px solid #805e1f;
+}

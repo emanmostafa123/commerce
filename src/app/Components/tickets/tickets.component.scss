@@ -52,3 +52,29 @@ app-toast{
     top: 95px !important;
     left: auto !important;
 }
+
+.table-responsive-custom {
+  width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+  white-space: nowrap;
+  margin-top: 1rem;
+
+  // Optional styling to prevent border/cutoff
+  border: 1px solid #dee2e6;
+  border-radius: 0.25rem;
+  background-color: #fff;
+
+  // Optional: Show horizontal scroll bar always (or use `auto`)
+  scrollbar-width: thin;
+  scrollbar-color: #999 transparent;
+}
+
+.table-responsive-custom::-webkit-scrollbar {
+  height: 6px;
+}
+.table-responsive-custom::-webkit-scrollbar-thumb {
+  background: #ccc;
+  border-radius: 10px;
+}

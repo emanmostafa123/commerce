@@ -2,9 +2,9 @@
 
     <div class="row">
         <div class="col-12">
-            <div class="d-flex my-2 justify-content-center">
+            <div class="row d-flex my-2 justify-content-center">
                 @for( tcktCount of general.ticketsStatusCount ; track tcktCount ){
-                <div class="card text-center mx-3 px-0">
+                <div class="card text-center mx-3 px-0 my-1">
                     <div class="card-header bg-rayahen text-light ">
                         {{'charts.'+tcktCount.label | translate}}
                     </div>
@@ -17,17 +17,17 @@
         </div>
     </div>
 
-    <div class="d-flex">
-        <a class="btn btn-sm btn-outline tcktsBtn  mx-1" [ngClass]="getTckts == 'all'? 'active':''"
+    <div class="d-lg-flex d-xl-flex d-md-block d-sm-block">
+        <a class="btn btn-sm btn-outline tcktsBtn  mx-1 my-1" [ngClass]="getTckts == 'all'? 'active':''"
             (click)="getTickets('all')">{{'tickets.mainLabels.alltckts'| translate}}</a>
-        <a class="btn btn-sm btn-outline tcktsBtn mx-1" [ngClass]="getTckts == 'active'? 'active':''"
+        <a class="btn btn-sm btn-outline tcktsBtn mx-1 my-1" [ngClass]="getTckts == 'active'? 'active':''"
             (click)="getTickets('active')">{{'tickets.mainLabels.activetckts'| translate}}</a>
-        <a class="btn btn-sm btn-outline tcktsBtn mx-1" [ngClass]="getTckts == 'deactive'? 'active':''"
+        <a class="btn btn-sm btn-outline tcktsBtn mx-1 my-1" [ngClass]="getTckts == 'deactive'? 'active':''"
             (click)="getTickets('deactive')">{{'tickets.mainLabels.deactivetckts'| translate}}</a>
             <span>
-                <input type="text" (change)="searchTicket($event)" class="form-control form-control-sm mx-1" placeholder="{{'tickets.tcktsCrd.search'| translate}}">
+                <input type="text" (change)="searchTicket($event)" class="form-control form-control-sm mx-1 my-1" placeholder="{{'tickets.tcktsCrd.search'| translate}}">
             </span>
-        <a class="btn btn-sm btn-outline tcktsBtn mx-1 " [ngClass]="general.dirVal =='rtl'?'me-auto':'ms-auto'"
+        <a class="btn btn-sm btn-outline tcktsBtn mx-1 my-1 " [ngClass]="general.dirVal =='rtl'?'me-auto':'ms-auto'"
             (click)="goToAddTicket()"><i class="fa-solid fa-plus"></i></a>
 
     </div>
@@ -71,11 +71,11 @@
 
 
 
-
+<div class="table-responsive-custom">
     <table class="table table-bordered">
         <thead>
             <tr>
-                <th style="width:20px"></th>
+                <th style="width:35px"></th>
                 <th style="width:40px">{{'tickets.tcktsCrd.id' | translate}}</th>
                 <th style="width:100px">{{'tickets.tcktsCrd.subject'| translate}} </th>
                 <th class="thDes">{{'tickets.tcktsCrd.tcktDes'| translate}} </th>
@@ -152,6 +152,6 @@
             </div>
         </tfoot>
     </table>
-    
+    </div>
 </div>
 <app-toast #toastRef [message]="toastMessage" [bgColor]="toastBgColor"></app-toast>

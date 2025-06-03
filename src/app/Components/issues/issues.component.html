@@ -1,8 +1,8 @@
 <div class="main-screen mt-3">
     <div class="row cursor_pointer">
-        <div class="col-11 row">
+        <div class="col-12 row col-md-11 col-lg-11 col-sm-11 col-xl-11 col-xxl-11">
             @for(issue of allIssues; track issue){
-            <div class="card m-2 col-2 col-md-2 col-lg-2 col-sm-12">
+            <div class="card m-2 col-12 col-md-2 col-lg-2 col-sm-12 col-xl-2 col-xxl-2">
                 <div class="card-content p-2">
                     <span>{{issue.name}} </span>
                     <span class="mx-1 text-danger" [ngClass]="general.dirVal =='rtl'?' float-left':' float-right'"
@@ -13,7 +13,7 @@
             </div>
             }
         </div>
-        <div class="col-1 m-2" [ngClass]="general.dirVal =='rtl'?'me-auto':'ms-auto'">
+        <div class="col-12 m-2 col-md-1 col-lg-1 col-sm-11 col-xl-1 col-xxl-1" [ngClass]="general.dirVal =='rtl'?'me-auto':'ms-auto'">
             <a class="btn btn-sm btn-outline tcktsBtn mx-1  " (click)="general.openModal('addIssueModal')"><i
                     class="fa-solid fa-plus"></i></a>
         </div>

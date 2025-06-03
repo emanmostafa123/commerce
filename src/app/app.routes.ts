@@ -9,6 +9,7 @@ import { IssuesComponent } from './Components/issues/issues.component';
 import { DisplayTicketComponent } from './Components/display-ticket/display-ticket.component';
 import { FormControlsComponent } from './Components/form-controls/form-controls.component';
 import { UserComponent } from './Components/user/user.component';
+import { AllUserComponent } from './Components/all-user/all-user.component';
 
 export const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -31,7 +32,8 @@ export const routes: Routes = [
       { path: 'addTicket', component: FormControlsComponent},
       { path: 'updTicket/:id', component: FormControlsComponent},
       { path: 'adduser', component: UserComponent},
-
+      { path: 'upduser/:id', component: UserComponent},
+      { path: 'users', component: AllUserComponent},
       { path: '', redirectTo: 'rayahen', pathMatch: 'full' }, // Default child route
     ]
   },
