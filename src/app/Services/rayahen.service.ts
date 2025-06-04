@@ -69,5 +69,5 @@ export class RayahenService {
   uploadImg(req: any) {
     return this.http.post<any>('https://ticket-sys.runasp.net/api/Ticket/Image' , req, { responseType: 'json', observe: 'response' })
   }
-  
+  // redeploy
 }
