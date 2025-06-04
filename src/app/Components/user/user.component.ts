@@ -91,7 +91,7 @@ toastBgColor: any;
     })
     this.updusrForm = this.fb.group({
       id: ['', [Validators.required]],
-      password: ['', [Validators.required]],
+      password: [''],
       branch: ['', [Validators.required]],
       department: ['', [Validators.required]],
       role: [''],

@@ -90,3 +90,15 @@ app-toast{
     top: 95px !important;
     left: auto !important;
 }
+
+.showPass{
+    position: absolute;
+    right: 12px;
+    top: 13px;
+}
+#rtl{
+    .showPass{
+    left: 12px;
+    right: auto;
+}
+}

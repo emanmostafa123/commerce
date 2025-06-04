@@ -42,6 +42,7 @@ export class LoginComponent {
   toastMessage: any;
   toastBgColor: any;
   lang: any;
+  inputType: any = 'password';
   constructor(
     public fb : FormBuilder,
     public router : Router,
@@ -92,6 +93,9 @@ export class LoginComponent {
       console.log(this.loginForm)
     }
   }
+  showPass(){
+    this.inputType = this.inputType === 'password' ? 'text' : 'password';
+  }
   login(){
     console.log(this.loginForm)
     if(!this.loginForm.invalid){
@@ -106,7 +110,7 @@ export class LoginComponent {
         this.getLoginDate()
         this.getExpDate()
         }else{
-          this.toastMessage = 'Invalid ID or Password'
+          this.toastMessage = res.body.message
         this.toastBgColor = 'bg-danger'
         this.toastComponent.show();
         }

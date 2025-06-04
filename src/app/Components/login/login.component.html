@@ -30,16 +30,22 @@
                                     <i class="fa-solid fa-key  text-rayahen"></i>
                                 </p-inputgroup-addon>
                                 <p-floatlabel variant="on">
-                                    <input type="password" pInputText id="pass_on_label" 
+                                    <input [type]="inputType" pInputText id="pass_on_label" 
                                       (keydown.enter)="onEnterPressed()"
                                         name="password" formControlName="password"/>
+                                        @if(inputType == 'password'){
+                                         <i class="fa-solid fa-eye  text-rayahen showPass" (click)="showPass()"></i>
+                                        }
+                                        @if(inputType == 'text'){
+                                         <i class="fa-solid fa-eye-slash text-rayahen showPass" (click)="showPass()"></i>
+                                        }
                                     <label for="pass_on_label">{{'log.password' | translate}}</label>
                                 </p-floatlabel>
                             </p-inputgroup>
                             <!-- <input type="password" name="password" formControlName="password"
                             id="usrPss" class="my-4 col-12" [placeholder]="'log.password' | translate">
                             <i class="fa-solid fa-key icon_pass"></i> -->
-                            <a [routerLink]="['/forgetpassword']" routerLinkActive="router-link-active"  rel="noopener noreferrer" class="mt-2">{{'log.forgetpsswrd' | translate}}</a>
+                            <!-- <a [routerLink]="['/forgetpassword']" routerLinkActive="router-link-active"  rel="noopener noreferrer" class="mt-2">{{'log.forgetpsswrd' | translate}}</a> -->
                         </div>
                         <button class="w-25 me-3 " (click)="login()" type="button"  
                         [ngClass]="general.dirVal == 'rtl'?'me-auto':'ms-auto'"

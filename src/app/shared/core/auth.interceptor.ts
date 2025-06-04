@@ -7,7 +7,8 @@ export const AuthInterceptor: HttpInterceptorFn = (req, next) => {
   const clonedRequest = req.clone({
     setHeaders: {
       ...(isFormData ? {} : { 'Content-Type': 'application/json' }),
-      Authorization: `Bearer ${localStorage.getItem('token') || ''}`
+      Authorization: `Bearer ${localStorage.getItem('token') || ''}`,
+      'accept-language': localStorage.getItem('lang') || 'en'
     }
   });
   return next(clonedRequest);
