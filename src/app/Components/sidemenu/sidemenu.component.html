@@ -1,13 +1,18 @@
+
 <div class="d-flex flex-column flex-shrink-0 p-3 text-white bg-rayahen" 
-    style="width: 280px;min-height: 100%;height: 100vh;">
+ [ngStyle]="{ width: !isCollapsed ? '280px' : '60px' }"
+    style="min-height: 100%;height: 100vh; overflow:hidden">
     <div class="d-block text-center sideMenutop">
-        <li>
-            <a class="navbar-brand">
-              <img src="assets/rayahenLogo.png" alt="">
+        <li style="height: 55px;">
+            <a class="navbar-brand" >
+              <img src="assets/rayahenLogo.png" alt=""  [ngStyle]="{ width: !isCollapsed ? '120px' : '50px' }">
                 <!-- {{'main.nav.brand' | translate}} -->
             </a>
         </li>
     </div>
+    <button class="btn  mb-3 me-auto me-2" (click)="toggleSidebar()">
+      <i class="fa-solid fa-bars text-white"></i>
+    </button>
 
     <hr>
     <ul class="nav nav-pills flex-column mb-auto p-0">
@@ -15,16 +20,20 @@
         <a  class="nav-link text-white" aria-current="page" 
             [ngClass]="general.shownavElmnt == 'home' ? 'active':''" [routerLink]="['/rayahen']" routerLinkActive="router-link-active" 
             (click)="general.openNavElmnt('home')">
-          <svg class="bi me-2" width="16" height="16"><use xlink:href="#home"></use></svg>
-          {{'main.nav.home'| translate}}
+          <i class="fa-solid fa-house me-2"></i>
+          @if(!isCollapsed){
+          <span>{{'main.nav.home'| translate}}</span>
+          }
         </a>
       </li>
       <li>
         <a  class="nav-link text-white my-1" 
             [ngClass]="general.shownavElmnt == 'tickets' ? 'active':''"  [routerLink]="['/tickets']" routerLinkActive="router-link-active" 
             (click)="general.openNavElmnt('tickets')">
-          <svg class="bi me-2" width="16" height="16"><use xlink:href="#speedometer2"></use></svg>
-          {{'tickets.mainLabels.tckts'| translate}}
+          <i class="fa-solid fa-ticket me-2"></i>
+           @if(!isCollapsed){
+          <span>{{'tickets.mainLabels.tckts'| translate}}</span>
+           }
         </a>
       </li>
       @if(usrData.userData.Role =='Admin'){
@@ -33,8 +42,11 @@
         <a  class="nav-link text-white my-1" 
             [ngClass]="general.shownavElmnt == 'issues' ? 'active':''"  [routerLink]="['/issues']" routerLinkActive="router-link-active" 
             (click)="general.openNavElmnt('issues')">
-          <svg class="bi me-2" width="16" height="16"><use xlink:href="#table"></use></svg>
+          <i class="fa-solid fa-passport me-2"></i>
+          @if(!isCollapsed){
+          <span>
           {{'tickets.mainLabels.allissue'| translate}}
+          </span>}
         </a>
       </li>
     }
@@ -42,11 +54,14 @@
 
       <li>
         <a  class="nav-link text-white my-1" 
-           [routerLink]="['/adduser']" routerLinkActive="router-link-active"
-            [ngClass]="general.shownavElmnt == 'adduser' ? 'active':''"
-            (click)="general.openNavElmnt('adduser')">
-          <svg class="bi me-2" width="16" height="16"><use xlink:href="#grid"></use></svg>
-          {{'tickets.mainLabels.adduser'| translate}}
+           [routerLink]="['/users']" routerLinkActive="router-link-active"
+            [ngClass]="general.shownavElmnt == 'users' ? 'active':''"
+            (click)="general.openNavElmnt('users')">
+          <i class="fa-solid fa-user-tie me-2"></i>
+           @if(!isCollapsed){
+          <span>
+          {{'main.nav.users'| translate}}
+          </span>}
         </a>
       </li>
     }

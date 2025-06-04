@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, HostListener, ViewChild } from '@angular/core';
 import { NgxChartsModule, Color, ScaleType } from '@swimlane/ngx-charts';
 import { RayahenService } from '../../Services/rayahen.service';
 import { enableRtl } from '@syncfusion/ej2-base';
@@ -69,8 +69,9 @@ export class ChartsComponent implements AfterViewInit {
     domain: ['#007bff', '#28a745', '#ffc107', '#dc3545', '#6f42c1', '#17a2b8', '#fd7e14']    // green for active, red for inactive
   };
   @ViewChild('toastRef') toastComponent!: ToastComponent;
+  viewsize: [number, number] = [600, 400];
 
-  displaydata:boolean = false;
+  displaydata: boolean = false;
   mainTickets: mainTickets[] = [];
   tickets: any;
   activeArray: Ticket[] = [];
@@ -93,10 +94,31 @@ export class ChartsComponent implements AfterViewInit {
 
   }
 
+  @HostListener('window:resize', ['$event'])
+  onResize(event: Event) {
+    this.setViewSize();
+  }
+
+
+  setViewSize() {
+    const width = window.innerWidth;
+    if (width < 576) {
+      this.viewsize = [300, 200];  // Small screens
+    } else if (width < 768) {
+      this.viewsize = [400, 300];
+    } else if (width < 992) {
+      this.viewsize = [500, 350];
+    } else {
+      this.viewsize = [600, 400];  // Default
+    }
+  }
+
+
   ngOnInit(): void {
     this.translate.onLangChange.subscribe((event: LangChangeEvent) => {
       this.getAllTickets()
     });
+    this.setViewSize();
   }
   ngAfterViewInit() {
     // Optional: refresh initially
@@ -131,7 +153,7 @@ export class ChartsComponent implements AfterViewInit {
           if (ticket.priority == 1) this.highprtyArray.push(ticket)
           if (ticket.priority == 2) this.mdmprtyArray.push(ticket)
           if (ticket.priority == 3) this.lowprtyArray.push(ticket)
-                        
+
         })
         const activeCount = this.activeArray.length;
         const inactiveCount = this.deactiveArray.length;
@@ -148,42 +170,42 @@ export class ChartsComponent implements AfterViewInit {
         }));
         this.chartsCountArray = [
           {
-            label : 'allTcktCount',
+            label: 'allTcktCount',
             count: this.mainTickets.length
           },
           {
-            label : 'activeTckt',
+            label: 'activeTckt',
             count: activeCount
           },
           {
-            label : 'deactiveTckt',
+            label: 'deactiveTckt',
             count: inactiveCount
           },
           {
-            label : 'highPrtyTckt',
+            label: 'highPrtyTckt',
             count: this.highprtyArray.length
           },
           {
-            label : 'mediumPrtyTckt',
+            label: 'mediumPrtyTckt',
             count: this.mdmprtyArray.length
           },
           {
-            label : 'lowPrtyTckt',
+            label: 'lowPrtyTckt',
             count: this.lowprtyArray.length
           }
 
         ]
         this.general.ticketsStatusCount = [
           {
-            label : 'allTcktCount',
+            label: 'allTcktCount',
             count: this.mainTickets.length
           },
           {
-            label : 'activeTckt',
+            label: 'activeTckt',
             count: activeCount
           },
           {
-            label : 'deactiveTckt',
+            label: 'deactiveTckt',
             count: inactiveCount
           },
         ]
