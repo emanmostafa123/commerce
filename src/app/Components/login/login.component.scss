@@ -95,10 +95,22 @@ app-toast{
     position: absolute;
     right: 12px;
     top: 13px;
+    z-index: 10;
 }
-#rtl{
+.rtl{
     .showPass{
     left: 12px;
     right: auto;
 }
+.logoLogin{
+    left: auto;
+    right: 0;
+}
+}
+
+.logoLogin{
+    position: absolute;
+    z-index: 0;
+    left: 0px;
+    top: 155px;
 }
