@@ -39,7 +39,9 @@
             "noTckts":"No Tickets Found",
             "of":"of",
             "search":"Search Tickets",
-            "tcktImg":"Ticket File"
+            "tcktImg":"Ticket File",
+            "fillAllFields":"Please fill all fields",
+            "crtBy":"Created By"
         },
         "issueCrd":{
             "issueNm":"Issue Name"
