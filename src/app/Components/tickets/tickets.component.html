@@ -79,6 +79,7 @@
                 <th style="width:40px">{{'tickets.tcktsCrd.id' | translate}}</th>
                 <th style="width:100px">{{'tickets.tcktsCrd.subject'| translate}} </th>
                 <th class="thDes">{{'tickets.tcktsCrd.tcktDes'| translate}} </th>
+                <th style="width:100px">{{'tickets.tcktsCrd.crtBy' | translate}}</th>
                 <th style="width:100px">{{'tickets.tcktsCrd.tcktImg'| translate}}</th>
                 <th style="width:100px">{{'tickets.tcktsCrd.tcktPrty' | translate}}</th>
                 <th style="width:100px">{{'tickets.tcktsCrd.tcktStatus' | translate}}</th>
@@ -95,6 +96,7 @@
                 <td>{{ticket.id}}</td>
                 <td>{{ticket.title}}</td>
                 <td class="tdDes">{{ticket.description}}</td>
+                <td class="fw-bold">{{ticket.userNameCreated}}</td>
                 <td>
                     @if(ticket.imageUrl != null && ticket.imageUrl != ""){
                     <a [href]="ticket.imageUrl" target="_blank">

@@ -12,30 +12,41 @@
                 <div class="title">
                     {{'tickets.tcktsCrd.id' | translate}} {{ticket.id}}
                 </div>
+                <div class="title">
+                    {{'tickets.tcktsCrd.crtBy' | translate}} ({{ticket.createdByUser}} / {{ticket.userNameCreated}} )
+                </div>
                 <div>
-                    <div class="">
+                    <div class="mx-2">
                         <div class="title_card">{{'tickets.tcktsCrd.subject' | translate}} :</div>
                         <div class="des">{{ticket.title}}</div>
                     </div>
-                    <div class="">
+                    <div class="mb-2">
                         <div class="title_card">{{'tickets.tcktsCrd.tcktDes' | translate}} :</div>
                         <div class="des">{{ticket.description}}</div>
                     </div>
-                    <div class="">
-                        <div class="title_card">{{'tickets.tcktsCrd.tcktPrty'|translate}} :</div>
+                    <div class="d-flex align-items-center mb-2">
+                        <div class="title_card mx-2">{{'tickets.tcktsCrd.tcktPrty'|translate}} :</div>
                         <div class="des"
                             [ngClass]="ticket.priority == 1? 'text-danger': ticket.priority == 2? 'text-warning':'text-success'">
                             {{(ticket.priority == 1 ? 'tickets.tcktsCrd.high' : (ticket.priority == 2 ?
                             'tickets.tcktsCrd.medium' : 'tickets.tcktsCrd.low')) | translate}}
                         </div>
                     </div>
-                    <div class="">
-                        <div class="title_card">{{'tickets.tcktsCrd.tcktStatus' | translate}} :</div>
+                    <div class="d-flex align-items-center mb-2">
+                        <div class="title_card mx-2">{{'tickets.tcktsCrd.tcktStatus' | translate}} :</div>
                         <div class="des" [ngClass]="ticket.isActive? 'text-success':'text-danger'">{{(ticket.isActive ?
                             'tickets.tcktsCrd.active' : 'tickets.tcktsCrd.deactive') | translate}}</div>
                     </div>
+                    @if(ticket.imageUrl != null && ticket.imageUrl != ""){
+                    <div class="d-flex align-items-center mb-2">
+                        <div class="title_card mx-2">{{'tickets.tcktsCrd.tcktImg' | translate}} :</div>
+                        <a [href]="ticket.imageUrl" target="_blank">
+                            <i class="fa-solid fa-file"></i>
+                        </a>
+                    </div>
+                    }
                     <div class="date">
-                        <div class="des">{{ticket.createdOn | date:'short'}}</div>
+                        <div class="des">{{ticket.createdOn }}</div>
                     </div>
 
                 </div>

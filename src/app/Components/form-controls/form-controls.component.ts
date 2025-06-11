@@ -174,6 +174,11 @@ export class FormControlsComponent implements OnInit {
     }
 
     // this.addTcktForm.value.image =  formData
+    if(this.addTcktForm.invalid){
+      this.toastMessage = this.translate.instant('tickets.tcktsCrd.fillAllFields')
+        this.toastBgColor = 'bg-danger'
+        this.toastComponent.show();
+    }else{
       this.rayahenService.addTickt(this.addTcktForm.value).subscribe((res)=>{
         if(res.status == 200 ){
           // this.uploadImage()
@@ -187,6 +192,7 @@ export class FormControlsComponent implements OnInit {
           },1000)
         }
       })
+    }
 
   }
 
@@ -220,6 +226,11 @@ export class FormControlsComponent implements OnInit {
 
 
   submitUpdTicket(){
+    if(this.general.updTcktForm.invalid){
+      this.toastMessage = this.translate.instant('tickets.tcktsCrd.fillAllFields')
+        this.toastBgColor = 'bg-danger'
+        this.toastComponent.show();
+    }else{
     this.rayahenService.updTicket(this.general.updTcktForm.value,this.general.updTcktForm.value.id).subscribe({
       next:(res)=>{
         this.upload(this.general.updTcktForm.value.id)
@@ -237,6 +248,7 @@ export class FormControlsComponent implements OnInit {
         this.toastComponent.show();
       }
     })
+  }
 
   }
   

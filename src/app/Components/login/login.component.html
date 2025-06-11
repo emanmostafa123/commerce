@@ -1,12 +1,12 @@
 <div class="section"  [lang]="lang" [dir]="general.dirVal" [ngClass]="general.dirVal == 'rtl'?'rtl':''">
     <div class="container">
         <app-language-switch></app-language-switch>
-        <img src="assets/rayahenLogo.png" alt="" srcset="" class="logoLogin">
         <form [formGroup]="loginForm">
             <div class="row justify-content-center">
                 <div class="m-5 col-12 col-sm-12 col-md-8 col-lg-6 col-xl-6 col-xxl-6 ">
                     <div class="login_card p-4 row">
                         <div class="title mt-4 col-12">
+                            <img src="assets/rayahen.png" alt="" srcset="" class="logoLogin">
                             <h3>{{'log.wlcmBck' | translate}}</h3>
                         </div>
                         <div class="controls_container col-12">
@@ -48,7 +48,7 @@
                             <i class="fa-solid fa-key icon_pass"></i> -->
                             <!-- <a [routerLink]="['/forgetpassword']" routerLinkActive="router-link-active"  rel="noopener noreferrer" class="mt-2">{{'log.forgetpsswrd' | translate}}</a> -->
                         </div>
-                        <button class="w-25 me-3 " (click)="login()" type="button"  
+                        <button class="loginbtn me-3 " (click)="login()" type="button"  
                         [ngClass]="general.dirVal == 'rtl'?'me-auto':'ms-auto'"
                         [disabled]="this.loginForm.invalid">{{'log.login' | translate}}</button>
                     </div>
